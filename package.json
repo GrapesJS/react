@@ -1,6 +1,7 @@
 {
   "name": "grapesjs-react",
   "private": true,
+  "packageManager": "yarn@1.22.19",
   "scripts": {
     "start": "yarn workspace @grapesjs/react run dev & yarn workspace @grapesjs/react-app run dev"
   },

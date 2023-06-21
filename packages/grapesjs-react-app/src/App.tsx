@@ -12,7 +12,7 @@ function App() {
 
   return (
     <div>
-      Test button:
+      <div className="text-3xl font-bold underline">TEST</div>
       <MyButton check={MyEnumTest.Hello}/>
     </div>
   )
