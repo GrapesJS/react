@@ -1,0 +1,12 @@
+{
+  "name": "grapesjs-react",
+  "private": true,
+  "scripts": {
+    "start": "yarn workspace @grapesjs/react run dev & yarn workspace @grapesjs/react-app run dev"
+  },
+  "workspaces": {
+    "packages": [
+      "packages/*"
+    ]
+  }
+}
