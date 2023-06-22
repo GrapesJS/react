@@ -3,7 +3,7 @@ import type { Editor, EditorConfig } from 'grapesjs';
 import { useEffect, useRef } from 'react';
 import { useEditorInstance } from './context/EditorInstance';
 import { useEditorOptions } from './context/EditorOptions';
-import { cx, loadPlugins } from './utils';
+import { PluginToLoad, cx, loadPlugins } from './utils';
 import { loadScript, loadStyle } from './utils/dom';
 
 export interface EditorInstanceProps extends React.HTMLProps<HTMLDivElement> {
@@ -23,14 +23,15 @@ export default function EditorInstance({ children, className, options = {}, grap
       return;
     }
 
+    const win = (window as any);
     const defaultContainer = editorRef.current;
     const canvasContainer = editorOptions.refCanvas;
 
     let editor: Editor | undefined;
     const loadedPlugins: string[] = [];
-    const pluginOptions: Record<string, any> = {};
+    const pluginOptions: PluginToLoad['options'] = {};
 
-    const loadEditor = (gjse: typeof gjs) => {
+    const loadEditor = (grapes: typeof gjs) => {
       const config: EditorConfig = {
         height: '100%',
         panels: { defaults: [] },
@@ -63,16 +64,16 @@ export default function EditorInstance({ children, className, options = {}, grap
         customUI: !!canvasContainer,
       };
       console.log('grapesjs config', config)
-      editor = gjse.init(config);
+      editor = grapes.init(config);
       // dispatch('setEditor', editor);
       setEditor(editor);
-      (window as any).editor = editor;
+      win.editor = editor;
     }
 
     const init = async () => {
       grapesjsCss && await loadStyle(grapesjsCss);
 
-      const plugins: any[] = [
+      const plugins: PluginToLoad[] = [
         // ...PLUGINS_BY_PROJECT[projectType],
         // ...PLUGINS_BY_PROJECT.global,
       ];
@@ -89,7 +90,7 @@ export default function EditorInstance({ children, className, options = {}, grap
       // Load GrapesJS
       if (typeof grapesjs === 'string') {
         await loadScript(grapesjs);
-        loadEditor((window as any).grapesjs);
+        loadEditor(win.grapesjs);
       } else {
         loadEditor(grapesjs);
       }

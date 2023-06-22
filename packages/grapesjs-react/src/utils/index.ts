@@ -1,6 +1,5 @@
+import type { PluginOptions } from "grapesjs";
 import { loadScripts } from "./dom";
-
-type PluginOptions = Record<string, any>;
 
 export type PluginToLoad = {
     id: string,
