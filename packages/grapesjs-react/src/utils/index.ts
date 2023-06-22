@@ -27,3 +27,11 @@ export async function loadPlugins(plugins: PluginToLoad[]) {
 
     return { loaded, failed };
 }
+
+type ClassNameInput = string | number | boolean | null | undefined;
+type ClassNameInputs = ClassNameInput | Array<ClassNameInput>;
+
+export function cx(...inputs: ClassNameInputs[]): string {
+    const inp = Array.isArray(inputs[0]) ? inputs[0] : [...inputs];
+    return inp.filter(Boolean).join(' ');
+}

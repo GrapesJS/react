@@ -3,7 +3,7 @@ import type { Editor, EditorConfig } from 'grapesjs';
 import { useEffect, useRef } from 'react';
 import { useEditorInstance } from './context/EditorInstance';
 import { useEditorOptions } from './context/EditorOptions';
-import { loadPlugins } from './utils';
+import { cx, loadPlugins } from './utils';
 import { loadScript, loadStyle } from './utils/dom';
 
 export interface EditorInstanceProps extends React.HTMLProps<HTMLDivElement> {
@@ -24,6 +24,7 @@ export default function EditorInstance({ children, className, options = {}, grap
     }
 
     const defaultContainer = editorRef.current;
+    const canvasContainer = editorOptions.refCanvas;
 
     let editor: Editor | undefined;
     const loadedPlugins: string[] = [];
@@ -31,6 +32,8 @@ export default function EditorInstance({ children, className, options = {}, grap
 
     const loadEditor = (gjse: typeof gjs) => {
       const config: EditorConfig = {
+        height: '100%',
+        panels: { defaults: [] },
         ...options,
         plugins: [
           ...loadedPlugins,
@@ -40,10 +43,6 @@ export default function EditorInstance({ children, className, options = {}, grap
           ...options?.pluginsOpts,
           ...pluginOptions,
         },
-        panels: { defaults: [] },
-        container: editorOptions.refCanvas || defaultContainer,
-        customUI: true,
-        height: '100%',
         modal: {
           ...options?.modal,
           custom: !!editorOptions.customModal,
@@ -60,6 +59,8 @@ export default function EditorInstance({ children, className, options = {}, grap
           ...options?.richTextEditor,
           custom: !!editorOptions.customRte,
         },
+        container: canvasContainer || defaultContainer,
+        customUI: !!canvasContainer,
       };
       console.log('grapesjs config', config)
       editor = gjse.init(config);
@@ -102,7 +103,7 @@ export default function EditorInstance({ children, className, options = {}, grap
   console.log('EditorInstance');
 
   return (
-    <div className={className} ref={editorRef}>
+    <div className={cx('gjs-editor-wrapper', className)} ref={editorRef}>
       { children }
     </div>
   );
