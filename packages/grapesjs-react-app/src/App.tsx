@@ -26,8 +26,7 @@ function App() {
     projectData;
   }, []);
 
-  // EditorProps['plugins']
-  const plugins: any = useMemo(() => ([
+  const plugins: EditorProps['plugins'] = useMemo(() => ([
     {
       id: 'gjs-blocks-basic',
       src: 'https://unpkg.com/grapesjs-blocks-basic',
