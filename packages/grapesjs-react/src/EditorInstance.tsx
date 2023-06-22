@@ -8,8 +8,15 @@ import { loadScript, loadStyle } from './utils/dom';
 
 export interface EditorInstanceProps extends React.HTMLProps<HTMLDivElement> {
     grapesjs: string | typeof gjs,
-    grapesjsCss?: string,
+    /**
+     * GrapesJS options.
+     */
     options?: EditorConfig,
+    /**
+     * Load GrapesJS CSS file asynchronously from URL.
+     * @example 'https://unpkg.com/grapesjs/dist/css/grapes.min.css'
+     */
+    grapesjsCss?: string,
     /**
      * Array of plugins.
      * Differently from the GrapesJS `plugins` option, this one allows you to load plugins
