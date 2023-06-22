@@ -1,6 +1,6 @@
 import type gjs from 'grapesjs';
 import type { Editor, EditorConfig, ProjectData } from 'grapesjs';
-import { useEffect, useRef } from 'react';
+import { memo, useEffect, useRef } from 'react';
 import { useEditorInstance } from './context/EditorInstance';
 import { useEditorOptions } from './context/EditorOptions';
 import { PluginToLoad, cx, loadPlugins } from './utils';
@@ -43,7 +43,7 @@ export interface EditorProps extends Omit<React.HTMLProps<HTMLDivElement>, 'onLo
     onUpdate?: (projectData: ProjectData, editor: Editor) => void,
 }
 
-export default function EditorInstance({
+const EditorInstance = memo(function EditorInstance({
   children,
   className,
   options = {},
@@ -145,13 +145,15 @@ export default function EditorInstance({
     init();
 
     return () => editor?.destroy();
-  }, [editorOptions]); // eslint-disable-line
+  }, [editorOptions]);
 
-  console.log('EditorInstance 222');
+  console.log('EditorInstance');
 
   return (
     <div className={cx('gjs-editor-wrapper', className)} ref={editorRef}>
       { children }
     </div>
   );
-}
+});
+
+export default EditorInstance;

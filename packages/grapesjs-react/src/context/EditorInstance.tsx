@@ -16,8 +16,6 @@ export const EditorInstanceProvider = ({ children }: {
         }
     });
 
-    console.log('EditorInstanceProvider ', state);
-
     return (
         <EditorInstanceContext.Provider value={state}>
             { children }

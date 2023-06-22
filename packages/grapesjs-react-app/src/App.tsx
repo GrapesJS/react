@@ -1,13 +1,15 @@
 import GrapesJsEditor, { EditorProps } from '@grapesjs/react';
 import type gjs from 'grapesjs';
-import type { Editor, ProjectData } from 'grapesjs';
-import { useState } from 'react';
+import type { Editor, EditorConfig, ProjectData } from 'grapesjs';
+import { useCallback, useMemo, useState } from 'react';
 
 declare global {
   interface Window {
     grapesjs: typeof gjs
   }
 }
+
+type onUpdateProp = Required<EditorProps>['onUpdate'];
 
 const getDateString = (date?: Date) => {
   return date?.toISOString().replace(/Z|T/gi, ' ');
@@ -18,13 +20,29 @@ function App() {
   const [projectData, setProjectData] =  useState<ProjectData>();
   const [projectDataDate, setProjectDataDate] =  useState<Date>();
 
-  const onProjectUpdate: EditorProps['onUpdate'] = (pd) => {
+  const onProjectUpdate = useCallback<onUpdateProp>((pd) => {
     setProjectData(pd);
     setProjectDataDate(new Date());
     projectData;
-  }
+  }, []);
 
-  console.log('App GrapesJS')
+  const plugins: EditorProps['plugins'] = useMemo(() => ([
+    {
+      id: 'gjs-blocks-basic',
+      src: 'https://unpkg.com/grapesjs-blocks-basic',
+    }
+  ]), []);
+
+  const defOptions: EditorConfig = useMemo(() => ({
+    storageManager: false,
+    components: `
+      <h1>Title</h1>
+      <p>Paragraph</p>
+    `,
+  }), []);
+
+  console.log('App GrapesJS');
+
   return (
     <div className="flex flex-col h-screen text-white">
       <div className="bg-slate-900">
@@ -36,21 +54,10 @@ function App() {
         <GrapesJsEditor
           grapesjs={window.grapesjs}
           grapesjsCss="http://localhost:8080/dist/css/grapes.min.css"
-          plugins={[
-            {
-              id: 'gjs-blocks-basic',
-              src: 'https://unpkg.com/grapesjs-blocks-basic',
-            }
-          ]}
+          plugins={plugins}
           onLoad={setEditor}
           onUpdate={onProjectUpdate}
-          options={{
-            storageManager: false,
-            components: `
-              <h1>Title</h1>
-              <p>Paragraph</p>
-            `,
-          }}
+          options={defOptions}
         />
       </div>
     </div>

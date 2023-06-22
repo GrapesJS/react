@@ -42,8 +42,6 @@ export const EditorOptionsProvider = ({ children }: {
         },
     });
 
-    console.log('EditorOptionsProvider ', state);
-
     return (
         <EditorOptionsContext.Provider value={state}>
             { children }

@@ -1,8 +1,9 @@
-import { EditorInstanceProvider, EditorOptionsProvider } from './context';
+import { memo } from 'react';
 import EditorInstance, { EditorProps } from './EditorInstance';
 import EditorReady from './EditorReady';
+import { EditorInstanceProvider, EditorOptionsProvider } from './context';
 
-export default function Editor({ children, ...rest }: EditorProps) {
+const Editor = memo(function Editor({ children, ...rest }: EditorProps) {
     return (
         <EditorInstanceProvider>
             <EditorOptionsProvider>
@@ -13,4 +14,6 @@ export default function Editor({ children, ...rest }: EditorProps) {
             </EditorOptionsProvider>
         </EditorInstanceProvider>
     );
-}
+});
+
+export default Editor;
