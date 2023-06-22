@@ -1,8 +1,8 @@
 import { EditorInstanceProvider, EditorOptionsProvider } from './context';
-import EditorInstance, { EditorInstanceProps } from './EditorInstance';
+import EditorInstance, { EditorProps } from './EditorInstance';
 import EditorReady from './EditorReady';
 
-export default function Editor({ children, ...rest }: EditorInstanceProps) {
+export default function Editor({ children, ...rest }: EditorProps) {
     return (
         <EditorInstanceProvider>
             <EditorOptionsProvider>

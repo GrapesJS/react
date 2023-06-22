@@ -1,4 +1,4 @@
-import GrapesJsEditor from '@grapesjs/react';
+import GrapesJsEditor, { EditorProps } from '@grapesjs/react';
 import type gjs from 'grapesjs';
 import type { Editor, ProjectData } from 'grapesjs';
 import { useState } from 'react';
@@ -9,10 +9,19 @@ declare global {
   }
 }
 
+const getDateString = (date?: Date) => {
+  return date?.toISOString().replace(/Z|T/gi, ' ');
+}
+
 function App() {
   const [editor, setEditor] =  useState<Editor>();
   const [projectData, setProjectData] =  useState<ProjectData>();
   const [projectDataDate, setProjectDataDate] =  useState<Date>();
+
+  const onProjectUpdate: EditorProps['onUpdate'] = (pd) => {
+    setProjectData(pd);
+    setProjectDataDate(new Date());
+  }
 
   console.log('App GrapesJS')
   return (
@@ -20,7 +29,7 @@ function App() {
       <div className="bg-slate-900">
         Example
         <div>Editor loaded: {editor ? 'Y' : 'N'}</div>
-        <div>Editor last update: {projectDataDate?.toISOString().split('.')[0].replace('T', ' ')}</div>
+        <div>Editor last update: {getDateString(projectDataDate)}</div>
       </div>
       <div className="flex-grow">
         <GrapesJsEditor
@@ -33,6 +42,7 @@ function App() {
             }
           ]}
           onLoad={setEditor}
+          onUpdate={onProjectUpdate}
           options={{
             storageManager: false,
             components: `

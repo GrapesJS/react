@@ -1,12 +1,12 @@
 import type gjs from 'grapesjs';
-import type { Editor, EditorConfig } from 'grapesjs';
+import type { Editor, EditorConfig, ProjectData } from 'grapesjs';
 import { useEffect, useRef } from 'react';
 import { useEditorInstance } from './context/EditorInstance';
 import { useEditorOptions } from './context/EditorOptions';
 import { PluginToLoad, cx, loadPlugins } from './utils';
 import { loadScript, loadStyle } from './utils/dom';
 
-export interface EditorInstanceProps extends Omit<React.HTMLProps<HTMLDivElement>, 'onLoad'> {
+export interface EditorProps extends Omit<React.HTMLProps<HTMLDivElement>, 'onLoad'> {
     grapesjs: string | typeof gjs,
     /**
      * GrapesJS options.
@@ -33,9 +33,14 @@ export interface EditorInstanceProps extends Omit<React.HTMLProps<HTMLDivElement
      */
     plugins?: PluginToLoad[],
     /**
-     * Callback on when the editor is loaded
+     * Callback triggered once the editor is loaded
      */
     onLoad?: (editor: Editor) => void,
+    /**
+     * Callback triggered on each update in the editor project.
+     * The updated ProjectData (JSON) is passed as a first argument.
+     */
+    onUpdate?: (projectData: ProjectData, editor: Editor) => void,
 }
 
 export default function EditorInstance({
@@ -46,7 +51,8 @@ export default function EditorInstance({
   grapesjs,
   grapesjsCss,
   onLoad = () => {},
-}: EditorInstanceProps) {
+  onUpdate,
+}: EditorProps) {
   const { setEditor } = useEditorInstance();
   const editorOptions = useEditorOptions();
   const editorRef = useRef<HTMLDivElement>(null);
@@ -105,6 +111,13 @@ export default function EditorInstance({
       editor = grapes.init(config);
       setEditor(editor);
       onLoad(editor);
+
+      if (onUpdate) {
+        editor.on('update', () => {
+          onUpdate(editor!.getProjectData(), editor!);
+        })
+      }
+
       win.editor = editor;
     }
 
@@ -134,7 +147,7 @@ export default function EditorInstance({
     return () => editor?.destroy();
   }, [editorOptions]); // eslint-disable-line
 
-  console.log('EditorInstance');
+  console.log('EditorInstance 222');
 
   return (
     <div className={cx('gjs-editor-wrapper', className)} ref={editorRef}>
