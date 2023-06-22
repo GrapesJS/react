@@ -1,10 +1,13 @@
 import type gjs from 'grapesjs';
-import type { Editor, EditorConfig, ProjectData } from 'grapesjs';
+import type { Editor, EditorConfig, Plugin, ProjectData } from 'grapesjs';
 import { memo, useEffect, useRef } from 'react';
 import { useEditorInstance } from './context/EditorInstance';
 import { useEditorOptions } from './context/EditorOptions';
 import { PluginToLoad, cx, loadPlugins } from './utils';
 import { loadScript, loadStyle } from './utils/dom';
+
+type GrapesPlugins = string | Plugin<any>;
+type PluginTypeToLoad = (GrapesPlugins | PluginToLoad | false | null | undefined);
 
 export interface EditorProps extends Omit<React.HTMLProps<HTMLDivElement>, 'onLoad'> {
     grapesjs: string | typeof gjs,
@@ -19,7 +22,7 @@ export interface EditorProps extends Omit<React.HTMLProps<HTMLDivElement>, 'onLo
     grapesjsCss?: string,
     /**
      * Array of plugins.
-     * Differently from the GrapesJS `plugins` option, this one allows you to load plugins
+     * Differently from the GrapesJS `plugins` option, this one allows also you to load plugins
      * asynchronously from a CDN URL.
      * @example
      * plugins: [
@@ -29,9 +32,13 @@ export interface EditorProps extends Omit<React.HTMLProps<HTMLDivElement>, 'onLo
      *    src: 'https://unpkg.com/grapesjs-blocks-basic',
      *    options: {}
      *  }
+     *  // plugin already loaded in the global scope (eg. loaded via CND in HTML)
+     *  'grapesjs-plugin-forms',
+     *  // plugin as a function
+     *  myPlugin,
      * ]
      */
-    plugins?: PluginToLoad[],
+    plugins?: PluginTypeToLoad[],
     /**
      * Callback triggered once the editor is loaded
      */
@@ -41,6 +48,49 @@ export interface EditorProps extends Omit<React.HTMLProps<HTMLDivElement>, 'onLo
      * The updated ProjectData (JSON) is passed as a first argument.
      */
     onUpdate?: (projectData: ProjectData, editor: Editor) => void,
+}
+
+const isPluginToLoad = (plugin: PluginTypeToLoad): plugin is PluginToLoad => {
+  return !!(plugin && !Array.isArray(plugin) && typeof plugin === 'object');
+}
+
+const initPlugins = async (plugins: PluginTypeToLoad[]) => {
+  const pluginsToInit = [ ...plugins ];
+  const pluginOptions: PluginToLoad['options'] = {};
+
+  if (pluginsToInit.length) {
+    const pluginToLoadMap: Record<string, { index: number, loaded?: boolean }> = {};
+    const pluginsToLoad: PluginToLoad[] = [];
+
+    pluginsToInit.forEach((plugin, index) => {
+      if (isPluginToLoad(plugin)) {
+        pluginToLoadMap[plugin.id] = { index }
+        pluginsToLoad.push(plugin);
+      }
+    });
+
+    if (pluginsToLoad.length) {
+      const { loaded } = await loadPlugins(pluginsToLoad);
+        loaded.forEach(({ id, options }) => {
+          pluginToLoadMap[id].loaded = true;
+          pluginOptions[id] = options || {};
+        });
+    }
+
+    Object.keys(pluginToLoadMap).forEach(id => {
+      const plugin = pluginToLoadMap[id];
+      if (plugin.loaded) {
+        pluginsToInit[plugin.index] = id;
+      } else {
+        pluginsToInit[plugin.index] = false;
+      }
+    })
+  }
+
+  return {
+    plugins: pluginsToInit.filter(Boolean) as GrapesPlugins[],
+    pluginOptions,
+  }
 }
 
 const EditorInstance = memo(function EditorInstance({
@@ -67,8 +117,8 @@ const EditorInstance = memo(function EditorInstance({
     const canvasContainer = editorOptions.refCanvas;
 
     let editor: Editor | undefined;
-    const loadedPlugins: string[] = [];
-    const pluginOptions: PluginToLoad['options'] = {};
+    let pluginOptions: PluginToLoad['options'] = {};
+    let loadedPlugins: GrapesPlugins[] = [];
 
     const loadEditor = (grapes: typeof gjs) => {
       const config: EditorConfig = {
@@ -120,15 +170,9 @@ const EditorInstance = memo(function EditorInstance({
 
     const init = async () => {
       grapesjsCss && await loadStyle(grapesjsCss);
-
-      // Load plugins
-      if (plugins.length) {
-        const { loaded } = await loadPlugins(plugins);
-        loaded.forEach(({ id, options }) => {
-          loadedPlugins.push(id);
-          pluginOptions[id] = options || {};
-        });
-      }
+      const pluginsRes = await initPlugins(plugins);
+      loadedPlugins = pluginsRes.plugins;
+      pluginOptions = pluginsRes.pluginOptions;
 
       // Load GrapesJS
       if (typeof grapesjs === 'string') {

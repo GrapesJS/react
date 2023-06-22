@@ -26,11 +26,14 @@ function App() {
     projectData;
   }, []);
 
-  const plugins: EditorProps['plugins'] = useMemo(() => ([
+  // EditorProps['plugins']
+  const plugins: any = useMemo(() => ([
     {
       id: 'gjs-blocks-basic',
       src: 'https://unpkg.com/grapesjs-blocks-basic',
-    }
+    },
+    'grapesjs-plugin-forms',
+    'grapesjs-component-countdown',
   ]), []);
 
   const defOptions: EditorConfig = useMemo(() => ({
