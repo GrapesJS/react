@@ -21,6 +21,7 @@ function App() {
   const onProjectUpdate: EditorProps['onUpdate'] = (pd) => {
     setProjectData(pd);
     setProjectDataDate(new Date());
+    projectData;
   }
 
   console.log('App GrapesJS')
