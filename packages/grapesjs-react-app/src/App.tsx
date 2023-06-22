@@ -1,4 +1,4 @@
-import { MyButton, MyEnumTest } from '@grapesjs/react';
+import GrapesJsEditor, { MyButton, MyEnumTest } from '@grapesjs/react';
 import type gjs from 'grapesjs';
 
 declare global {
@@ -11,9 +11,16 @@ function App() {
   console.log({ grapesjs: window.grapesjs })
 
   return (
-    <div>
-      <div className="text-3xl font-bold underline">TEST</div>
-      <MyButton check={MyEnumTest.Hello}/>
+    <div className="flex flex-col h-screen text-white">
+      <div className="bg-slate-900">
+        Example
+      </div>
+      <div className="flex-grow">
+        <GrapesJsEditor
+          grapesjs={window.grapesjs}
+          grapesjsCss="http://localhost:8080/dist/css/grapes.min.css"
+        />
+      </div>
     </div>
   )
 }

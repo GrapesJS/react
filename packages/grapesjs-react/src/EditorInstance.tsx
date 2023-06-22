@@ -12,14 +12,18 @@ export interface EditorInstanceProps extends React.HTMLProps<HTMLDivElement> {
     options?: EditorConfig,
 }
 
-export default function EditorInstance({ children, className, options, grapesjs, grapesjsCss }: EditorInstanceProps) {
+export default function EditorInstance({ children, className, options = {}, grapesjs, grapesjsCss }: EditorInstanceProps) {
   const { setEditor } = useEditorInstance();
   const editorOptions = useEditorOptions();
   const editorRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     // Wait until all refs are loaded
-    if (!editorOptions.ready) return;
+    if (!editorOptions.ready || !editorRef.current) {
+      return;
+    }
+
+    const defaultContainer = editorRef.current;
 
     let editor: Editor | undefined;
     const loadedPlugins: string[] = [];
@@ -27,26 +31,26 @@ export default function EditorInstance({ children, className, options, grapesjs,
 
     const loadEditor = (gjse: typeof gjs) => {
       const config: EditorConfig = {
-        ...editorOptions,
+        ...options,
         plugins: [
           ...loadedPlugins,
-          ...(options?.plugins as any),
+          ...(options?.plugins || []),
         ],
         pluginsOpts: {
           ...options?.pluginsOpts,
           ...pluginOptions,
         },
         panels: { defaults: [] },
-        container: editorOptions.refCanvas,
+        container: editorOptions.refCanvas || defaultContainer,
         customUI: true,
         height: '100%',
         modal: {
           ...options?.modal,
-          custom: editorOptions.customModal,
+          custom: !!editorOptions.customModal,
         },
         assetManager: {
           ...options?.assetManager,
-          custom: editorOptions.customAssets,
+          custom: !!editorOptions.customAssets,
         },
         styleManager: {
           ...options?.styleManager,
@@ -54,10 +58,10 @@ export default function EditorInstance({ children, className, options, grapesjs,
         },
         richTextEditor: {
           ...options?.richTextEditor,
-          custom: editorOptions.customRte,
+          custom: !!editorOptions.customRte,
         },
       };
-
+      console.log('grapesjs config', config)
       editor = gjse.init(config);
       // dispatch('setEditor', editor);
       setEditor(editor);
