@@ -1,6 +1,9 @@
 import type { PluginOptions } from "grapesjs";
 import { loadScripts } from "./dom";
 
+type ClassNameInput = string | number | boolean | null | undefined;
+type ClassNameInputs = ClassNameInput | Array<ClassNameInput>;
+
 export type PluginToLoad = {
     id: string,
     src: string,
@@ -26,9 +29,6 @@ export async function loadPlugins(plugins: PluginToLoad[]) {
 
     return { loaded, failed };
 }
-
-type ClassNameInput = string | number | boolean | null | undefined;
-type ClassNameInputs = ClassNameInput | Array<ClassNameInput>;
 
 export function cx(...inputs: ClassNameInputs[]): string {
     const inp = Array.isArray(inputs[0]) ? inputs[0] : [...inputs];

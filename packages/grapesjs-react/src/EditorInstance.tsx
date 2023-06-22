@@ -10,9 +10,31 @@ export interface EditorInstanceProps extends React.HTMLProps<HTMLDivElement> {
     grapesjs: string | typeof gjs,
     grapesjsCss?: string,
     options?: EditorConfig,
+    /**
+     * Array of plugins.
+     * Differently from the GrapesJS `plugins` option, this one allows you to load plugins
+     * asynchronously from a CDN URL.
+     * @example
+     * plugins: [
+     *  {
+     *    // The id should be name of the plugin that will be actually loaded
+     *    id: 'gjs-blocks-basic',
+     *    src: 'https://unpkg.com/grapesjs-blocks-basic',
+     *    options: {}
+     *  }
+     * ]
+     */
+    plugins?: PluginToLoad[],
 }
 
-export default function EditorInstance({ children, className, options = {}, grapesjs, grapesjsCss }: EditorInstanceProps) {
+export default function EditorInstance({
+  children,
+  className,
+  options = {},
+  plugins = [],
+  grapesjs,
+  grapesjsCss
+}: EditorInstanceProps) {
   const { setEditor } = useEditorInstance();
   const editorOptions = useEditorOptions();
   const editorRef = useRef<HTMLDivElement>(null);
@@ -34,7 +56,6 @@ export default function EditorInstance({ children, className, options = {}, grap
     const loadEditor = (grapes: typeof gjs) => {
       const config: EditorConfig = {
         height: '100%',
-        panels: { defaults: [] },
         ...options,
         plugins: [
           ...loadedPlugins,
@@ -54,7 +75,7 @@ export default function EditorInstance({ children, className, options = {}, grap
         },
         styleManager: {
           ...options?.styleManager,
-          custom: true,
+          custom: !!editorOptions.customStyles,
         },
         richTextEditor: {
           ...options?.richTextEditor,
@@ -62,6 +83,11 @@ export default function EditorInstance({ children, className, options = {}, grap
         },
         container: canvasContainer || defaultContainer,
         customUI: !!canvasContainer,
+        // Disables all default panels if Canvas is used
+        ...(canvasContainer ?
+          {
+            panels: { defaults: [] }
+          } : {})
       };
       console.log('grapesjs config', config)
       editor = grapes.init(config);
@@ -72,11 +98,6 @@ export default function EditorInstance({ children, className, options = {}, grap
 
     const init = async () => {
       grapesjsCss && await loadStyle(grapesjsCss);
-
-      const plugins: PluginToLoad[] = [
-        // ...PLUGINS_BY_PROJECT[projectType],
-        // ...PLUGINS_BY_PROJECT.global,
-      ];
 
       // Load plugins
       if (plugins.length) {

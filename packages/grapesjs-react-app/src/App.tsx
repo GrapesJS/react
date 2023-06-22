@@ -17,11 +17,17 @@ function App() {
         <GrapesJsEditor
           grapesjs={window.grapesjs}
           grapesjsCss="http://localhost:8080/dist/css/grapes.min.css"
+          plugins={[
+            {
+              id: 'gjs-blocks-basic',
+              src: 'https://unpkg.com/grapesjs-blocks-basic',
+            }
+          ]}
           options={{
             storageManager: false,
             components: `
-              <h1>Title<h1>
-              <p>Paragraph<p>
+              <h1>Title</h1>
+              <p>Paragraph</p>
             `,
           }}
         />
