@@ -147,8 +147,6 @@ const EditorInstance = memo(function EditorInstance({
     return () => editor?.destroy();
   }, [editorOptions]);
 
-  console.log('EditorInstance');
-
   return (
     <div className={cx('gjs-editor-wrapper', className)} ref={editorRef}>
       { children }
