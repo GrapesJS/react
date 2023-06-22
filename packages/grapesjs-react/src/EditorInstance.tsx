@@ -6,7 +6,7 @@ import { useEditorOptions } from './context/EditorOptions';
 import { PluginToLoad, cx, loadPlugins } from './utils';
 import { loadScript, loadStyle } from './utils/dom';
 
-export interface EditorInstanceProps extends React.HTMLProps<HTMLDivElement> {
+export interface EditorInstanceProps extends Omit<React.HTMLProps<HTMLDivElement>, 'onLoad'> {
     grapesjs: string | typeof gjs,
     /**
      * GrapesJS options.
@@ -32,6 +32,10 @@ export interface EditorInstanceProps extends React.HTMLProps<HTMLDivElement> {
      * ]
      */
     plugins?: PluginToLoad[],
+    /**
+     * Callback on when the editor is loaded
+     */
+    onLoad?: (editor: Editor) => void,
 }
 
 export default function EditorInstance({
@@ -40,7 +44,8 @@ export default function EditorInstance({
   options = {},
   plugins = [],
   grapesjs,
-  grapesjsCss
+  grapesjsCss,
+  onLoad = () => {},
 }: EditorInstanceProps) {
   const { setEditor } = useEditorInstance();
   const editorOptions = useEditorOptions();
@@ -98,8 +103,8 @@ export default function EditorInstance({
       };
       console.log('grapesjs config', config)
       editor = grapes.init(config);
-      // dispatch('setEditor', editor);
       setEditor(editor);
+      onLoad(editor);
       win.editor = editor;
     }
 
