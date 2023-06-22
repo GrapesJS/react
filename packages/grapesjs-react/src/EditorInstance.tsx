@@ -63,7 +63,6 @@ const EditorInstance = memo(function EditorInstance({
       return;
     }
 
-    const win = (window as any);
     const defaultContainer = editorRef.current;
     const canvasContainer = editorOptions.refCanvas;
 
@@ -107,7 +106,7 @@ const EditorInstance = memo(function EditorInstance({
             panels: { defaults: [] }
           } : {})
       };
-      console.log('grapesjs config', config)
+
       editor = grapes.init(config);
       setEditor(editor);
       onLoad(editor);
@@ -117,8 +116,6 @@ const EditorInstance = memo(function EditorInstance({
           onUpdate(editor!.getProjectData(), editor!);
         })
       }
-
-      win.editor = editor;
     }
 
     const init = async () => {
@@ -136,7 +133,7 @@ const EditorInstance = memo(function EditorInstance({
       // Load GrapesJS
       if (typeof grapesjs === 'string') {
         await loadScript(grapesjs);
-        loadEditor(win.grapesjs);
+        loadEditor((window as any).grapesjs);
       } else {
         loadEditor(grapesjs);
       }
