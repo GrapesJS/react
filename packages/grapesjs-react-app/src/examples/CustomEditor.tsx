@@ -8,7 +8,7 @@ export default function CustomEditor(props: Partial<EditorProps>) {
             {...defaultEditorProps}
             {...props}
         >
-            <Canvas></Canvas>
+            <Canvas className="gjs-custom-editor-canvas"/>
         </GrapesJsEditor>
     )
 }

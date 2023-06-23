@@ -150,9 +150,6 @@ const EditorInstance = memo(function EditorInstance({
     width,
   }), [height, width]);
 
-
-  console.log({ height, width })
-
   return (
     <div className={cx('gjs-editor-wrapper', className)} ref={editorRef} style={style}>
       { children }
