@@ -1,7 +1,7 @@
 import { useRef, useEffect } from 'react';
 import { useEditorOptions } from './context/EditorOptions';
 
-export default function Canvas({ className, children, ...rest }:  React.HTMLProps<HTMLDivElement>) {
+export default function Canvas({ children, ...rest }:  React.HTMLProps<HTMLDivElement>) {
     const editorOptions = useEditorOptions();
     const canvasRef = useRef<HTMLDivElement>(null);
 
@@ -10,7 +10,7 @@ export default function Canvas({ className, children, ...rest }:  React.HTMLProp
     }, [canvasRef.current]);
 
     return (
-        <div {...rest} className={className} ref={canvasRef}>
+        <div {...rest} ref={canvasRef}>
             { children }
         </div>
     )

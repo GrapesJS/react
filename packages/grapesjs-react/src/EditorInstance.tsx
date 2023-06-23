@@ -1,6 +1,6 @@
 import type gjs from 'grapesjs';
 import type { Editor, EditorConfig, Plugin, ProjectData } from 'grapesjs';
-import { memo, useEffect, useRef } from 'react';
+import { memo, useEffect, useMemo, useRef } from 'react';
 import { useEditorInstance } from './context/EditorInstance';
 import { useEditorOptions } from './context/EditorOptions';
 import { PluginToLoad, cx, loadPlugins } from './utils';
@@ -187,8 +187,19 @@ const EditorInstance = memo(function EditorInstance({
     return () => editor?.destroy();
   }, [editorOptions.ready]);
 
+  const height = options.height ?? '100%';
+  const width = options.width ?? '100%';
+
+  const style = useMemo(() => ({
+    height,
+    width,
+  }), [height, width]);
+
+
+  console.log({ height, width })
+
   return (
-    <div className={cx('gjs-editor-wrapper', className)} ref={editorRef}>
+    <div className={cx('gjs-editor-wrapper', className)} ref={editorRef} style={style}>
       { children }
     </div>
   );
