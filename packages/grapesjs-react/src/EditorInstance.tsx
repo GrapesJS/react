@@ -1,13 +1,11 @@
 import type gjs from 'grapesjs';
-import type { Editor, EditorConfig, Plugin, ProjectData } from 'grapesjs';
+import type { Editor, EditorConfig, ProjectData } from 'grapesjs';
 import { memo, useEffect, useMemo, useRef } from 'react';
 import { useEditorInstance } from './context/EditorInstance';
 import { useEditorOptions } from './context/EditorOptions';
-import { PluginToLoad, cx, loadPlugins } from './utils';
+import { cx } from './utils';
 import { loadScript, loadStyle } from './utils/dom';
-
-type GrapesPlugins = string | Plugin<any>;
-type PluginTypeToLoad = (GrapesPlugins | PluginToLoad | false | null | undefined);
+import { GrapesPlugins, PluginToLoad, PluginTypeToLoad, initPlugins } from './utils/plugins';
 
 export interface EditorProps extends Omit<React.HTMLProps<HTMLDivElement>, 'onLoad'> {
     grapesjs: string | typeof gjs,
@@ -48,49 +46,6 @@ export interface EditorProps extends Omit<React.HTMLProps<HTMLDivElement>, 'onLo
      * The updated ProjectData (JSON) is passed as a first argument.
      */
     onUpdate?: (projectData: ProjectData, editor: Editor) => void,
-}
-
-const isPluginToLoad = (plugin: PluginTypeToLoad): plugin is PluginToLoad => {
-  return !!(plugin && !Array.isArray(plugin) && typeof plugin === 'object');
-}
-
-const initPlugins = async (plugins: PluginTypeToLoad[]) => {
-  const pluginsToInit = [ ...plugins ];
-  const pluginOptions: PluginToLoad['options'] = {};
-
-  if (pluginsToInit.length) {
-    const pluginToLoadMap: Record<string, { index: number, loaded?: boolean }> = {};
-    const pluginsToLoad: PluginToLoad[] = [];
-
-    pluginsToInit.forEach((plugin, index) => {
-      if (isPluginToLoad(plugin)) {
-        pluginToLoadMap[plugin.id] = { index }
-        pluginsToLoad.push(plugin);
-      }
-    });
-
-    if (pluginsToLoad.length) {
-      const { loaded } = await loadPlugins(pluginsToLoad);
-        loaded.forEach(({ id, options }) => {
-          pluginToLoadMap[id].loaded = true;
-          pluginOptions[id] = options || {};
-        });
-    }
-
-    Object.keys(pluginToLoadMap).forEach(id => {
-      const plugin = pluginToLoadMap[id];
-      if (plugin.loaded) {
-        pluginsToInit[plugin.index] = id;
-      } else {
-        pluginsToInit[plugin.index] = false;
-      }
-    })
-  }
-
-  return {
-    plugins: pluginsToInit.filter(Boolean) as GrapesPlugins[],
-    pluginOptions,
-  }
 }
 
 const EditorInstance = memo(function EditorInstance({
