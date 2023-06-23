@@ -12,7 +12,7 @@ export const EditorInstanceProvider = ({ children }: {
 }) => {
     const [state, setState] = useState<EditorInstanceState>({
         setEditor: editor => {
-            setState({ ...state, editor });
+            setState((state) => ({ ...state, editor }));
         }
     });
 

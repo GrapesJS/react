@@ -9,8 +9,6 @@ export default function Canvas({ className, children, ...rest }:  React.HTMLProp
         canvasRef.current && editorOptions.setRefCanvas(canvasRef.current)
     }, [canvasRef.current]);
 
-    console.log('Canvas', canvasRef.current)
-
     return (
         <div {...rest} className={className} ref={canvasRef}>
             { children }

@@ -156,7 +156,6 @@ const EditorInstance = memo(function EditorInstance({
             panels: { defaults: [] }
           } : {})
       };
-
       editor = grapes.init(config);
       setEditor(editor);
       onLoad(editor);
@@ -186,7 +185,7 @@ const EditorInstance = memo(function EditorInstance({
     init();
 
     return () => editor?.destroy();
-  }, [editorOptions]);
+  }, [editorOptions.ready]);
 
   return (
     <div className={cx('gjs-editor-wrapper', className)} ref={editorRef}>

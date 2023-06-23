@@ -21,26 +21,26 @@ export interface EditorOptionsState {
 export const EditorOptionsProvider = ({ children }: {
     children?: React.ReactNode,
 }) => {
-    const [state, setState] = useState<EditorOptionsState>({
-        setRefCanvas: (refCanvas) => {
-            setState({ ...state, refCanvas })
+    const [state, setState] = useState<EditorOptionsState>(() => ({
+        setRefCanvas(refCanvas) {
+            setState((state) => ({ ...state, refCanvas }))
         },
         setCustomModal(customModal) {
-            setState({ ...state, customModal })
+            setState((state) => ({ ...state, customModal }))
         },
         setCustomAssets(customAssets) {
-            setState({ ...state, customAssets })
+            setState((state) => ({ ...state, customAssets }))
         },
         setCustomRte(customRte) {
-            setState({ ...state, customRte })
+            setState((state) => ({ ...state, customRte }))
         },
         setCustomStyles(customStyles) {
-            setState({ ...state, customStyles })
+            setState((state) => ({ ...state, customStyles }))
         },
         setReady(ready) {
-            setState({ ...state, ready })
+            setState((state) => ({ ...state, ready }))
         },
-    });
+    }));
 
     return (
         <EditorOptionsContext.Provider value={state}>
