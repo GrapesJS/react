@@ -1,10 +1,11 @@
 import { EditorProps } from '@grapesjs/react';
+import { mdiCheckBold, mdiClose } from '@mdi/js';
+import Icon from '@mdi/react';
 import type { Editor, ProjectData } from 'grapesjs';
 import { useCallback, useMemo, useState } from 'react';
+import CustomEditor from './examples/CustomEditor';
 import DefaultEditor from './examples/DefaultEditor';
 import { getDateString } from './examples/common';
-import Icon from '@mdi/react';
-import { mdiCheckBold, mdiClose } from '@mdi/js';
 
 enum Examples {
   Default = 'Default Editor',
@@ -25,12 +26,20 @@ function App() {
   }, []);
 
   const exampleOptions = useMemo(() => (
-    Object.keys(Examples).map((key) => (
-      <option key={key} value={key}>
-        {Examples[key as keyof typeof Examples]}
+    Object.entries(Examples).map(([key, value]) => (
+      <option key={key} value={value}>
+        {value}
       </option>
     ))
   ), []);
+
+  let EditorToRender = DefaultEditor;
+
+  switch (selectedExample) {
+    case Examples.Custom:
+      EditorToRender = CustomEditor;
+      break;
+  }
 
   return (
     <div className="flex flex-col h-screen  text-sm text-white bg-slate-900">
@@ -58,7 +67,7 @@ function App() {
         }
       </div>
       <div className="flex-grow">
-        <DefaultEditor
+        <EditorToRender
           onLoad={setEditor}
           onUpdate={onProjectUpdate}
         />
