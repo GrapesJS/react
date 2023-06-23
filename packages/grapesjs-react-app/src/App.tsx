@@ -20,8 +20,8 @@ function App() {
   console.log('App GrapesJS');
 
   return (
-    <div className="flex flex-col h-screen  text-sm text-white">
-      <div className="flex bg-slate-900 gap-5 p-3">
+    <div className="flex flex-col h-screen  text-sm text-white bg-slate-900">
+      <div className="flex gap-5 p-3">
         <div>Example</div>
         <div>Editor loaded: {editor ? 'Y' : 'N'}</div>
         {
