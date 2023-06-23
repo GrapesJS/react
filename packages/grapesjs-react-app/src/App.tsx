@@ -1,19 +1,10 @@
-import GrapesJsEditor, { EditorProps } from '@grapesjs/react';
-import type gjs from 'grapesjs';
-import type { Editor, EditorConfig, ProjectData } from 'grapesjs';
-import { useCallback, useMemo, useState } from 'react';
-
-declare global {
-  interface Window {
-    grapesjs: typeof gjs
-  }
-}
+import { EditorProps } from '@grapesjs/react';
+import type { Editor, ProjectData } from 'grapesjs';
+import { useCallback, useState } from 'react';
+import DefaultEditor from './examples/DefaultEditor';
+import { getDateString } from './examples/common';
 
 type onUpdateProp = Required<EditorProps>['onUpdate'];
-
-const getDateString = (date?: Date) => {
-  return date?.toISOString().replace(/Z|T/gi, ' ');
-}
 
 function App() {
   const [editor, setEditor] =  useState<Editor>();
@@ -26,40 +17,22 @@ function App() {
     projectData;
   }, []);
 
-  const plugins: EditorProps['plugins'] = useMemo(() => ([
-    {
-      id: 'gjs-blocks-basic',
-      src: 'https://unpkg.com/grapesjs-blocks-basic',
-    },
-    'grapesjs-plugin-forms',
-    'grapesjs-component-countdown',
-  ]), []);
-
-  const defOptions: EditorConfig = useMemo(() => ({
-    storageManager: false,
-    components: `
-      <h1>Title</h1>
-      <p>Paragraph</p>
-    `,
-  }), []);
-
   console.log('App GrapesJS');
 
   return (
-    <div className="flex flex-col h-screen text-white">
-      <div className="bg-slate-900">
-        Example
+    <div className="flex flex-col h-screen  text-sm text-white">
+      <div className="flex bg-slate-900 gap-5 p-3">
+        <div>Example</div>
         <div>Editor loaded: {editor ? 'Y' : 'N'}</div>
-        <div>Editor last update: {getDateString(projectDataDate)}</div>
+        {
+          !!projectDataDate &&
+          <div>Editor last update: {getDateString(projectDataDate)}</div>
+        }
       </div>
       <div className="flex-grow">
-        <GrapesJsEditor
-          grapesjs={window.grapesjs}
-          grapesjsCss="http://localhost:8080/dist/css/grapes.min.css"
-          plugins={plugins}
+        <DefaultEditor
           onLoad={setEditor}
           onUpdate={onProjectUpdate}
-          options={defOptions}
         />
       </div>
     </div>
