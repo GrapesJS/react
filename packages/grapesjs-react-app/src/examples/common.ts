@@ -26,6 +26,7 @@ export const defaultOptions: EditorConfig = {
     components: `
       <h1>Title</h1>
       <p>Paragraph</p>
+      <img/>
     `,
 };
 
