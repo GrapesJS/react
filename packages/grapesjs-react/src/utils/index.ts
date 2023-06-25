@@ -8,6 +8,8 @@ export function cx(...inputs: ClassNameInputs[]): string {
     return inp.filter(Boolean).join(' ');
 }
 
+export function noop() {}
+
 export function useTraceUpdate(props: Record<string, any>) {
     const prev = useRef(props);
     useEffect(() => {

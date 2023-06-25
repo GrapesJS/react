@@ -1,6 +1,7 @@
-import React, { createElement, useState, useEffect } from 'react';
+import React, { createElement, useEffect, useState } from 'react';
 import { useEditorInstance } from './context/EditorInstance';
 import { useEditorOptions } from './context/EditorOptions';
+import { noop } from './utils';
 import { WrapDom } from './utils/react';
 
 export interface ModalState {
@@ -52,7 +53,7 @@ export default function ModalProvider({ children }: ModalProvider) {
         title: <></>,
         content: <></>,
         attributes: {},
-        close: () => {}
+        close: noop,
     });
 
     useEffect(() => {
