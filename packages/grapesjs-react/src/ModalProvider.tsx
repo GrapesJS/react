@@ -26,15 +26,15 @@ export interface ModalState {
     close: () => void,
 }
 
-export interface ResultProps extends ModalState {
+export interface ModalResultProps extends ModalState {
     /**
      * Indicates if the modal is open.
      */
      open: boolean,
 }
 
-export interface ModalProvider {
-    children: ((props: ResultProps) => React.JSX.Element),
+export interface ModalProviderProps {
+    children: ((props: ModalResultProps) => React.JSX.Element),
 }
 
 export interface ModalEventProps {
@@ -45,7 +45,7 @@ export interface ModalEventProps {
     close: () => void,
 }
 
-export default function ModalProvider({ children }: ModalProvider) {
+export default function ModalProvider({ children }: ModalProviderProps) {
     const { editor } = useEditorInstance();
     const options = useEditorOptions();
     const [isOpen, setOpen] = useState(false);
