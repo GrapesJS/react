@@ -41,6 +41,8 @@ function App() {
       break;
   }
 
+  (window as any).editor = editor
+
   return (
     <div className="flex flex-col h-screen  text-sm text-white bg-slate-900">
       <div className="flex gap-5 p-3">
