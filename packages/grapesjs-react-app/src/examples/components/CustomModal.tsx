@@ -28,7 +28,7 @@ export default function CustomModal({ children, title, close, ...props }: Custom
             <Box sx={style} className={cx(MAIN_BG_COLOR, MAIN_TXT_COLOR, 'rounded')}>
                 <div className="flex pb-3">
                     <div className="flex-grow text-lg">{ title }</div>
-                    <div onClick={close}>
+                    <div onClick={close} className="cursor-pointer">
                         <Icon size={1} path={mdiClose}/>
                     </div>
                 </div>

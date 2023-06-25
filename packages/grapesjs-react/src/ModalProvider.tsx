@@ -29,7 +29,7 @@ export interface ResultProps extends ModalState {
     /**
      * Indicates if the modal is open.
      */
-     isOpen: boolean,
+     open: boolean,
 }
 
 export interface ModalProvider {
@@ -78,9 +78,7 @@ export default function ModalProvider({ children }: ModalProvider) {
 
     useEffect(() => options.setCustomModal(true), []);
 
-    console.log('ModalProvider');
-
     return editor ?
-        (typeof children === 'function' ? children({ isOpen, ...modalState })  : null)
+        (typeof children === 'function' ? children({ open: isOpen, ...modalState })  : null)
     : null;
   }
