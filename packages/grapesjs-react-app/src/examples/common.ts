@@ -8,6 +8,15 @@ declare global {
     }
 }
 
+export const MAIN_BG_COLOR = 'bg-slate-900';
+
+export const MAIN_TXT_COLOR = 'text-white';
+
+export function cx(...inputs: any[]): string {
+    const inp = Array.isArray(inputs[0]) ? inputs[0] : [...inputs];
+    return inp.filter(Boolean).join(' ');
+}
+
 export const getDateString = (date?: Date) => {
     return date?.toISOString().replace(/Z|T/gi, ' ');
 }

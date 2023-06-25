@@ -7,16 +7,18 @@ export interface ModalState {
     /**
      * Modal title
      */
-    title: React.ReactNode,
+    title: React.ReactElement,
+
     /**
      * Modal content
      */
-    content: React.ReactNode,
+    content: React.ReactElement,
 
     /**
      * Modal attributes
      */
     attributes: Record<string, any>,
+
     /**
      * Callback for closing the modal
      */
@@ -31,7 +33,7 @@ export interface ResultProps extends ModalState {
 }
 
 export interface ModalProvider {
-    children: ((props: ResultProps) => void),
+    children: ((props: ResultProps) => React.JSX.Element),
 }
 
 export interface ModalEventProps {
@@ -47,8 +49,8 @@ export default function ModalProvider({ children }: ModalProvider) {
     const options = useEditorOptions();
     const [isOpen, setOpen] = useState(false);
     const [modalState, setModalState] = useState<ModalState>({
-        title: '',
-        content: '',
+        title: <></>,
+        content: <></>,
         attributes: {},
         close: () => {}
     });

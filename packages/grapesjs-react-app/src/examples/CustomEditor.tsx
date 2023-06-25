@@ -1,5 +1,6 @@
-import GrapesJsEditor, { Canvas, EditorProps } from '@grapesjs/react';
+import GrapesJsEditor, { Canvas, EditorProps, ModalProvider } from '@grapesjs/react';
 import { defaultEditorProps } from './common';
+import CustomModal from './components/CustomModal';
 
 const clsBorderColor = 'border-slate-500';
 
@@ -24,6 +25,16 @@ export default function CustomEditor(props: Partial<EditorProps>) {
                     C
                 </div>
             </div>
+            <ModalProvider>
+                {({ isOpen, title, content, close }) => (
+                    <CustomModal
+                        open={isOpen}
+                        title={title}
+                        children={content}
+                        close={close}
+                    />
+                )}
+            </ModalProvider>
         </GrapesJsEditor>
     )
 }
