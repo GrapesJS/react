@@ -32,8 +32,10 @@ export default function CustomEditor(props: Partial<EditorProps>) {
                 )}
             </ModalProvider>
             <AssetsProvider>
-                {({ assets, select, close }) => (
-                    <CustomAssetManager assets={assets} select={select} close={close}/>
+                {({ assets, select, close, Container }) => (
+                    <Container>
+                        <CustomAssetManager assets={assets} select={select} close={close}/>
+                    </Container>
                 )}
             </AssetsProvider>
         </GrapesJsEditor>

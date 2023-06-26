@@ -32,6 +32,24 @@ export const plugins: EditorProps['plugins'] = [
 
 export const defaultOptions: EditorConfig = {
     storageManager: false,
+    assetManager: {
+        assets: [
+          'https://via.placeholder.com/350x250/78c5d6/fff',
+          'https://via.placeholder.com/350x250/459ba8/fff',
+          'https://via.placeholder.com/350x250/79c267/fff',
+          'https://via.placeholder.com/350x250/c5d647/fff',
+          'https://via.placeholder.com/350x250/f28c33/fff',
+          'https://via.placeholder.com/350x250/e868a2/fff',
+          'https://via.placeholder.com/350x250/cc4360/fff',
+          'https://via.placeholder.com/350x250/78c5d6/eee',
+          'https://via.placeholder.com/350x250/459ba8/eee',
+          'https://via.placeholder.com/350x250/79c267/eee',
+          'https://via.placeholder.com/350x250/c5d647/eee',
+          'https://via.placeholder.com/350x250/f28c33/eee',
+          'https://via.placeholder.com/350x250/e868a2/eee',
+          'https://via.placeholder.com/350x250/cc4360/eee',
+        ],
+      },
     components: `
       <h1>Title</h1>
       <p>Paragraph</p>

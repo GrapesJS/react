@@ -13,6 +13,10 @@ const style = {
     width: 900,
     border: '2px solid #000',
     boxShadow: 24,
+    overflow: 'hidden',
+    display: 'flex',
+    flexDirection: 'column',
+    maxHeight: '90vh',
     p: 2,
 };
 
@@ -32,7 +36,7 @@ export default function CustomModal({ children, title, close, ...props }: Custom
                         <Icon size={1} path={mdiClose}/>
                     </div>
                 </div>
-                <div>
+                <div className="flex-grow overflow-y-auto">
                     { children }
                 </div>
             </Box>

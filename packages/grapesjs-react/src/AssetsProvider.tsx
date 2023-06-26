@@ -19,7 +19,7 @@ export type AssetsState = {
     /**
      * Select asset.
      */
-    select: (asset: Asset) => void,
+    select: (asset: Asset, complete?: boolean) => void,
 
     /**
      * Close assets.
