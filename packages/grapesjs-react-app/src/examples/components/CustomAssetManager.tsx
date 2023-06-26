@@ -2,6 +2,7 @@ import { AssetsResultProps } from '@grapesjs/react';
 import { mdiClose } from '@mdi/js';
 import Icon from '@mdi/react';
 import type { Asset } from 'grapesjs';
+import { BTN_CLS } from '../common';
 
 
 export type CustomAssetManagerProps = Pick<AssetsResultProps, 'assets' | 'close' | 'select'>
@@ -20,7 +21,11 @@ export default function CustomAssetManager({ assets, select }: CustomAssetManage
             >
                 <img className="display-block" src={asset.getSrc()} />
                 <div className="flex flex-col items-center justify-end absolute top-0 left-0 w-full h-full p-5 bg-zinc-700/75 group-hover:opacity-100 opacity-0 transition-opacity">
-                    <button type="button" onClick={() => select(asset, true)}>
+                    <button
+                        type="button"
+                        className={BTN_CLS}
+                        onClick={() => select(asset, true)}
+                    >
                         Select
                     </button>
                     <button
