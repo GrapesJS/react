@@ -1,5 +1,6 @@
 import { useEditor } from '@grapesjs/react';
 import type { Block } from 'grapesjs';
+import { MAIN_BORDER_COLOR, cx } from '../common';
 
 type BlockCategoryMap = Record<string, Block[]>;
 
@@ -23,7 +24,9 @@ export default function CustomBlockManager() {
       <div>
         {Object.keys(blocksMap).map(categoryName => (
             <div key={categoryName}>
-                <div>{ categoryName }</div>
+                <div className={cx('py-2 px-4 border-y', MAIN_BORDER_COLOR)}>
+                    { categoryName }
+                </div>
                 <div className="grid grid-cols-2 gap-2 p-2">
                     {blocksMap[categoryName].map((block) => (
                         <div key={block.getId()}

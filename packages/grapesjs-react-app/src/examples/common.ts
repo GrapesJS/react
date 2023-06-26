@@ -14,6 +14,8 @@ export const MAIN_TXT_COLOR = 'text-white';
 
 export const BTN_CLS = 'border rounded px-2 py-1';
 
+export const MAIN_BORDER_COLOR = 'border-slate-500';
+
 export function cx(...inputs: any[]): string {
     const inp = Array.isArray(inputs[0]) ? inputs[0] : [...inputs];
     return inp.filter(Boolean).join(' ');
