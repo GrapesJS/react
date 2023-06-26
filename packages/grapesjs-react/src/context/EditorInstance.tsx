@@ -36,9 +36,19 @@ export const useEditorInstance = () => {
     return context;
 };
 
-
-export const useEditor = () => {
+/**
+ * Get the current editor instance.
+ * @returns Editor
+ */
+export const useEditor = (): Editor => {
     // TODO ensure editor is used inside provider
+    return useEditorInstance().editor!;
+}
+
+/**
+ * Similar to useEditor, but in this case, the editor might be undefined.
+ */
+export const useEditorMaybe = () => {
     return useEditorInstance().editor;
 }
 

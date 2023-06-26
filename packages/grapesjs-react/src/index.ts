@@ -1,3 +1,4 @@
+export { useEditor, useEditorMaybe } from './context/EditorInstance';
 export { default as Editor } from './Editor';
 export { default as Canvas } from './Canvas';
 export { default as ModalProvider } from './ModalProvider';
