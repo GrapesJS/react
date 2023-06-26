@@ -20,7 +20,7 @@ export default function CustomBlockManager() {
     }, {} as BlockCategoryMap);
 
     return (
-      <div className="grid grid-cols-3 gap-2 pr-2">
+      <div>
         {Object.keys(blocksMap).map(categoryName => (
             <div key={categoryName}>
                 <div>{ categoryName }</div>

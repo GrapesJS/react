@@ -44,7 +44,7 @@ function App() {
   (window as any).editor = editor
 
   return (
-    <div className="flex flex-col h-screen  text-sm text-white bg-slate-900">
+    <div className="flex flex-col h-screen text-sm text-white bg-slate-900">
       <div className="flex gap-5 p-3">
         <div>
           <select
@@ -68,7 +68,7 @@ function App() {
           <div>Last update: {getDateString(projectDataDate)}</div>
         }
       </div>
-      <div className="flex-grow">
+      <div className="flex-grow overflow-hidden">
         <EditorToRender
           onLoad={setEditor}
           onUpdate={onProjectUpdate}

@@ -23,7 +23,7 @@ export default function CustomEditor(props: Partial<EditorProps>) {
                     </div>
                     <Canvas className="flex-grow gjs-custom-editor-canvas"/>
                 </div>
-                <div className={`gjs-column-r w-[300px] border-l ${clsBorderColor}`}>
+                <div className={`overflow-y-auto gjs-column-r w-[300px] border-l ${clsBorderColor}`}>
                     <WithEditor>
                         <CustomBlockManager/>
                     </WithEditor>
