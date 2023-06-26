@@ -1,6 +1,7 @@
-import GrapesJsEditor, { Canvas, EditorProps, ModalProvider } from '@grapesjs/react';
+import GrapesJsEditor, { AssetsProvider, Canvas, EditorProps, ModalProvider } from '@grapesjs/react';
 import { defaultEditorProps } from './common';
 import CustomModal from './components/CustomModal';
+import CustomAssetManager from './components/CustomAssetManager';
 
 const clsBorderColor = 'border-slate-500';
 
@@ -30,6 +31,11 @@ export default function CustomEditor(props: Partial<EditorProps>) {
                     <CustomModal open={open} title={title} children={content} close={close}/>
                 )}
             </ModalProvider>
+            <AssetsProvider>
+                {({ assets, select, close }) => (
+                    <CustomAssetManager assets={assets} select={select} close={close}/>
+                )}
+            </AssetsProvider>
         </GrapesJsEditor>
     )
 }

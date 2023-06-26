@@ -34,7 +34,7 @@ export type AssetsState = {
 
 export type AssetsResultProps = AssetsState & {
     /**
-     * Indicates if the modal is open.
+     * Indicates if the Asset Manager is open.
      */
      open: boolean,
 };
