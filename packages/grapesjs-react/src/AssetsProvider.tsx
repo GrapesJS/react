@@ -17,17 +17,17 @@ export type AssetsState = {
     types: string[],
 
     /**
-     * Select asset
+     * Select asset.
      */
     select: () => void,
 
     /**
-     * Close assets
+     * Close assets.
      */
     close: () => void,
 
     /**
-     * Asset Manager container
+     * Asset Manager container.
      */
     Container: PortalContainerResult,
 };
@@ -84,7 +84,7 @@ export default function AssetsProvider({ children }: AssetsProviderProps) {
         return () => {
             editor.off(event, toListen)
         };
-    }, [setPropState, editor]);
+    }, [editor]);
 
     useEffect(() => options.setCustomAssets(true), []);
 
