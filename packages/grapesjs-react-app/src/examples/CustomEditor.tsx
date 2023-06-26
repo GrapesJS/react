@@ -1,4 +1,4 @@
-import GrapesJsEditor, { AssetsProvider, Canvas, EditorProps, ModalProvider } from '@grapesjs/react';
+import GrapesJsEditor, { AssetsProvider, Canvas, EditorProps, ModalProvider, WithEditor } from '@grapesjs/react';
 import { defaultEditorProps } from './common';
 import CustomModal from './components/CustomModal';
 import CustomAssetManager from './components/CustomAssetManager';
@@ -24,7 +24,9 @@ export default function CustomEditor(props: Partial<EditorProps>) {
                     <Canvas className="flex-grow gjs-custom-editor-canvas"/>
                 </div>
                 <div className={`gjs-column-r w-[300px] border-l ${clsBorderColor}`}>
-                    <CustomBlockManager/>
+                    <WithEditor>
+                        <CustomBlockManager/>
+                    </WithEditor>
                 </div>
             </div>
             <ModalProvider>
