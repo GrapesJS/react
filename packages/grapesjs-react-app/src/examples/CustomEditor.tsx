@@ -2,6 +2,7 @@ import GrapesJsEditor, { AssetsProvider, Canvas, EditorProps, ModalProvider } fr
 import { defaultEditorProps } from './common';
 import CustomModal from './components/CustomModal';
 import CustomAssetManager from './components/CustomAssetManager';
+import CustomBlockManager from './components/CustomBlockManager';
 
 const clsBorderColor = 'border-slate-500';
 
@@ -23,7 +24,7 @@ export default function CustomEditor(props: Partial<EditorProps>) {
                     <Canvas className="flex-grow gjs-custom-editor-canvas"/>
                 </div>
                 <div className={`gjs-column-r w-[300px] border-l ${clsBorderColor}`}>
-                    C
+                    <CustomBlockManager/>
                 </div>
             </div>
             <ModalProvider>

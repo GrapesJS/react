@@ -41,8 +41,13 @@ export const useEditorInstance = () => {
  * @returns Editor
  */
 export const useEditor = (): Editor => {
-    // TODO ensure editor is used inside provider
-    return useEditorInstance().editor!;
+    const { editor } = useEditorInstance();
+
+    if (!editor) {
+        throw new Error('useEditor used before the load of the editor instance. You can wrap your component in `<WithEditor>` or make use of `useEditorMaybe` hook and ensure the `editor` exists.');
+    }
+
+    return editor;
 }
 
 /**
