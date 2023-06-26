@@ -8,6 +8,13 @@ export function cx(...inputs: ClassNameInputs[]): string {
     return inp.filter(Boolean).join(' ');
 }
 
+export function isFunction(value: any):
+     // eslint-disable-next-line @typescript-eslint/ban-types
+     value is Function
+{
+    return typeof value === 'function';
+}
+
 export function noop() {}
 
 export function useTraceUpdate(props: Record<string, any>) {

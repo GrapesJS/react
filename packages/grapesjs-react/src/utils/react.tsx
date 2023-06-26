@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import { createPortal } from "react-dom";
 import { isString } from "./dom";
 
 export const WrapDom = (el: HTMLElement | string) => {
@@ -19,4 +20,16 @@ export const WrapDom = (el: HTMLElement | string) => {
 
         return <div ref={ref}/>
     }
+}
+
+export interface PortalContainerProps {
+    children: React.ReactNode
+}
+
+export type PortalContainerResult = React.FC<PortalContainerProps>;
+
+export function portalContainer(el: HTMLElement): PortalContainerResult {
+    return function Container({ children }: PortalContainerProps) {
+        return createPortal(children, el);
+    };
 }
