@@ -31,11 +31,14 @@ export default function CustomBlockManager() {
                     {blocksMap[categoryName].map((block) => (
                         <div key={block.getId()}
                             draggable
-                            className="cursor-pointer py-2 px-5 transition-colors"
+                            className={cx('flex flex-col items-center border rounded cursor-pointer py-2 px-5 transition-colors', MAIN_BORDER_COLOR)}
                             onDragStart={(ev) => Blocks.startDrag(block, ev.nativeEvent)}
                             onDragEnd={() => Blocks.endDrag(false)}
                         >
-                            <div className="h-10 w-10 block-media" dangerouslySetInnerHTML={{ __html: block.getMedia()! }}></div>
+                            <div
+                                className="h-10 w-10"
+                                dangerouslySetInnerHTML={{ __html: block.getMedia()! }}
+                            />
                             <div className="text-sm text-center w-full" title={block.getLabel()}>
                                 {block.getLabel()}
                             </div>
