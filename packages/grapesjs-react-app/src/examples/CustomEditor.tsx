@@ -44,7 +44,7 @@ export default function CustomEditor(props: Partial<EditorProps>) {
                     </div>
                     <div className={`overflow-y-auto gjs-column-r w-[300px] border-l ${clsBorderColor}`}>
                         <Tabs value={selectedTab} onChange={handleTabChange} variant="fullWidth">
-                            <Tab className="text-white" label={<Icon size={1} path={mdiBrush}/>}/>
+                            <Tab label={<Icon size={1} path={mdiBrush}/>}/>
                             <Tab label={<Icon size={1} path={mdiLayers}/>}/>
                             <Tab label={<Icon size={1} path={mdiViewGridPlus}/>}/>
                         </Tabs>

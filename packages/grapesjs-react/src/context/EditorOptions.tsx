@@ -7,11 +7,13 @@ export interface EditorOptionsState {
     customModal?: boolean;
     customAssets?: boolean;
     customStyles?: boolean;
+    customBlocks?: boolean;
     customRte?: boolean;
     ready?: boolean;
     setRefCanvas: (ref: HTMLElement) => void;
     setCustomModal: (value: boolean) => void;
     setCustomAssets: (value: boolean) => void;
+    setCustomBlocks: (value: boolean) => void;
     setCustomRte: (value: boolean) => void;
     setCustomStyles: (value: boolean) => void;
     setReady: (value: boolean) => void;
@@ -30,6 +32,9 @@ export const EditorOptionsProvider = ({ children }: {
         },
         setCustomAssets(customAssets) {
             setState((state) => ({ ...state, customAssets }))
+        },
+        setCustomBlocks(customBlocks) {
+            setState((state) => ({ ...state, customBlocks }))
         },
         setCustomRte(customRte) {
             setState((state) => ({ ...state, customRte }))
