@@ -62,9 +62,7 @@ const BlocksProvider = memo(function BlocksProvider({ children }: BlocksProvider
     useEffect(() => {
         if (!editor) return;
         const event = editor.Blocks.events.custom;
-
         const toListen = ({ blocks, container, dragStart, dragStop }: BlocksEventProps) => {
-            console.log('BlockProvider listen', blocks)
             const mapCategoryBlocks = blocks.reduce((res, block) => {
                 const categoryLabel = block.getCategoryLabel();
                 const categoryBlocks = res.get(categoryLabel);
@@ -88,6 +86,7 @@ const BlocksProvider = memo(function BlocksProvider({ children }: BlocksProvider
         }
 
         editor.on(event, toListen);
+        editor.Blocks.__trgCustom();
 
         return () => {
             editor.off(event, toListen);
@@ -95,8 +94,6 @@ const BlocksProvider = memo(function BlocksProvider({ children }: BlocksProvider
     }, [editor]);
 
     useEffect(() => options.setCustomBlocks(true), []);
-
-    console.log('BlockProvider');
 
     return editor ?
         (isFunction(children) ? children(propState)  : null)
