@@ -1,5 +1,5 @@
 import type { Block } from 'grapesjs';
-import React, { useEffect, useState } from 'react';
+import React, { memo, useEffect, useState } from 'react';
 import { useEditorInstance } from './context/EditorInstance';
 import { useEditorOptions } from './context/EditorOptions';
 import { isFunction, noop } from './utils';
@@ -48,7 +48,7 @@ export interface BlocksEventProps {
 
 export type MapCategoryBlocks = Map<string, Block[]>;
 
-export default function BlocksProvider({ children }: BlocksProviderProps) {
+const BlocksProvider = memo(function BlocksProvider({ children }: BlocksProviderProps) {
     const { editor } = useEditorInstance();
     const options = useEditorOptions();
     const [propState, setPropState] = useState<BlocksState>(() => ({
@@ -101,4 +101,6 @@ export default function BlocksProvider({ children }: BlocksProviderProps) {
     return editor ?
         (isFunction(children) ? children(propState)  : null)
     : null;
-  }
+  });
+
+  export default BlocksProvider;
