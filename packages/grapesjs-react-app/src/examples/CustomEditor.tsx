@@ -60,9 +60,6 @@ export default function CustomEditor(props: Partial<EditorProps>) {
                                 />
                             )}
                         </BlocksProvider>
-                        {/* <WithEditor>
-                            <CustomBlockManager/>
-                        </WithEditor> */}
                     </div>
                 </div>
                 <ModalProvider>

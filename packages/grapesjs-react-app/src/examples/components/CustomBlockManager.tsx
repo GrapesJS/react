@@ -4,10 +4,8 @@ import { MAIN_BORDER_COLOR, cx } from '../common';
 export type CustomBlockManagerProps = Pick<BlocksResultProps, 'mapCategoryBlocks' | 'dragStart' | 'dragStop'>;
 
 export default function CustomBlockManager({ mapCategoryBlocks, dragStart, dragStop }: CustomBlockManagerProps) {
-    console.log({ mapCategoryBlocks });
-
     return (
-      <div>
+      <div className="gjs-custom-block-manager">
         {Array.from(mapCategoryBlocks).map(([category, blocks]) => (
             <div key={category}>
                 <div className={cx('py-2 px-4 border-y', MAIN_BORDER_COLOR)}>
