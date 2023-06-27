@@ -1,4 +1,4 @@
-import type { Block } from 'grapesjs';
+import type { Block, Category } from 'grapesjs';
 import React, { useEffect, useState } from 'react';
 import { useEditorInstance } from './context/EditorInstance';
 import { useEditorOptions } from './context/EditorOptions';
@@ -25,6 +25,11 @@ export type BlocksState = {
      * Default Block Manager container.
      */
     Container: PortalContainerResult,
+
+    /**
+     * Map of blocks by category.
+     */
+    mapCategoryBlocks: MapCategoryBlocks,
 };
 
 export type BlocksResultProps = BlocksState;
@@ -41,25 +46,42 @@ export interface BlocksEventProps {
     dragStop: (cancel?: boolean) => void,
 }
 
+export type MapCategoryBlocks = Map<Category, Block[] | undefined>;
+
 export default function BlocksProvider({ children }: BlocksProviderProps) {
     const { editor } = useEditorInstance();
     const options = useEditorOptions();
-    const [propState, setPropState] = useState<BlocksState>({
+    const [propState, setPropState] = useState<BlocksState>(() => ({
         blocks: [],
         dragStart: noop,
         dragStop: noop,
+        mapCategoryBlocks: new Map(),
         Container: () => null,
-    });
+    }));
 
     useEffect(() => {
         if (!editor) return;
         const event = editor.Blocks.events.custom;
 
         const toListen = ({ blocks, container, dragStart, dragStop }: BlocksEventProps) => {
+            const mapCategoryBlocks = blocks.reduce((res, block) => {
+                const category = block.get('category') as unknown as Category;
+                const categoryBlocks = mapCategoryBlocks.get(category);
+
+                if (!categoryBlocks) {
+                    mapCategoryBlocks.set(category, [block]);
+                } else {
+                    categoryBlocks.push(block);
+                }
+
+                return res;
+            }, new Map() as MapCategoryBlocks);
+
             setPropState({
                 blocks,
                 dragStart,
                 dragStop,
+                mapCategoryBlocks,
                 Container: portalContainer(container),
             });
         }
