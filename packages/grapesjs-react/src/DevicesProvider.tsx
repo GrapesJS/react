@@ -20,10 +20,10 @@ export type DevicesState = {
     select: (deviceId: string) => void,
 };
 
-export type DevicesStateResultProps = DevicesState;
+export type DevicesResultProps = DevicesState;
 
 export interface DevicesStateProviderProps {
-    children: (props: DevicesStateResultProps) => React.JSX.Element,
+    children: (props: DevicesResultProps) => React.JSX.Element,
 }
 
 const DevicesProvider = memo(function DevicesProvider({ children }: DevicesStateProviderProps) {
