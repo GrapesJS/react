@@ -9,13 +9,10 @@ import { cx } from '../common';
 
 export default function RightSidebar({ className }: React.HTMLAttributes<HTMLDivElement>) {
     const [selectedTab, setSelectedTab] = useState(0);
-    const handleTabChange = (_: React.SyntheticEvent, newValue: number) => {
-        setSelectedTab(newValue);
-    };
 
     return (
       <div className={cx('gjs-right-sidebar flex flex-col', className)}>
-        <Tabs value={selectedTab} onChange={handleTabChange} variant="fullWidth">
+        <Tabs value={selectedTab} onChange={(_, v) => setSelectedTab(v)} variant="fullWidth">
             <Tab label={<Icon size={1} path={mdiBrush}/>}/>
             <Tab label={<Icon size={1} path={mdiLayers}/>}/>
             <Tab label={<Icon size={1} path={mdiViewGridPlus}/>}/>
