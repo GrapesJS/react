@@ -1,4 +1,4 @@
-import type { Block, Category } from 'grapesjs';
+import type { Block } from 'grapesjs';
 import React, { useEffect, useState } from 'react';
 import { useEditorInstance } from './context/EditorInstance';
 import { useEditorOptions } from './context/EditorOptions';
@@ -46,7 +46,7 @@ export interface BlocksEventProps {
     dragStop: (cancel?: boolean) => void,
 }
 
-export type MapCategoryBlocks = Map<Category, Block[] | undefined>;
+export type MapCategoryBlocks = Map<string, Block[]>;
 
 export default function BlocksProvider({ children }: BlocksProviderProps) {
     const { editor } = useEditorInstance();
@@ -64,12 +64,13 @@ export default function BlocksProvider({ children }: BlocksProviderProps) {
         const event = editor.Blocks.events.custom;
 
         const toListen = ({ blocks, container, dragStart, dragStop }: BlocksEventProps) => {
+            console.log('BlockProvider listen', blocks)
             const mapCategoryBlocks = blocks.reduce((res, block) => {
-                const category = block.get('category') as unknown as Category;
-                const categoryBlocks = mapCategoryBlocks.get(category);
+                const categoryLabel = block.getCategoryLabel();
+                const categoryBlocks = res.get(categoryLabel);
 
                 if (!categoryBlocks) {
-                    mapCategoryBlocks.set(category, [block]);
+                    res.set(categoryLabel, [block]);
                 } else {
                     categoryBlocks.push(block);
                 }
@@ -89,7 +90,7 @@ export default function BlocksProvider({ children }: BlocksProviderProps) {
         editor.on(event, toListen);
 
         return () => {
-            editor.off(event, toListen)
+            editor.off(event, toListen);
         };
     }, [editor]);
 

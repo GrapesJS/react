@@ -1,4 +1,4 @@
-import GrapesJsEditor, { AssetsProvider, Canvas, EditorProps, ModalProvider, WithEditor } from '@grapesjs/react';
+import GrapesJsEditor, { AssetsProvider, BlocksProvider, Canvas, EditorProps, ModalProvider, WithEditor } from '@grapesjs/react';
 import { defaultEditorProps } from './common';
 import CustomModal from './components/CustomModal';
 import CustomAssetManager from './components/CustomAssetManager';
@@ -51,9 +51,18 @@ export default function CustomEditor(props: Partial<EditorProps>) {
                         {selectedTab === 0 && <div>Styles</div>}
                         {selectedTab === 1 && <div>Layers</div>}
                         {selectedTab === 2 && <div>Blocks</div>}
-                        <WithEditor>
+                        <BlocksProvider>
+                            {({ mapCategoryBlocks, dragStart, dragStop }) => (
+                                <CustomBlockManager
+                                    mapCategoryBlocks={mapCategoryBlocks}
+                                    dragStart={dragStart}
+                                    dragStop={dragStop}
+                                />
+                            )}
+                        </BlocksProvider>
+                        {/* <WithEditor>
                             <CustomBlockManager/>
-                        </WithEditor>
+                        </WithEditor> */}
                     </div>
                 </div>
                 <ModalProvider>
