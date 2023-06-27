@@ -4,6 +4,7 @@ import { defaultEditorProps } from './common';
 import CustomAssetManager from './components/CustomAssetManager';
 import CustomModal from './components/CustomModal';
 import RightSidebar from './components/RightSidebar';
+import TopSidebar from './components/TopSidebar';
 
 const theme = createTheme({
     palette: {
@@ -24,9 +25,7 @@ export default function CustomEditor(props: Partial<EditorProps>) {
             >
                 <div className={`flex h-full border-t ${clsBorderColor}`}>
                     <div className="gjs-column-m flex flex-col flex-grow">
-                        <div className=" flex-grow">
-                            Top
-                        </div>
+                        <TopSidebar className="flex-grow"/>
                         <Canvas className="flex-grow gjs-custom-editor-canvas"/>
                     </div>
                     <RightSidebar className={`gjs-column-r w-[300px] border-l ${clsBorderColor}`}/>
