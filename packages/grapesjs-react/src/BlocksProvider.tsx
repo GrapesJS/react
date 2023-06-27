@@ -95,6 +95,8 @@ export default function BlocksProvider({ children }: BlocksProviderProps) {
 
     useEffect(() => options.setCustomBlocks(true), []);
 
+    console.log('BlockProvider');
+
     return editor ?
         (isFunction(children) ? children(propState)  : null)
     : null;

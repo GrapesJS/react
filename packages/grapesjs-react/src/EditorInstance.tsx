@@ -81,26 +81,30 @@ const EditorInstance = memo(function EditorInstance({
         ...options,
         plugins: [
           ...loadedPlugins,
-          ...(options?.plugins || []),
+          ...(options.plugins || []),
         ],
         pluginsOpts: {
-          ...options?.pluginsOpts,
+          ...options.pluginsOpts,
           ...pluginOptions,
         },
         modal: {
-          ...options?.modal,
+          ...options.modal,
           custom: !!editorOptions.customModal,
         },
         assetManager: {
-          ...options?.assetManager,
+          ...options.assetManager,
           custom: !!editorOptions.customAssets,
         },
         styleManager: {
-          ...options?.styleManager,
+          ...options.styleManager,
           custom: !!editorOptions.customStyles,
         },
+        blockManager: {
+          ...options.blockManager,
+          custom: !!editorOptions.customBlocks,
+        },
         richTextEditor: {
-          ...options?.richTextEditor,
+          ...options.richTextEditor,
           custom: !!editorOptions.customRte,
         },
         container: canvasContainer || defaultContainer,
