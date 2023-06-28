@@ -21,7 +21,7 @@ const getDragTarget = (ev: React.PointerEvent) => {
     const elLayer = el?.closest('[data-layer-item]') as HTMLElement;
     return {
         el: elLayer,
-        cmp: (elLayer as any)?.__cmp,
+        cmp: (elLayer as any)?.__cmp as Component,
     }
 }
 
@@ -62,7 +62,7 @@ export default function CustomLayerManager({ root }: LayersResultProps) {
         const cmpIndex = cmp.index() + (isBefore ? 0 : 1);
         !dragging && setDragging(cmp);
         setCmpPointerOver(cmp);
-        const canMove = Components.canMove(cmpTarget, cmpSource, cmpIndex);
+        const canMove = Components.canMove(cmpTarget!, cmpSource, cmpIndex);
         const canMoveInside = Components.canMove(cmp, cmpSource);
         const canMoveRes: CanMove = {
             ...canMove,
