@@ -1,4 +1,4 @@
-import { BlocksProvider } from '@grapesjs/react';
+import { BlocksProvider, PagesProvider } from '@grapesjs/react';
 import { mdiBrush, mdiLayers, mdiViewGridPlus, mdiTextBoxMultiple } from '@mdi/js';
 import Icon from '@mdi/react';
 import Tab from '@mui/material/Tab';
@@ -6,6 +6,7 @@ import Tabs from '@mui/material/Tabs';
 import { useState } from 'react';
 import CustomBlockManager from './CustomBlockManager';
 import { cx } from '../common';
+import CustomPageManager from './CustomPageManager';
 
 const defaultTabProps = {
     className: '!min-w-0',
@@ -36,6 +37,14 @@ export default function RightSidebar({ className }: React.HTMLAttributes<HTMLDiv
                         />
                     )}
                 </BlocksProvider>
+            }
+            {
+                selectedTab === 3 &&
+                <PagesProvider>
+                    {({ pages, select, add, remove, selected }) => (
+                        <CustomPageManager pages={pages} select={select} add={add} remove={remove} selected={selected}/>
+                    )}
+                </PagesProvider>
             }
         </div>
       </div>

@@ -12,7 +12,7 @@ export const MAIN_BG_COLOR = 'bg-slate-900';
 
 export const MAIN_TXT_COLOR = 'text-white';
 
-export const BTN_CLS = 'border rounded px-2 py-1';
+export const BTN_CLS = 'border rounded px-2 py-1 w-full';
 
 export const MAIN_BORDER_COLOR = 'border-slate-500';
 
