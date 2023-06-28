@@ -1,8 +1,8 @@
 import { LayersResultProps, useEditor } from '@grapesjs/react';
-import LayerItem from './LayerItem';
-import { useEffect, useRef, useState } from 'react';
-import type { Editor, Component } from 'grapesjs';
+import type { Component, Editor } from 'grapesjs';
+import { useRef, useState } from 'react';
 import { cx } from '../common';
+import LayerItem from './LayerItem';
 
 type DragRect = {
     y: number,
@@ -102,22 +102,6 @@ export default function CustomLayerManager({ root }: LayersResultProps) {
     const showIndicator = !!(dragging && dragRect && canMoveRes?.result && !dragRect.pointerInside);
     const indicatorStyle = showIndicator ? { top: dragRect.y, left: 0, marginLeft: dragLevel*10+20 } : {};
 
-    useEffect(() => {
-        const doc = window.document;
-        const onKeyDown = (ev: KeyboardEvent) => {
-            if (ev.key === 'Escape') {
-                setCanMoveRes({ ...canMoveRes, result: false });
-                onDragEnd();
-            }
-        }
-
-        doc.addEventListener('keydown', onKeyDown);
-
-        return () => {
-            doc.removeEventListener('keydown', onKeyDown);
-        }
-    }, []);
-
     return (
       <div
         className="gjs-custom-layer-manager h-full overflow-y-auto overflow-x-hidden text-sm select-none relative"
@@ -127,7 +111,8 @@ export default function CustomLayerManager({ root }: LayersResultProps) {
         onPointerUp={onDragEnd}
     >
         {
-            !!root && <LayerItem component={root} level={-1} draggingCmp={dragging} dragParent={dragParent}/>
+            !!root &&
+            <LayerItem component={root} level={-1} draggingCmp={dragging} dragParent={dragParent}/>
         }
         {
             showIndicator &&

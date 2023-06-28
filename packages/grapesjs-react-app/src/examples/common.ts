@@ -54,10 +54,20 @@ export const defaultOptions: EditorConfig = {
           'https://via.placeholder.com/350x250/cc4360/eee',
         ],
       },
+    // components: `
+    //   <h1>Title</h1>
+    //   <p>Paragraph</p>
+    //   <img/>
+    // `,
     components: `
-      <h1>Title</h1>
-      <p>Paragraph</p>
-      <img/>
+        <div style="padding: 25px">Custom Layer Manager</div>
+        <div>Element A</div>
+        <div style="padding: 20px">
+        <div>Element B1</div>
+        <div>Element B2</div>
+        <div>Element B3</div>
+        </div>
+        <div>Element C</div>
     `,
 };
 

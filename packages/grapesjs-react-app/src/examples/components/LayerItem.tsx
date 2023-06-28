@@ -1,15 +1,15 @@
-import { useState, useEffect, MouseEvent, useMemo, useRef } from 'react';
-import Icon from '@mdi/react';
-import { mdiMenuDown, mdiEyeOutline, mdiEyeOffOutline, mdiLock, mdiLockOpenVariant } from '@mdi/js';
-import type { Component } from 'grapesjs';
 import { useEditor } from '@grapesjs/react';
-import { cx } from '../common';
+import { mdiEyeOffOutline, mdiEyeOutline, mdiMenuDown } from '@mdi/js';
+import Icon from '@mdi/react';
+import type { Component } from 'grapesjs';
+import { MouseEvent, useEffect, useMemo, useRef, useState } from 'react';
+import { MAIN_BORDER_COLOR, cx } from '../common';
 
 export declare interface LayerItemProps extends React.HTMLProps<HTMLDivElement> {
     component: Component,
     level: number,
-    draggingCmp: any,
-    dragParent: any,
+    draggingCmp?: Component,
+    dragParent?: Component,
 }
 
 const itemStyle = { maxWidth: `100%` };
@@ -18,9 +18,8 @@ export default function LayerItem({ component, draggingCmp, dragParent, ...props
     const editor = useEditor();
     const { Layers } = editor;
     const layerRef = useRef<HTMLDivElement>(null);
-    const [rename, setRename] = useState(false);
     const [layerData, setLayerData] = useState(Layers.getLayerData(component));
-    const { open, selected, hovered, components, visible, locked, name } = layerData;
+    const { open, selected, hovered, components, visible, name } = layerData;
     const componentsIds = components.map((cmp) => cmp.getId());
     const isDragging = draggingCmp === component;
     const cmpHash = componentsIds.join('-');
@@ -58,11 +57,6 @@ export default function LayerItem({ component, draggingCmp, dragParent, ...props
         ))
     }, [cmpHash, draggingCmp, dragParent]);
 
-    const onRename = (name: string) => {
-        Layers.setLayerData(component, { name });
-        setRename(false);
-    }
-
     const toggleOpen = (ev: MouseEvent) => {
         ev.stopPropagation();
         Layers.setLayerData(component, { open: !open })
@@ -71,11 +65,6 @@ export default function LayerItem({ component, draggingCmp, dragParent, ...props
     const toggleVisibility = (ev: MouseEvent) => {
         ev.stopPropagation();
         Layers.setLayerData(component, { visible: !visible })
-    };
-
-    const toggleLock = (ev: MouseEvent) => {
-        ev.stopPropagation();
-        Layers.setLayerData(component, { locked: !locked })
     };
 
     const select = (event: MouseEvent) => {
@@ -89,57 +78,56 @@ export default function LayerItem({ component, draggingCmp, dragParent, ...props
         }
     };
 
-    const wrapperCls = cx('layer-item flex flex-col', selected && 'bg-red-300', (!visible || isDragging) && 'opacity-50');
+    const wrapperCls = cx(
+        'layer-item flex flex-col',
+        selected && 'bg-sky-900',
+        (!visible || isDragging) && 'opacity-50'
+    );
 
 
     return (
-        <div className="move-ref">
-            <div className={wrapperCls}>
+        <div className={wrapperCls}>
+            <div
+                onClick={select}
+                onMouseEnter={() => hover(true)}
+                onMouseLeave={() => hover(false)}
+                className="group max-w-full"
+                data-layer-item
+                ref={layerRef}
+            >
                 <div
-                    onClick={select}
-                    onMouseEnter={() => hover(true)}
-                    onMouseLeave={() => hover(false)}
-                    className={cx('group max-w-full')}
-                    data-layer-item
-                    ref={layerRef}
+                    className={cx(
+                        'flex items-center p-1 pr-2 border-b gap-1',
+                        level === 0 && 'border-t',
+                        MAIN_BORDER_COLOR,
+                        isHovered && 'bg-sky-700',
+                        selected && 'bg-sky-500',
+                    )}
                 >
                     <div
-                        className={cx([
-                            'flex items-center',
-                            isHovered ? 'bg-red-300' : '',
-                            ...(selected ? ['bg-red-500'] : [])
-                        ])}
+                        style={{ marginLeft: `${level*10}px` }}
+                        className={cx('cursor-pointer', !components.length && 'pointer-events-none opacity-0')}
+                        onClick={toggleOpen}
                     >
-                        <div
-                            style={{ marginLeft: `${level*10}px` }}
-                            className={cx('cursor-pointer', !components.length && 'pointer-events-none opacity-0')}
-                            onClick={toggleOpen}
-                        >
-                            <Icon path={mdiMenuDown} size={1} rotate={open ? 0 : -90}/>
-                        </div>
-                        <div className="truncate flex-grow" onDoubleClick={() => setRename(true)} style={itemStyle}>
-                            { rename ? <input value={name} onBlur={(ev) => onRename(ev.target.value)}/> : <>{ name }</> }
-                        </div>
-                        {
-                            !rename &&
-                            <>
-                                <div className={cx('group-hover:opacity-100 cursor-pointer', locked ? 'opacity-100' : 'opacity-0')} onClick={toggleLock}>
-                                    <Icon path={locked ? mdiLock : mdiLockOpenVariant} size={1}/>
-                                </div>
-                                <div className={cx('group-hover:opacity-100 cursor-pointer', visible ? 'opacity-0' : 'opacity-100')} onClick={toggleVisibility}>
-                                    <Icon path={visible ? mdiEyeOutline : mdiEyeOffOutline} size={1}/>
-                                </div>
-                            </>
-                        }
+                        <Icon path={mdiMenuDown} size={0.7} rotate={open ? 0 : -90}/>
+                    </div>
+                    <div className="truncate flex-grow" style={itemStyle}>
+                        { name }
+                    </div>
+                    <div
+                        className={cx('group-hover:opacity-100 cursor-pointer', visible ? 'opacity-0' : 'opacity-100')}
+                        onClick={toggleVisibility}
+                    >
+                        <Icon path={visible ? mdiEyeOutline : mdiEyeOffOutline} size={0.7}/>
                     </div>
                 </div>
-                {
-                    !!(open && components.length) &&
-                    <div className={cx('max-w-full', !open && 'hidden')}>
-                        { cmpToRender }
-                    </div>
-                }
             </div>
+            {
+                !!(open && components.length) &&
+                <div className={cx('max-w-full', !open && 'hidden')}>
+                    { cmpToRender }
+                </div>
+            }
         </div>
     )
 }
