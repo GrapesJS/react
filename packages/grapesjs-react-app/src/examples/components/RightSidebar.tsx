@@ -1,4 +1,4 @@
-import { BlocksProvider, PagesProvider } from '@grapesjs/react';
+import { BlocksProvider, LayersProvider, PagesProvider } from '@grapesjs/react';
 import { mdiBrush, mdiLayers, mdiViewGridPlus, mdiTextBoxMultiple } from '@mdi/js';
 import Icon from '@mdi/react';
 import Tab from '@mui/material/Tab';
@@ -7,6 +7,7 @@ import { useState } from 'react';
 import CustomBlockManager from './CustomBlockManager';
 import { cx } from '../common';
 import CustomPageManager from './CustomPageManager';
+import CustomLayerManager from './CustomLayerManager';
 
 const defaultTabProps = {
     className: '!min-w-0',
@@ -25,7 +26,14 @@ export default function RightSidebar({ className }: React.HTMLAttributes<HTMLDiv
         </Tabs>
         <div className="overflow-y-auto flex-grow">
             {selectedTab === 0 && <div>Styles</div>}
-            {selectedTab === 1 && <div>Layers</div>}
+            {
+                selectedTab === 1 &&
+                <LayersProvider>
+                    {({ root }) => (
+                        <CustomLayerManager root={root}/>
+                    )}
+                </LayersProvider>
+            }
             {
                 selectedTab === 2 &&
                 <BlocksProvider>
