@@ -42,7 +42,7 @@ const DevicesProvider = memo(function DevicesProvider({ children }: DevicesState
         const up = () => {
             setPropState({
                 devices: Devices.getDevices(),
-                selected: Devices.getSelected().id as string,
+                selected: Devices.getSelected()?.id as string,
                 select: (id) => Devices.select(id),
             });
         }
