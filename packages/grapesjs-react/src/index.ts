@@ -7,8 +7,11 @@ export { default as DevicesProvider } from './DevicesProvider';
 export type { DevicesResultProps } from './DevicesProvider';
 export { default as Editor, default } from './Editor';
 export type * from './EditorInstance';
+export { default as LayersProvider } from './LayersProvider';
+export type { LayersResultProps } from './LayersProvider';
 export { default as ModalProvider } from './ModalProvider';
 export { default as PagesProvider } from './PagesProvider';
 export type { PagesResultProps } from './PagesProvider';
 export { default as WithEditor } from './WithEditor';
 export { useEditor, useEditorMaybe } from './context/EditorInstance';
+
