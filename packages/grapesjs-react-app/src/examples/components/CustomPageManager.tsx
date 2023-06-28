@@ -15,7 +15,9 @@ export default function CustomPageManager({ pages, selected, add, select, remove
     return (
       <div className="gjs-custom-page-manager">
         <div className="p-2">
-            <button type="button" className={BTN_CLS} onClick={addNewPage}>Add new page</button>
+            <button type="button" className={BTN_CLS} onClick={addNewPage}>
+                Add new page
+            </button>
         </div>
         {pages.map((page, index) => (
             <div
