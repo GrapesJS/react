@@ -90,10 +90,10 @@ export default function CustomLayerManager({ root }: LayersResultProps) {
     };
     const onDragEnd = () => {
         canMoveRes?.result && canMoveRes.source?.move(canMoveRes.target!, { at: canMoveRes.index });
-        setDragging(undefined);
-        setPointerDown(false);
-        setCmpPointerOver(undefined);
         setCanMoveRes({});
+        setPointerDown(false);
+        setDragging(undefined);
+        setCmpPointerOver(undefined);
         setDragParent(undefined);
         setDragRect(undefined);
     };
