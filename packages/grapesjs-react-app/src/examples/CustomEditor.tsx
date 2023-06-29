@@ -23,7 +23,7 @@ export default function CustomEditor(props: Partial<EditorProps>) {
                 <div className={`flex h-full border-t ${MAIN_BORDER_COLOR}`}>
                     <div className="gjs-column-m flex flex-col flex-grow">
                         <Topbar className="min-h-[48px]"/>
-                        <Canvas className="flex-grow gjs-custom-editor-canvas bg-red-500"/>
+                        <Canvas className="flex-grow gjs-custom-editor-canvas"/>
                     </div>
                     <RightSidebar className={`gjs-column-r w-[300px] border-l ${MAIN_BORDER_COLOR}`}/>
                 </div>
