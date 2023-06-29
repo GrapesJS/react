@@ -1,23 +1,28 @@
-import type { Device } from 'grapesjs';
+import type { Selector, State } from 'grapesjs';
 import React, { memo, useEffect, useState } from 'react';
 import { useEditorInstance } from './context/EditorInstance';
-import { isFunction, noop } from './utils';
+import { isFunction } from './utils';
 
 export type SelectorsState = {
     /**
-     * Array of devices.
+     * Array of current selectors.
      */
-    devices: Device[],
+    selectors: Selector[],
 
     /**
-     * Selected device id.
+     * Array of available states.
      */
-    selected: string,
+    states: State[],
 
     /**
-     * Select new device by id.
+     * Current selected state.
      */
-    select: (deviceId: string) => void,
+    selectedState: string,
+
+    /**
+     * Selector strings of currently selected targets.
+     */
+    targets: string[],
 };
 
 export type SelectorsResultProps = SelectorsState;
@@ -29,26 +34,29 @@ export interface SelectorsProviderProps {
 const SelectorsProvider = memo(function ({ children }: SelectorsProviderProps) {
     const { editor } = useEditorInstance();
     const [propState, setPropState] = useState<SelectorsState>(() => ({
-        devices: [],
-        selected: '',
-        select: noop,
+        selectors: [],
+        states: [],
+        selectedState: '',
+        targets: [],
     }));
 
     useEffect(() => {
         if (!editor) return;
-        const { Devices } = editor;
-        const event = Devices.events.all;
+        const { Selectors } = editor;
+        const event = Selectors.events.custom;
 
         const up = () => {
             setPropState({
-                devices: Devices.getDevices(),
-                selected: Devices.getSelected()?.id as string,
-                select: (id) => Devices.select(id),
+                selectors: Selectors.getSelected(),
+                states: Selectors.getStates(),
+                selectedState: Selectors.getState(),
+                targets: Selectors.getSelectedTargets()
+                    .map(target => target.getSelectorsString()),
             });
         }
 
         editor.on(event, up);
-        up();
+        // up();
 
         return () => {
             editor.off(event, up);
