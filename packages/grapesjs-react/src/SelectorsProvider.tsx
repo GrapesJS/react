@@ -2,6 +2,7 @@ import type { Selector, State, Editor } from 'grapesjs';
 import React, { memo, useEffect, useState } from 'react';
 import { useEditorInstance } from './context/EditorInstance';
 import { isFunction, noop } from './utils';
+import { PortalContainerResult, portalContainer } from './utils/react';
 
 export type SelectorsState = {
     /**
@@ -38,6 +39,11 @@ export type SelectorsState = {
      * Update current state.
      */
     setState: (...args: Parameters<Editor['Selectors']['setState']>) => void,
+
+    /**
+     * Default Selectors container.
+     */
+    Container: PortalContainerResult,
 };
 
 export type SelectorsResultProps = SelectorsState;
@@ -56,6 +62,7 @@ const SelectorsProvider = memo(function ({ children }: SelectorsProviderProps) {
         addSelector: noop,
         removeSelector: noop,
         setState: noop,
+        Container: () => null,
     }));
 
     useEffect(() => {
@@ -63,7 +70,7 @@ const SelectorsProvider = memo(function ({ children }: SelectorsProviderProps) {
         const { Selectors } = editor;
         const event = Selectors.events.custom;
 
-        const up = () => {
+        const up = ({ container }: { container: HTMLElement }) => {
             setPropState({
                 selectors: Selectors.getSelected(),
                 states: Selectors.getStates(),
@@ -72,6 +79,7 @@ const SelectorsProvider = memo(function ({ children }: SelectorsProviderProps) {
                 addSelector: (...args) => Selectors.addSelected(...args),
                 removeSelector: (...args) => Selectors.removeSelected(...args),
                 setState: (...args) => Selectors.setState(...args),
+                Container: portalContainer(container),
             });
         }
 
