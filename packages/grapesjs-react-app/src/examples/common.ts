@@ -53,7 +53,10 @@ export const defaultOptions: EditorConfig = {
           'https://via.placeholder.com/350x250/e868a2/eee',
           'https://via.placeholder.com/350x250/cc4360/eee',
         ],
-      },
+    },
+    undoManager: {
+        trackSelection: false,
+    },
     // components: `
     //   <h1>Title</h1>
     //   <p>Paragraph</p>
