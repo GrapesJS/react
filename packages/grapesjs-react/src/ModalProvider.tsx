@@ -1,4 +1,4 @@
-import React, { createElement, useEffect, useState } from 'react';
+import React, { createElement, memo, useEffect, useState } from 'react';
 import { useEditorInstance } from './context/EditorInstance';
 import { useEditorOptions } from './context/EditorOptions';
 import { noop } from './utils';
@@ -45,7 +45,7 @@ export interface ModalEventProps {
     close: () => void,
 }
 
-export default function ModalProvider({ children }: ModalProviderProps) {
+const ModalProvider = memo(function ({ children }: ModalProviderProps) {
     const { editor } = useEditorInstance();
     const options = useEditorOptions();
     const [isOpen, setOpen] = useState(false);
@@ -82,4 +82,6 @@ export default function ModalProvider({ children }: ModalProviderProps) {
     return editor ?
         (typeof children === 'function' ? children({ open: isOpen, ...modalState })  : null)
     : null;
-  }
+  });
+
+  export default ModalProvider;

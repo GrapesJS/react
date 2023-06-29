@@ -26,7 +26,7 @@ export interface DevicesStateProviderProps {
     children: (props: DevicesResultProps) => React.JSX.Element,
 }
 
-const DevicesProvider = memo(function DevicesProvider({ children }: DevicesStateProviderProps) {
+const DevicesProvider = memo(function ({ children }: DevicesStateProviderProps) {
     const { editor } = useEditorInstance();
     const [propState, setPropState] = useState<DevicesState>(() => ({
         devices: [],

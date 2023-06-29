@@ -1,5 +1,5 @@
 import type { Asset } from 'grapesjs';
-import React, { useEffect, useState } from 'react';
+import React, { memo, useEffect, useState } from 'react';
 import { useEditorInstance } from './context/EditorInstance';
 import { useEditorOptions } from './context/EditorOptions';
 import { isFunction } from './utils';
@@ -52,7 +52,7 @@ export interface AssetsEventProps {
     container: HTMLElement,
 }
 
-export default function AssetsProvider({ children }: AssetsProviderProps) {
+const AssetsProvider = memo(function ({ children }: AssetsProviderProps) {
     const { editor } = useEditorInstance();
     const options = useEditorOptions();
     const [open, setOpen] = useState(false);
@@ -91,4 +91,6 @@ export default function AssetsProvider({ children }: AssetsProviderProps) {
     return editor ?
         (isFunction(children) ? children({ open, ...propState })  : null)
     : null;
-  }
+  });
+
+  export default AssetsProvider;

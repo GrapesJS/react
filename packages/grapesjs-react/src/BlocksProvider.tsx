@@ -48,7 +48,7 @@ export interface BlocksEventProps {
 
 export type MapCategoryBlocks = Map<string, Block[]>;
 
-const BlocksProvider = memo(function BlocksProvider({ children }: BlocksProviderProps) {
+const BlocksProvider = memo(function ({ children }: BlocksProviderProps) {
     const { editor } = useEditorInstance();
     const options = useEditorOptions();
     const [propState, setPropState] = useState<BlocksState>(() => ({
