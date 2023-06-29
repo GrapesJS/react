@@ -84,7 +84,6 @@ const SelectorsProvider = memo(function ({ children }: SelectorsProviderProps) {
         }
 
         editor.on(event, up);
-        // up();
 
         return () => {
             editor.off(event, up);

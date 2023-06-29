@@ -5,7 +5,7 @@ import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
 import { useState } from 'react';
 import CustomBlockManager from './CustomBlockManager';
-import { cx } from '../common';
+import { MAIN_BORDER_COLOR, cx } from '../common';
 import CustomPageManager from './CustomPageManager';
 import CustomLayerManager from './CustomLayerManager';
 import CustomSelectorManager from './CustomSelectorManager';
@@ -25,7 +25,7 @@ export default function RightSidebar({ className }: React.HTMLAttributes<HTMLDiv
             <Tab {...defaultTabProps} label={<Icon size={1} path={mdiViewGridPlus}/>}/>
             <Tab {...defaultTabProps} label={<Icon size={1} path={mdiTextBoxMultiple}/>}/>
         </Tabs>
-        <div className="overflow-y-auto flex-grow">
+        <div className={cx('overflow-y-auto flex-grow border-t', MAIN_BORDER_COLOR)}>
             {
                 selectedTab === 0 &&
                 <>
