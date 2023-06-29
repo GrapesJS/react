@@ -64,11 +64,11 @@ export const defaultOptions: EditorConfig = {
     // `,
     components: `
         <div style="padding: 25px">Custom Layer Manager</div>
-        <div>Element A</div>
+        <div class="example example-a">Element A</div>
         <div style="padding: 20px">
-        <div>Element B1</div>
-        <div>Element B2</div>
-        <div>Element B3</div>
+            <div class="example-b1">Element B1</div>
+            <div class="example-b2">Element B2</div>
+            <div>Element B3</div>
         </div>
         <div>Element C</div>
     `,
