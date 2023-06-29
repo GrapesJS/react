@@ -57,6 +57,9 @@ export const defaultOptions: EditorConfig = {
     undoManager: {
         trackSelection: false,
     },
+    selectorManager: {
+        componentFirst: true,
+    },
     // components: `
     //   <h1>Title</h1>
     //   <p>Paragraph</p>
