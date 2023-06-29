@@ -1,7 +1,7 @@
-import type { Selector, State } from 'grapesjs';
+import type { Selector, State, Editor } from 'grapesjs';
 import React, { memo, useEffect, useState } from 'react';
 import { useEditorInstance } from './context/EditorInstance';
-import { isFunction } from './utils';
+import { isFunction, noop } from './utils';
 
 export type SelectorsState = {
     /**
@@ -23,6 +23,21 @@ export type SelectorsState = {
      * Selector strings of currently selected targets.
      */
     targets: string[],
+
+    /**
+     * Add new selector to selected targets.
+     */
+    addSelector: (...args: Parameters<Editor['Selectors']['addSelected']>) => void,
+
+    /**
+     * Remove selector from selected targets.
+     */
+    removeSelector: (...args: Parameters<Editor['Selectors']['removeSelected']>) => void,
+
+    /**
+     * Update current state.
+     */
+    setState: (...args: Parameters<Editor['Selectors']['setState']>) => void,
 };
 
 export type SelectorsResultProps = SelectorsState;
@@ -38,6 +53,9 @@ const SelectorsProvider = memo(function ({ children }: SelectorsProviderProps) {
         states: [],
         selectedState: '',
         targets: [],
+        addSelector: noop,
+        removeSelector: noop,
+        setState: noop,
     }));
 
     useEffect(() => {
@@ -50,8 +68,10 @@ const SelectorsProvider = memo(function ({ children }: SelectorsProviderProps) {
                 selectors: Selectors.getSelected(),
                 states: Selectors.getStates(),
                 selectedState: Selectors.getState(),
-                targets: Selectors.getSelectedTargets()
-                    .map(target => target.getSelectorsString()),
+                targets: Selectors.getSelectedTargets().map(t => t.getSelectorsString()),
+                addSelector: (...args) => Selectors.addSelected(...args),
+                removeSelector: (...args) => Selectors.removeSelected(...args),
+                setState: (...args) => Selectors.setState(...args),
             });
         }
 
