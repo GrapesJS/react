@@ -3,7 +3,7 @@ import React, { memo, useEffect, useState } from 'react';
 import { useEditorInstance } from './context/EditorInstance';
 import { isFunction, noop } from './utils';
 
-export type DevicesState = {
+export type SelectorsState = {
     /**
      * Array of devices.
      */
@@ -20,15 +20,15 @@ export type DevicesState = {
     select: (deviceId: string) => void,
 };
 
-export type DevicesResultProps = DevicesState;
+export type SelectorsResultProps = SelectorsState;
 
-export interface DevicesProviderProps {
-    children: (props: DevicesResultProps) => React.JSX.Element,
+export interface SelectorsProviderProps {
+    children: (props: SelectorsResultProps) => React.JSX.Element,
 }
 
-const DevicesProvider = memo(function ({ children }: DevicesProviderProps) {
+const SelectorsProvider = memo(function ({ children }: SelectorsProviderProps) {
     const { editor } = useEditorInstance();
-    const [propState, setPropState] = useState<DevicesState>(() => ({
+    const [propState, setPropState] = useState<SelectorsState>(() => ({
         devices: [],
         selected: '',
         select: noop,
@@ -60,4 +60,4 @@ const DevicesProvider = memo(function ({ children }: DevicesProviderProps) {
     : null;
   });
 
-  export default DevicesProvider;
+  export default SelectorsProvider;
