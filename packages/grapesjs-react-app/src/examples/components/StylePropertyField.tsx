@@ -17,31 +17,43 @@ interface StylePropertyFieldProps extends React.HTMLProps<HTMLDivElement> {
 }
 
 export default function StylePropertyField({ prop, ...rest }: StylePropertyFieldProps) {
+    const handleChange = (value: string) => {
+        prop.upValue(value);
+    };
+
+    const type = prop.getType();
+    const defValue = prop.getDefaultValue();
+    const canClear = prop.canClear();
+    const hasValue = prop.hasValue();
+    const value = prop.getValue();
+    const valueString = hasValue ? value : '';
+    const valueWithDef = hasValue ? value : defValue;
+
     return (
         <div {...rest} className={cx('mb-3 px-1', prop.isFull() ? 'w-full' : 'w-1/2')} >
-            <div className={cx('flex mb-2', prop.canClear() && 'text-sky-300')}>
+            <div className={cx('flex mb-2', canClear && 'text-sky-300')}>
                 <div className="flex-grow capitalize">{ prop.getName() }</div>
                 {
-                    prop.canClear() &&
+                    canClear &&
                     <button onClick={() => prop.clear()}>
                         <Icon path={mdiClose} size={0.7}/>
                     </button>
                 }
             </div>
             {
-                prop.getType() === 'number' &&
+                type === 'number' &&
                 <TextField
-                    fullWidth
-                    placeholder={prop.getDefaultValue()}
-                    value={prop.hasValue() ? prop.getValue() : ''}
-                    onChange={(ev) => {prop.upValue(ev.target.value)}}
+                    placeholder={defValue}
+                    value={valueString}
+                    onChange={(ev) => {handleChange(ev.target.value)}}
                     size="small"
+                    fullWidth
                 />
 
             }
             {
-                prop.getType() === 'radio' &&
-                <RadioGroup value={prop.getValue()} onChange={(ev) => prop.upValue(ev.target.value)} row>
+                type === 'radio' &&
+                <RadioGroup value={value} onChange={(ev) => handleChange(ev.target.value)} row>
                     {(prop as PropertyRadio).getOptions().map(option => (
                         <FormControlLabel
                             key={(prop as PropertyRadio).getOptionId(option)}
@@ -53,9 +65,9 @@ export default function StylePropertyField({ prop, ...rest }: StylePropertyField
                 </RadioGroup>
             }
             {
-                prop.getType() === 'select' &&
+                type === 'select' &&
                 <FormControl fullWidth size="small">
-                    <Select value={prop.getValue()} onChange={(ev) => prop.upValue(ev.target.value)}>
+                    <Select value={value} onChange={(ev) => handleChange(ev.target.value)}>
                         {(prop as PropertySelect).getOptions().map(option => (
                             <MenuItem
                                 key={(prop as PropertySelect).getOptionId(option)}
@@ -68,21 +80,21 @@ export default function StylePropertyField({ prop, ...rest }: StylePropertyField
                 </FormControl>
             }
             {
-                prop.getType() === 'color' &&
+                type === 'color' &&
                 <TextField
                     fullWidth
-                    placeholder={prop.getDefaultValue()}
-                    value={prop.hasValue() ? prop.getValue() : ''}
-                    onChange={(ev) => prop.upValue(ev.target.value)}
+                    placeholder={defValue}
+                    value={valueString}
+                    onChange={(ev) => handleChange(ev.target.value)}
                     size="small"
                     InputProps={{
                         startAdornment: <InputAdornment position="start">
-                            <div className="w-[15px] h-[15px]" style={{ backgroundColor: prop.hasValue() ? prop.getValue() : prop.getDefaultValue() }}>
+                            <div className="w-[15px] h-[15px]" style={{ backgroundColor: valueWithDef }}>
                                 <input
                                     type="color"
                                     className="w-[15px] h-[15px] opacity-0"
-                                    value={prop.hasValue() ? prop.getValue() : prop.getDefaultValue()}
-                                    onChange={(ev) => prop.upValue(ev.target.value)}
+                                    value={valueWithDef}
+                                    onChange={(ev) => handleChange(ev.target.value)}
                                 />
                             </div>
                         </InputAdornment>,
@@ -91,14 +103,14 @@ export default function StylePropertyField({ prop, ...rest }: StylePropertyField
 
             }
             {
-                prop.getType() === 'slider' &&
+                type === 'slider' &&
                 <Slider
                     size="small"
-                    value={prop.getValue()}
+                    value={value}
                     min={(prop as PropertySlider).getMin()}
                     max={(prop as PropertySlider).getMax()}
                     step={(prop as PropertySlider).getStep()}
-                    onChange={(ev: any) => prop.upValue(ev.target.value)}
+                    onChange={(ev: any) => handleChange(ev.target.value)}
                     valueLabelDisplay="auto"
                 />
 
