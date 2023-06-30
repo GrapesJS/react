@@ -11,12 +11,14 @@ import Slider from "@mui/material/Slider";
 import TextField from "@mui/material/TextField";
 import type { Property, PropertyRadio, PropertySelect, PropertySlider } from "grapesjs";
 import { cx } from "../common";
+import { useEditor } from "@grapesjs/react";
 
 interface StylePropertyFieldProps extends React.HTMLProps<HTMLDivElement> {
     prop: Property;
 }
 
 export default function StylePropertyField({ prop, ...rest }: StylePropertyFieldProps) {
+    const editor = useEditor();
     const handleChange = (value: string) => {
         prop.upValue(value);
     };
@@ -24,6 +26,18 @@ export default function StylePropertyField({ prop, ...rest }: StylePropertyField
     const onChange = (ev: any) => {
         handleChange(ev.target.value);
     };
+
+    const openAssets = () => {
+        const { Assets } = editor;
+        Assets.open({
+            select: (asset, complete) => {
+                prop.upValue(asset.getSrc(), { partial: !complete });
+                complete && Assets.close();
+            },
+            types: ['image'],
+            accept: 'image/*',
+        });
+    }
 
     const type = prop.getType();
     const defValue = prop.getDefaultValue();
@@ -94,6 +108,17 @@ export default function StylePropertyField({ prop, ...rest }: StylePropertyField
                     valueLabelDisplay="auto"
                 />
             )
+        } break;
+        case 'file': {
+            inputToRender = (
+                <button onClick={openAssets}>
+                    {
+                        value && value !== defValue &&
+                        <div className="w-[16px] h-[16px] rounded inline-block" style={{ backgroundImage: `url(${value})` }}/>
+                    }
+                    <div>Select</div>
+                </button>
+            );
         } break;
     }
 
