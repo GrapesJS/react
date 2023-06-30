@@ -8,8 +8,11 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import TextField from '@mui/material/TextField';
-import type { PropertyRadio } from 'grapesjs';
+import type { PropertyRadio, PropertySelect } from 'grapesjs';
 import { MAIN_BG_COLOR, cx } from '../common';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
 
 const accordionIcon = <Icon path={mdiMenuDown} size={0.7}/>;
 
@@ -56,6 +59,21 @@ export default function CustomStyleManager({ sectors }: StylesResultProps) {
                                         />
                                     ))}
                                 </RadioGroup>
+                            }
+                            {
+                                prop.getType() === 'select' &&
+                                <FormControl fullWidth size="small">
+                                    <Select value={prop.getValue()} onChange={(ev) => prop.upValue(ev.target.value)}>
+                                        {(prop as PropertySelect).getOptions().map(option => (
+                                            <MenuItem
+                                                key={(prop as PropertySelect).getOptionId(option)}
+                                                value={(prop as PropertySelect).getOptionId(option)}
+                                            >
+                                                {(prop as PropertySelect).getOptionLabel(option)}
+                                            </MenuItem>
+                                        ))}
+                                    </Select>
+                                </FormControl>
                             }
                         </div>
                     ))}
