@@ -14,6 +14,8 @@ export { default as PagesProvider } from './PagesProvider';
 export type { PagesResultProps } from './PagesProvider';
 export { default as SelectorsProvider } from './SelectorsProvider';
 export type { SelectorsResultProps } from './SelectorsProvider';
+export { default as StylesProvider } from './StylesProvider';
+export type { StylesResultProps } from './StylesProvider';
 export { default as WithEditor } from './WithEditor';
 export { useEditor, useEditorMaybe } from './context/EditorInstance';
 
