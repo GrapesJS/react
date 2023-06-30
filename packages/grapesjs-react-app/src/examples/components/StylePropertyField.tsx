@@ -123,7 +123,7 @@ export default function StylePropertyField({ prop, ...rest }: StylePropertyField
         case 'composite': {
             const compositeProp = prop as PropertyComposite;
             inputToRender = (
-                <div className={cx('flex flex-wrap p-2 bg-black/30 rounded border', MAIN_BORDER_COLOR)}>
+                <div className={cx('flex flex-wrap p-2 bg-black/20 rounded border', MAIN_BORDER_COLOR)}>
                     {
                         compositeProp.getProperties().map(prop => (
                             <StylePropertyField key={prop.getId()} prop={prop} />
