@@ -86,7 +86,7 @@ export default function StylePropertyField({ prop, ...rest }: StylePropertyField
             inputToRender = (
                 <Slider
                     size="small"
-                    value={value}
+                    value={parseFloat(value)}
                     min={sliderProp.getMin()}
                     max={sliderProp.getMax()}
                     step={sliderProp.getStep()}
