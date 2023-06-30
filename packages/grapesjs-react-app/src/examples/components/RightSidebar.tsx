@@ -31,7 +31,7 @@ export default function RightSidebar({ className }: React.HTMLAttributes<HTMLDiv
                 selectedTab === 0 &&
                 <>
                     <SelectorsProvider>
-                        {CustomSelectorManager}
+                        {props => <CustomSelectorManager {...props}/>}
                     </SelectorsProvider>
                     <StylesProvider>
                         {props => <CustomStyleManager {...props}/>}
@@ -41,29 +41,19 @@ export default function RightSidebar({ className }: React.HTMLAttributes<HTMLDiv
             {
                 selectedTab === 1 &&
                 <LayersProvider>
-                    {({ root }) => (
-                        <CustomLayerManager root={root}/>
-                    )}
+                    {props => <CustomLayerManager {...props}/>}
                 </LayersProvider>
             }
             {
                 selectedTab === 2 &&
                 <BlocksProvider>
-                    {({ mapCategoryBlocks, dragStart, dragStop }) => (
-                        <CustomBlockManager
-                            mapCategoryBlocks={mapCategoryBlocks}
-                            dragStart={dragStart}
-                            dragStop={dragStop}
-                        />
-                    )}
+                    {props=> <CustomBlockManager {...props}/>}
                 </BlocksProvider>
             }
             {
                 selectedTab === 3 &&
                 <PagesProvider>
-                    {({ pages, select, add, remove, selected }) => (
-                        <CustomPageManager pages={pages} select={select} add={add} remove={remove} selected={selected}/>
-                    )}
+                    {props => <CustomPageManager {...props}/>}
                 </PagesProvider>
             }
         </div>
