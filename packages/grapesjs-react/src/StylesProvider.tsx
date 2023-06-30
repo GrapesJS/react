@@ -1,7 +1,7 @@
-import type { Selector, State, Editor, Sector } from 'grapesjs';
+import type { Sector } from 'grapesjs';
 import React, { memo, useEffect, useState } from 'react';
 import { useEditorInstance } from './context/EditorInstance';
-import { isFunction, noop } from './utils';
+import { isFunction } from './utils';
 import { PortalContainerResult, portalContainer } from './utils/react';
 
 // TODO
