@@ -8,12 +8,13 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import TextField from '@mui/material/TextField';
-import type { PropertyRadio, PropertySelect } from 'grapesjs';
+import type { PropertyRadio, PropertySelect, PropertySlider } from 'grapesjs';
 import { MAIN_BG_COLOR, cx } from '../common';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import InputAdornment from '@mui/material/InputAdornment';
+import Slider from '@mui/material/Slider';
 
 const accordionIcon = <Icon path={mdiMenuDown} size={0.7}/>;
 
@@ -41,6 +42,7 @@ export default function CustomStyleManager({ sectors }: StylesResultProps) {
                             {
                                 prop.getType() === 'number' &&
                                 <TextField
+                                    fullWidth
                                     placeholder={prop.getDefaultValue()}
                                     value={prop.hasValue() ? prop.getValue() : ''}
                                     onChange={(ev) => {prop.upValue(ev.target.value)}}
@@ -79,9 +81,10 @@ export default function CustomStyleManager({ sectors }: StylesResultProps) {
                             {
                                 prop.getType() === 'color' &&
                                 <TextField
+                                    fullWidth
                                     placeholder={prop.getDefaultValue()}
                                     value={prop.hasValue() ? prop.getValue() : ''}
-                                    onChange={(ev) => {prop.upValue(ev.target.value)}}
+                                    onChange={(ev) => prop.upValue(ev.target.value)}
                                     size="small"
                                     InputProps={{
                                         startAdornment: <InputAdornment position="start">
@@ -95,6 +98,19 @@ export default function CustomStyleManager({ sectors }: StylesResultProps) {
                                             </div>
                                         </InputAdornment>,
                                     }}
+                                />
+
+                            }
+                            {
+                                prop.getType() === 'slider' &&
+                                <Slider
+                                    size="small"
+                                    value={prop.getValue()}
+                                    min={(prop as PropertySlider).getMin()}
+                                    max={(prop as PropertySlider).getMax()}
+                                    step={(prop as PropertySlider).getStep()}
+                                    onChange={(ev: any) => prop.upValue(ev.target.value)}
+                                    valueLabelDisplay="auto"
                                 />
 
                             }
