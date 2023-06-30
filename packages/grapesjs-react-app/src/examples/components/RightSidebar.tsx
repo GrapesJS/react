@@ -1,4 +1,4 @@
-import { BlocksProvider, LayersProvider, PagesProvider, SelectorsProvider } from '@grapesjs/react';
+import { BlocksProvider, LayersProvider, PagesProvider, SelectorsProvider, StylesProvider } from '@grapesjs/react';
 import { mdiBrush, mdiLayers, mdiViewGridPlus, mdiTextBoxMultiple } from '@mdi/js';
 import Icon from '@mdi/react';
 import Tab from '@mui/material/Tab';
@@ -9,6 +9,7 @@ import { MAIN_BORDER_COLOR, cx } from '../common';
 import CustomPageManager from './CustomPageManager';
 import CustomLayerManager from './CustomLayerManager';
 import CustomSelectorManager from './CustomSelectorManager';
+import CustomStyleManager from './CustomStyleManager';
 
 const defaultTabProps = {
     className: '!min-w-0',
@@ -32,7 +33,9 @@ export default function RightSidebar({ className }: React.HTMLAttributes<HTMLDiv
                     <SelectorsProvider>
                         {CustomSelectorManager}
                     </SelectorsProvider>
-                    <div>Styles</div>
+                    <StylesProvider>
+                        {props => <CustomStyleManager {...props}/>}
+                    </StylesProvider>
                 </>
             }
             {
