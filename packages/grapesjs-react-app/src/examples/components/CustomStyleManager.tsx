@@ -13,6 +13,7 @@ import { MAIN_BG_COLOR, cx } from '../common';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
+import InputAdornment from '@mui/material/InputAdornment';
 
 const accordionIcon = <Icon path={mdiMenuDown} size={0.7}/>;
 
@@ -74,6 +75,28 @@ export default function CustomStyleManager({ sectors }: StylesResultProps) {
                                         ))}
                                     </Select>
                                 </FormControl>
+                            }
+                            {
+                                prop.getType() === 'color' &&
+                                <TextField
+                                    placeholder={prop.getDefaultValue()}
+                                    value={prop.hasValue() ? prop.getValue() : ''}
+                                    onChange={(ev) => {prop.upValue(ev.target.value)}}
+                                    size="small"
+                                    InputProps={{
+                                        startAdornment: <InputAdornment position="start">
+                                            <div className="w-[15px] h-[15px]" style={{ backgroundColor: prop.hasValue() ? prop.getValue() : prop.getDefaultValue() }}>
+                                                <input
+                                                    type="color"
+                                                    className="w-[15px] h-[15px] opacity-0"
+                                                    value={prop.hasValue() ? prop.getValue() : prop.getDefaultValue()}
+                                                    onChange={(ev) => prop.upValue(ev.target.value)}
+                                                />
+                                            </div>
+                                        </InputAdornment>,
+                                    }}
+                                />
+
                             }
                         </div>
                     ))}
