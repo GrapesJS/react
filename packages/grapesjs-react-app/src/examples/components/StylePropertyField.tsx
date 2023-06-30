@@ -9,8 +9,8 @@ import RadioGroup from "@mui/material/RadioGroup";
 import Select from "@mui/material/Select";
 import Slider from "@mui/material/Slider";
 import TextField from "@mui/material/TextField";
-import type { Property, PropertyRadio, PropertySelect, PropertySlider } from "grapesjs";
-import { cx } from "../common";
+import type { Property, PropertyComposite, PropertyRadio, PropertySelect, PropertySlider } from "grapesjs";
+import { MAIN_BORDER_COLOR, cx } from "../common";
 import { useEditor } from "@grapesjs/react";
 
 interface StylePropertyFieldProps extends React.HTMLProps<HTMLDivElement> {
@@ -120,12 +120,24 @@ export default function StylePropertyField({ prop, ...rest }: StylePropertyField
                 </button>
             );
         } break;
+        case 'composite': {
+            const compositeProp = prop as PropertyComposite;
+            inputToRender = (
+                <div className={cx('flex flex-wrap p-2 bg-black/30 rounded border', MAIN_BORDER_COLOR)}>
+                    {
+                        compositeProp.getProperties().map(prop => (
+                            <StylePropertyField key={prop.getId()} prop={prop} />
+                        ))
+                    }
+                </div>
+            );
+        } break;
     }
 
     return (
         <div {...rest} className={cx('mb-3 px-1', prop.isFull() ? 'w-full' : 'w-1/2')} >
             <div className={cx('flex mb-2', canClear && 'text-sky-300')}>
-                <div className="flex-grow capitalize">{ prop.getName() }</div>
+                <div className="flex-grow capitalize">{ prop.getLabel() }</div>
                 {
                     canClear &&
                     <button onClick={() => prop.clear()}>
