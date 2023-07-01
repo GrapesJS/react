@@ -14,10 +14,12 @@ enum Examples {
 
 function App() {
   const [editor, setEditor] =  useState<Editor>();
+  const [ready, setReady] =  useState<Editor>();
   const [projectData, setProjectData] =  useState<ProjectData>();
   const [projectDataDate, setProjectDataDate] =  useState<Date>();
   const [selectedExample, setSelectedExample] =  useState(Examples.Custom);
-  const iconCls = `inline-block ${editor ? 'text-green-400' : 'text-red-400'}`;
+  const mountedIconCls = `inline-block ${editor ? 'text-green-400' : 'text-red-400'}`;
+  const readyIconCls = `inline-block ${ready ? 'text-green-400' : 'text-red-400'}`;
 
   const onProjectUpdate = useCallback<Required<EditorProps>['onUpdate']>((pd) => {
     setProjectData(pd);
@@ -33,6 +35,12 @@ function App() {
     ))
   ), []);
 
+  const onExampleChange = (ev: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedExample(ev.target.value as Examples);
+    setEditor(undefined);
+    setReady(undefined);
+  };
+
   let EditorToRender = DefaultEditor;
 
   switch (selectedExample) {
@@ -45,24 +53,32 @@ function App() {
 
   return (
     <div className="flex flex-col h-screen text-sm text-white bg-slate-900">
-      <div className="flex gap-5 p-3">
+      <div className="flex gap-3 p-3 items-center">
         <div>
           <select
             className="rounded-sm bg-slate-700 p-1"
             value={selectedExample}
-            onChange={(ev) => setSelectedExample(ev.target.value as Examples)}
+            onChange={onExampleChange}
           >
             {exampleOptions}
           </select>
         </div>
         <div className="flex gap-2 items-center">
-            Editor loaded:
+            Mounted:
             <Icon
               size={0.7}
               path={editor ? mdiCheckBold : mdiClose}
-              className={iconCls}
+              className={mountedIconCls}
             />
-          </div>
+        </div>
+        <div className="flex gap-2 items-center">
+            Ready:
+            <Icon
+              size={0.7}
+              path={ready ? mdiCheckBold : mdiClose}
+              className={readyIconCls}
+            />
+        </div>
         {
           !!projectDataDate &&
           <div>Last update: {getDateString(projectDataDate)}</div>
@@ -70,7 +86,8 @@ function App() {
       </div>
       <div className="flex-grow overflow-hidden">
         <EditorToRender
-          onLoad={setEditor}
+          onEditor={setEditor}
+          onReady={setReady}
           onUpdate={onProjectUpdate}
         />
       </div>
