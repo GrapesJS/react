@@ -46,7 +46,7 @@ export interface EditorProps extends Omit<React.HTMLProps<HTMLDivElement>, 'onLo
     onEditor?: (editor: Editor) => void,
 
     /**
-     * Callback triggered once the editor is ready (eg. mounted and loaded data from the Storage).
+     * Callback triggered once the editor is ready (mounted and loaded data from the Storage).
      */
     onReady?: (editor: Editor) => void,
 
@@ -55,6 +55,16 @@ export interface EditorProps extends Omit<React.HTMLProps<HTMLDivElement>, 'onLo
      * The updated ProjectData (JSON) is passed as a first argument.
      */
     onUpdate?: (projectData: ProjectData, editor: Editor) => void,
+
+    /**
+     * Avoid rendering children of the editor until the editor instance is created.
+     */
+    waitEditor?: boolean | React.ReactNode,
+
+    /**
+     * Avoid rendering children of the editor until the editor is ready (mounted and loaded data from the Storage).
+     */
+    waitReady?: boolean | React.ReactNode,
 }
 
 const EditorInstance = memo(function EditorInstance({

@@ -5,11 +5,13 @@ import type { Editor, ProjectData } from 'grapesjs';
 import { useCallback, useMemo, useState } from 'react';
 import CustomEditor from './examples/CustomEditor';
 import DefaultEditor from './examples/DefaultEditor';
+import EditorWaitReady from './examples/EditorWaitReady';
 import { getDateString } from './examples/common';
 
 enum Examples {
   Default = 'Default Editor',
   Custom = 'Custom UI Editor',
+  WaitReady = 'Editor wait Ready',
 }
 
 function App() {
@@ -17,7 +19,7 @@ function App() {
   const [ready, setReady] =  useState<Editor>();
   const [projectData, setProjectData] =  useState<ProjectData>();
   const [projectDataDate, setProjectDataDate] =  useState<Date>();
-  const [selectedExample, setSelectedExample] =  useState(Examples.Custom);
+  const [selectedExample, setSelectedExample] =  useState(Examples.WaitReady);
   const mountedIconCls = `inline-block ${editor ? 'text-green-400' : 'text-red-400'}`;
   const readyIconCls = `inline-block ${ready ? 'text-green-400' : 'text-red-400'}`;
 
@@ -46,6 +48,9 @@ function App() {
   switch (selectedExample) {
     case Examples.Custom:
       EditorToRender = CustomEditor;
+      break;
+    case Examples.WaitReady:
+      EditorToRender = EditorWaitReady;
       break;
   }
 
