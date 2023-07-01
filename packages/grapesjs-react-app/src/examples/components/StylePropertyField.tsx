@@ -151,7 +151,7 @@ export default function StylePropertyField({ prop, ...rest }: StylePropertyField
                                     </button>
                                     <div
                                         className={cx('bg-white min-w-[17px] min-h-[17px] text-black text-sm flex justify-center', ROUND_BORDER_COLOR)}
-                                        style={layer.getStylePreview({ number: { min: -3, max: 3 } })}
+                                        style={layer.getStylePreview({ number: { min: -3, max: 3 }, camelCase: true })}
                                     >
                                         { isTextShadow && 'T' }
                                     </div>
