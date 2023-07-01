@@ -18,7 +18,7 @@ export default function CustomStyleManager({ sectors }: StylesResultProps) {
                 <AccordionSummary className="!bg-slate-800" expandIcon={accordionIcon}>
                     { sector.getName() }
                 </AccordionSummary>
-                <AccordionDetails className={`!${MAIN_BG_COLOR} flex flex-wrap`}>
+                <AccordionDetails className={`${MAIN_BG_COLOR} flex flex-wrap`}>
                     {sector.getProperties().map(prop => (
                         <StylePropertyField key={prop.getId()} prop={prop} />
                     ))}

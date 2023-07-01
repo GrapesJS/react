@@ -10,7 +10,7 @@ import Select from "@mui/material/Select";
 import Slider from "@mui/material/Slider";
 import TextField from "@mui/material/TextField";
 import type { Property, PropertyComposite, PropertyRadio, PropertySelect, PropertySlider } from "grapesjs";
-import { MAIN_BORDER_COLOR, cx } from "../common";
+import { MAIN_BORDER_COLOR, ROUND_BORDER_COLOR, cx } from "../common";
 import { useEditor } from "@grapesjs/react";
 
 interface StylePropertyFieldProps extends React.HTMLProps<HTMLDivElement> {
@@ -87,8 +87,8 @@ export default function StylePropertyField({ prop, ...rest }: StylePropertyField
                     fullWidth placeholder={defValue} value={valueString} onChange={onChange} size="small"
                     InputProps={{
                         startAdornment: <InputAdornment position="start">
-                            <div className="w-[15px] h-[15px]" style={{ backgroundColor: valueWithDef }}>
-                                <input type="color" className="w-[15px] h-[15px] opacity-0" value={valueWithDef} onChange={(ev) => handleChange(ev.target.value)}/>
+                            <div className={`w-[15px] h-[15px] ${ROUND_BORDER_COLOR}`} style={{ backgroundColor: valueWithDef }}>
+                                <input type="color" className="w-[15px] h-[15px] cursor-pointer opacity-0" value={valueWithDef} onChange={(ev) => handleChange(ev.target.value)}/>
                             </div>
                         </InputAdornment>,
                     }}
@@ -123,7 +123,7 @@ export default function StylePropertyField({ prop, ...rest }: StylePropertyField
         case 'composite': {
             const compositeProp = prop as PropertyComposite;
             inputToRender = (
-                <div className={cx('flex flex-wrap p-2 bg-black/20 rounded border', MAIN_BORDER_COLOR)}>
+                <div className={cx('flex flex-wrap p-2 bg-black/20', ROUND_BORDER_COLOR)}>
                     {
                         compositeProp.getProperties().map(prop => (
                             <StylePropertyField key={prop.getId()} prop={prop} />
