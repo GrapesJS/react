@@ -3,7 +3,7 @@ import type { Editor, EditorConfig, ProjectData } from 'grapesjs';
 import { memo, useEffect, useMemo, useRef } from 'react';
 import { useEditorInstance } from './context/EditorInstance';
 import { useEditorOptions } from './context/EditorOptions';
-import { cx } from './utils';
+import { cx, noop } from './utils';
 import { loadScript, loadStyle } from './utils/dom';
 import { GrapesPlugins, PluginToLoad, PluginTypeToLoad, initPlugins } from './utils/plugins';
 
@@ -13,11 +13,13 @@ export interface EditorProps extends Omit<React.HTMLProps<HTMLDivElement>, 'onLo
      * GrapesJS options.
      */
     options?: EditorConfig,
+
     /**
      * Load GrapesJS CSS file asynchronously from URL.
      * @example 'https://unpkg.com/grapesjs/dist/css/grapes.min.css'
      */
     grapesjsCss?: string,
+
     /**
      * Array of plugins.
      * Differently from the GrapesJS `plugins` option, this one allows also you to load plugins
@@ -37,10 +39,17 @@ export interface EditorProps extends Omit<React.HTMLProps<HTMLDivElement>, 'onLo
      * ]
      */
     plugins?: PluginTypeToLoad[],
+
     /**
-     * Callback triggered once the editor is loaded
+     * Callback triggered once the editor instance is created.
      */
-    onLoad?: (editor: Editor) => void,
+    onEditor?: (editor: Editor) => void,
+
+    /**
+     * Callback triggered once the editor is ready (eg. mounted and loaded data from the Storage).
+     */
+    onReady?: (editor: Editor) => void,
+
     /**
      * Callback triggered on each update in the editor project.
      * The updated ProjectData (JSON) is passed as a first argument.
@@ -55,7 +64,8 @@ const EditorInstance = memo(function EditorInstance({
   plugins = [],
   grapesjs,
   grapesjsCss,
-  onLoad = () => {},
+  onEditor = noop,
+  onReady,
   onUpdate,
 }: EditorProps) {
   const { setEditor } = useEditorInstance();
@@ -117,12 +127,16 @@ const EditorInstance = memo(function EditorInstance({
       };
       editor = grapes.init(config);
       setEditor(editor);
-      onLoad(editor);
+      onEditor(editor);
 
       if (onUpdate) {
         editor.on('update', () => {
           onUpdate(editor!.getProjectData(), editor!);
         })
+      }
+
+      if (onReady) {
+        editor.onReady(() => onReady(editor!));
       }
     }
 
