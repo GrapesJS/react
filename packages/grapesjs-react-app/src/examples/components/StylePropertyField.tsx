@@ -12,7 +12,7 @@ import Select from "@mui/material/Select";
 import Slider from "@mui/material/Slider";
 import TextField from "@mui/material/TextField";
 import type { Property, PropertyComposite, PropertyRadio, PropertySelect, PropertySlider, PropertyStack } from "grapesjs";
-import { ROUND_BORDER_COLOR, cx } from "../common";
+import { BTN_CLS, ROUND_BORDER_COLOR, cx } from "../common";
 
 interface StylePropertyFieldProps extends React.HTMLProps<HTMLDivElement> {
     prop: Property;
@@ -32,6 +32,7 @@ export default function StylePropertyField({ prop, ...rest }: StylePropertyField
         const { Assets } = editor;
         Assets.open({
             select: (asset, complete) => {
+                console.log({ complete })
                 prop.upValue(asset.getSrc(), { partial: !complete });
                 complete && Assets.close();
             },
@@ -112,13 +113,19 @@ export default function StylePropertyField({ prop, ...rest }: StylePropertyField
         } break;
         case 'file': {
             inputToRender = (
-                <button onClick={openAssets}>
+                <div className="flex flex-col items-center gap-3">
                     {
                         value && value !== defValue &&
-                        <div className="w-[16px] h-[16px] rounded inline-block" style={{ backgroundImage: `url(${value})` }}/>
+                        <div
+                            className="w-[50px] h-[50px] rounded inline-block bg-cover bg-center cursor-pointer"
+                            style={{ backgroundImage: `url("${value}")` }}
+                            onClick={() => handleChange('')}
+                        />
                     }
-                    <div>Select</div>
-                </button>
+                    <button type="button" onClick={openAssets} className={BTN_CLS}>
+                        Select Image
+                    </button>
+                </div>
             );
         } break;
         case 'composite': {
