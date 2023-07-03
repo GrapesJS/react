@@ -1,4 +1,4 @@
-import GrapesJsEditor, { AssetsProvider, BlocksProvider, EditorProps, LayersProvider, ModalProvider, SelectorsProvider, StylesProvider } from '@grapesjs/react';
+import GrapesJsEditor, { AssetsProvider, BlocksProvider, EditorProps, LayersProvider, ModalProvider, SelectorsProvider, StylesProvider, TraitsProvider } from '@grapesjs/react';
 import { ThemeProvider } from '@mui/material/styles';
 import { customTheme, defaultEditorProps } from './common';
 import CustomAssetManager from './components/CustomAssetManager';
@@ -7,6 +7,7 @@ import CustomBlockManager from './components/CustomBlockManager';
 import CustomLayerManager from './components/CustomLayerManager';
 import CustomSelectorManager from './components/CustomSelectorManager';
 import CustomStyleManager from './components/CustomStyleManager';
+import CustomTraitManager from './components/CustomTraitManager';
 
 
 export default function DefaultCustomEditor(props: Partial<EditorProps>) {
@@ -31,6 +32,13 @@ export default function DefaultCustomEditor(props: Partial<EditorProps>) {
                         </Container>
                     )}
                 </StylesProvider>
+                <TraitsProvider>
+                    {({ Container, ...props})=> (
+                        <Container>
+                            <CustomTraitManager {...props}/>
+                        </Container>
+                    )}
+                </TraitsProvider>
                 <LayersProvider>
                     {({ Container, ...props})=> (
                         <Container>

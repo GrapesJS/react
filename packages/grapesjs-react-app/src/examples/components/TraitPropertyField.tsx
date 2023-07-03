@@ -69,7 +69,7 @@ export default function TraitPropertyField({ trait, ...rest }: StylePropertyFiel
         } break;
         case 'checkbox': {
             inputToRender = (
-                <Checkbox checked={value} onChange={onChange} size="small"/>
+                <Checkbox checked={value} onChange={(ev) => trait.setValue(ev.target.checked)} size="small"/>
             )
         } break;
         case 'button': {
