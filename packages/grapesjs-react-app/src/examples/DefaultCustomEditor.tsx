@@ -21,11 +21,6 @@ export default function DefaultCustomEditor(props: Partial<EditorProps>) {
                         </Container>
                     )}
                 </BlocksProvider>
-                <ModalProvider>
-                    {({ open, title, content, close }) => (
-                        <CustomModal open={open} title={title} children={content} close={close}/>
-                    )}
-                </ModalProvider>
                 <AssetsProvider>
                     {({ assets, select, close, Container }) => (
                         <Container>
@@ -33,6 +28,11 @@ export default function DefaultCustomEditor(props: Partial<EditorProps>) {
                         </Container>
                     )}
                 </AssetsProvider>
+                <ModalProvider>
+                    {({ open, title, content, close }) => (
+                        <CustomModal open={open} title={title} children={content} close={close}/>
+                    )}
+                </ModalProvider>
             </GrapesJsEditor>
         </ThemeProvider>
     )
