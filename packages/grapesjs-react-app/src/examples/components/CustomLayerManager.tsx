@@ -33,7 +33,7 @@ interface CanMove extends Partial<Omit<CanMoveResult, 'source'>> {
     index?: number;
 }
 
-export default function CustomLayerManager({ root }: LayersResultProps) {
+export default function CustomLayerManager({ root }: Omit<LayersResultProps, 'Container'>) {
     const editor = useEditor();
     const [pointerDown, setPointerDown] = useState(false);
     const [canMoveRes, setCanMoveRes] = useState<CanMove>({});
@@ -104,7 +104,7 @@ export default function CustomLayerManager({ root }: LayersResultProps) {
 
     return (
       <div
-        className="gjs-custom-layer-manager h-full overflow-y-auto overflow-x-hidden text-sm select-none relative"
+        className="gjs-custom-layer-manager h-full overflow-y-auto overflow-x-hidden text-sm text-left select-none relative"
         style={wrapGridStyle}
         onPointerDown={onDragStart}
         onPointerMove={onDragMove}

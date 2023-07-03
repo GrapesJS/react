@@ -126,6 +126,10 @@ const EditorInstance = memo(function({
           ...options.richTextEditor,
           custom: !!editorOptions.customRte,
         },
+        layerManager: {
+          ...options.layerManager,
+          custom: !!editorOptions.customLayers,
+        },
         container: canvasContainer || defaultContainer,
         customUI: !!canvasContainer,
         // Disables all default panels if Canvas is used

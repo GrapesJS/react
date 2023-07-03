@@ -1,13 +1,20 @@
 import type { Component } from 'grapesjs';
 import React, { memo, useEffect, useState } from 'react';
 import { useEditorInstance } from './context/EditorInstance';
+import { useEditorOptions } from './context/EditorOptions';
 import { isFunction } from './utils';
+import { PortalContainerResult, portalContainer } from './utils/react';
 
 export type LayersState = {
     /**
      * Root layer component.
      */
     root?: Component,
+
+    /**
+     * Default Layers Manager container.
+     */
+    Container: PortalContainerResult,
 };
 
 export type LayersResultProps = LayersState;
@@ -18,8 +25,10 @@ export interface LayersProviderProps {
 
 const LayersProvider = memo(function ({ children }: LayersProviderProps) {
     const { editor } = useEditorInstance();
+    const options = useEditorOptions();
     const [propState, setPropState] = useState<LayersState>(() => ({
         root: undefined,
+        Container: () => null,
     }));
 
     useEffect(() => {
@@ -27,19 +36,23 @@ const LayersProvider = memo(function ({ children }: LayersProviderProps) {
         const { Layers } = editor;
         const event = Layers.events.custom;
 
-        const up = () => {
+        const up = ({ container }: { container: HTMLElement }) => {
+            console.log('LayersProvider', container);
             setPropState({
                 root: Layers.getRoot(),
+                Container: portalContainer(container),
             });
         }
 
         editor.on(event, up);
-        up();
+        Layers.__trgCustom({});
 
         return () => {
             editor.off(event, up);
         };
     }, [editor]);
+
+    useEffect(() => options.setCustomLayers(true), []);
 
     return editor ?
         (isFunction(children) ? children(propState)  : null)
