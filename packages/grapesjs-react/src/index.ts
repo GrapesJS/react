@@ -16,6 +16,8 @@ export { default as SelectorsProvider } from './SelectorsProvider';
 export type { SelectorsResultProps } from './SelectorsProvider';
 export { default as StylesProvider } from './StylesProvider';
 export type { StylesResultProps } from './StylesProvider';
+export { default as TraitsProvider } from './TraitsProvider';
+export type { TraitsResultProps } from './TraitsProvider';
 export { default as WithEditor } from './WithEditor';
 export { useEditor, useEditorMaybe } from './context/EditorInstance';
 
