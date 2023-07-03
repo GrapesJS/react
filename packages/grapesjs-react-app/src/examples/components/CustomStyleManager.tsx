@@ -9,10 +9,10 @@ import StylePropertyField from './StylePropertyField';
 
 const accordionIcon = <Icon path={mdiMenuDown} size={0.7}/>;
 
-export default function CustomStyleManager({ sectors }: StylesResultProps) {
+export default function CustomStyleManager({ sectors }: Omit<StylesResultProps, 'Container'>) {
 
     return (
-      <div className="gjs-custom-style-manager">
+      <div className="gjs-custom-style-manager text-left">
         {sectors.map(sector => (
             <Accordion key={sector.getId()} disableGutters>
                 <AccordionSummary className="!bg-slate-800" expandIcon={accordionIcon}>

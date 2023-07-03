@@ -3,6 +3,7 @@ import React, { memo, useEffect, useState } from 'react';
 import { useEditorInstance } from './context/EditorInstance';
 import { isFunction } from './utils';
 import { PortalContainerResult, portalContainer } from './utils/react';
+import { useEditorOptions } from './context/EditorOptions';
 
 // TODO
 // addSelector: (...args: Parameters<Editor['Selectors']['addSelected']>) => void,
@@ -27,6 +28,7 @@ export interface StylesProviderProps {
 
 const StylesProvider = memo(function ({ children }: StylesProviderProps) {
     const { editor } = useEditorInstance();
+    const options = useEditorOptions();
     const [propState, setPropState] = useState<StylesState>(() => ({
         sectors: [],
         Container: () => null,
@@ -50,6 +52,8 @@ const StylesProvider = memo(function ({ children }: StylesProviderProps) {
             editor.off(event, up);
         };
     }, [editor]);
+
+    useEffect(() => options.setCustomStyles(true), []);
 
     return editor ?
         (isFunction(children) ? children(propState)  : null)
