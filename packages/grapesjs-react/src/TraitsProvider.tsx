@@ -44,6 +44,7 @@ const TraitsProvider = memo(function ({ children }: TraitsProviderProps) {
         }
 
         editor.on(event, up);
+        Traits.__trgCustom();
 
         return () => {
             editor.off(event, up);
