@@ -1,5 +1,6 @@
 import { EditorProps } from '@grapesjs/react';
 import type grapesjs from 'grapesjs';
+import type { Plugin } from 'grapesjs';
 import type { EditorConfig } from 'grapesjs';
 
 declare global {
@@ -78,6 +79,19 @@ export const defaultOptions: EditorConfig = {
         <div>Element C</div>
     `,
 };
+
+export const slowStoragePlugin: Plugin = (editor) => {
+    editor.Storage.add('slow', {
+      async load() {
+        console.log('Waiting for the Storage');
+        await new Promise(res => setTimeout(res, 3000));
+        return {
+          pages: [{ component: '<h1>Content from the Storage</h1>'}],
+        };
+      },
+      async store() {},
+    })
+  }
 
 export const defaultEditorProps: EditorProps = {
     grapesjs: window.grapesjs,
