@@ -9,7 +9,7 @@ export type TraitsState = {
     /**
      * Current selected traits.
      */
-    traits?: Trait[],
+    traits: Trait[],
 
     /**
      * Default Trait Manager container.
