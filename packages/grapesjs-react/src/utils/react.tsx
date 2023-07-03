@@ -30,6 +30,6 @@ export type PortalContainerResult = React.FC<PortalContainerProps>;
 
 export function portalContainer(el: HTMLElement): PortalContainerResult {
     return function Container({ children }: PortalContainerProps) {
-        return createPortal(children, el);
+        return el ? createPortal(children, el) : <></>;
     };
 }
