@@ -3,6 +3,7 @@ import React, { memo, useEffect, useState } from 'react';
 import { useEditorInstance } from './context/EditorInstance';
 import { isFunction, noop } from './utils';
 import { PortalContainerResult, portalContainer } from './utils/react';
+import { useEditorOptions } from './context/EditorOptions';
 
 export type SelectorsState = {
     /**
@@ -54,6 +55,7 @@ export interface SelectorsProviderProps {
 
 const SelectorsProvider = memo(function ({ children }: SelectorsProviderProps) {
     const { editor } = useEditorInstance();
+    const options = useEditorOptions();
     const [propState, setPropState] = useState<SelectorsState>(() => ({
         selectors: [],
         states: [],
@@ -89,6 +91,8 @@ const SelectorsProvider = memo(function ({ children }: SelectorsProviderProps) {
             editor.off(event, up);
         };
     }, [editor]);
+
+    useEffect(() => options.setCustomSelectors(true), []);
 
     return editor ?
         (isFunction(children) ? children(propState)  : null)

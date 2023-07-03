@@ -14,7 +14,7 @@ export default function CustomSelectorManager({
     setState,
     addSelector,
     removeSelector,
-}: SelectorsResultProps) {
+}: Omit<SelectorsResultProps, 'Container'>) {
     const addNewSelector = () => {
         const next = selectors.length + 1;
         addSelector({ name: `new-${next}`, label: `New ${next}` });
@@ -23,7 +23,7 @@ export default function CustomSelectorManager({
     const targetStr = targets.join(', ');
 
     return (
-      <div className="gjs-custom-selector-manager p-2 flex flex-col gap-2">
+      <div className="gjs-custom-selector-manager p-2 flex flex-col gap-2 text-left">
         <div className="flex items-center">
             <div className="flex-grow">
                 Selectors

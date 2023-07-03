@@ -1,10 +1,11 @@
-import GrapesJsEditor, { AssetsProvider, BlocksProvider, EditorProps, LayersProvider, ModalProvider } from '@grapesjs/react';
+import GrapesJsEditor, { AssetsProvider, BlocksProvider, EditorProps, LayersProvider, ModalProvider, SelectorsProvider } from '@grapesjs/react';
 import { ThemeProvider } from '@mui/material/styles';
 import { customTheme, defaultEditorProps } from './common';
 import CustomAssetManager from './components/CustomAssetManager';
 import CustomModal from './components/CustomModal';
 import CustomBlockManager from './components/CustomBlockManager';
 import CustomLayerManager from './components/CustomLayerManager';
+import CustomSelectorManager from './components/CustomSelectorManager';
 
 
 export default function DefaultCustomEditor(props: Partial<EditorProps>) {
@@ -15,13 +16,13 @@ export default function DefaultCustomEditor(props: Partial<EditorProps>) {
                 {...defaultEditorProps}
                 {...props}
             >
-                <BlocksProvider>
+                <SelectorsProvider>
                     {({ Container, ...props})=> (
                         <Container>
-                            <CustomBlockManager {...props}/>
+                            <CustomSelectorManager {...props}/>
                         </Container>
                     )}
-                </BlocksProvider>
+                </SelectorsProvider>
                 <LayersProvider>
                     {({ Container, ...props})=> (
                         <Container>
@@ -29,6 +30,13 @@ export default function DefaultCustomEditor(props: Partial<EditorProps>) {
                         </Container>
                     )}
                 </LayersProvider>
+                <BlocksProvider>
+                    {({ Container, ...props})=> (
+                        <Container>
+                            <CustomBlockManager {...props}/>
+                        </Container>
+                    )}
+                </BlocksProvider>
                 <AssetsProvider>
                     {({ assets, select, close, Container }) => (
                         <Container>

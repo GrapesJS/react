@@ -9,6 +9,7 @@ export interface EditorOptionsState {
     customStyles?: boolean;
     customBlocks?: boolean;
     customLayers?: boolean;
+    customSelectors?: boolean;
     customRte?: boolean;
     ready?: boolean;
     setRefCanvas: (ref: HTMLElement) => void;
@@ -18,6 +19,7 @@ export interface EditorOptionsState {
     setCustomRte: (value: boolean) => void;
     setCustomStyles: (value: boolean) => void;
     setCustomLayers: (value: boolean) => void;
+    setCustomSelectors: (value: boolean) => void;
     setReady: (value: boolean) => void;
 }
 
@@ -46,6 +48,9 @@ export const EditorOptionsProvider = ({ children }: {
         },
         setCustomLayers(customLayers) {
             setState((state) => ({ ...state, customLayers }))
+        },
+        setCustomSelectors(customSelectors) {
+            setState((state) => ({ ...state, customSelectors }))
         },
         setReady(ready) {
             setState((state) => ({ ...state, ready }))

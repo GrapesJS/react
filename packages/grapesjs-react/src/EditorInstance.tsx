@@ -130,6 +130,10 @@ const EditorInstance = memo(function({
           ...options.layerManager,
           custom: !!editorOptions.customLayers,
         },
+        selectorManager: {
+          ...options.selectorManager,
+          custom: !!editorOptions.customSelectors,
+        },
         container: canvasContainer || defaultContainer,
         customUI: !!canvasContainer,
         // Disables all default panels if Canvas is used
