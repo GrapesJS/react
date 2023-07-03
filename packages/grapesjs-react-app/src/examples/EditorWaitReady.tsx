@@ -1,6 +1,6 @@
 import GrapesJsEditor, { EditorProps } from '@grapesjs/react';
 import { defaultEditorProps, slowStoragePlugin } from './common';
-import CircularProgress from '@mui/material/CircularProgress';
+import FullSpinner from './components/FullSpinner';
 
 const options = {
   ...defaultEditorProps.options,
@@ -12,12 +12,6 @@ const plugins = [
   ...defaultEditorProps.plugins!,
 ];
 
-const Spinner = (
-  <div className="flex items-center h-full justify-center">
-    <CircularProgress/>
-  </div>
-)
-
 export default function EditorWaitReady(props: Partial<EditorProps>) {
     return (
         <GrapesJsEditor
@@ -26,7 +20,7 @@ export default function EditorWaitReady(props: Partial<EditorProps>) {
           options={options}
           plugins={plugins}
           {...props}
-          waitReady={Spinner}
+          waitReady={<FullSpinner/>}
         />
     )
 }
