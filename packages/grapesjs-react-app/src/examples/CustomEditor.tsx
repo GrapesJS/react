@@ -1,20 +1,14 @@
 import GrapesJsEditor, { AssetsProvider, Canvas, EditorProps, ModalProvider } from '@grapesjs/react';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
-import { MAIN_BORDER_COLOR, defaultEditorProps } from './common';
+import { ThemeProvider } from '@mui/material/styles';
+import { MAIN_BORDER_COLOR, customTheme, defaultEditorProps } from './common';
 import CustomAssetManager from './components/CustomAssetManager';
 import CustomModal from './components/CustomModal';
 import RightSidebar from './components/RightSidebar';
 import Topbar from './components/Topbar';
 
-const theme = createTheme({
-    palette: {
-        mode: 'dark',
-    },
-});
-
 export default function CustomEditor(props: Partial<EditorProps>) {
     return (
-        <ThemeProvider theme={theme}>
+        <ThemeProvider theme={customTheme}>
             <GrapesJsEditor
                 className="gjs-custom-editor"
                 {...defaultEditorProps}

@@ -2,6 +2,7 @@ import { EditorProps } from '@grapesjs/react';
 import type grapesjs from 'grapesjs';
 import type { Plugin } from 'grapesjs';
 import type { EditorConfig } from 'grapesjs';
+import { createTheme } from '@mui/material/styles';
 
 declare global {
     interface Window {
@@ -99,3 +100,9 @@ export const defaultEditorProps: EditorProps = {
     plugins: plugins,
     options: defaultOptions,
 }
+
+export const customTheme = createTheme({
+    palette: {
+        mode: 'dark',
+    },
+});
