@@ -37,7 +37,6 @@ const LayersProvider = memo(function ({ children }: LayersProviderProps) {
         const event = Layers.events.custom;
 
         const up = ({ container }: { container: HTMLElement }) => {
-            console.log('LayersProvider', container);
             setPropState({
                 root: Layers.getRoot(),
                 Container: portalContainer(container),
