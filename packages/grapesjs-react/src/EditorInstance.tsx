@@ -1,13 +1,13 @@
 import type gjs from 'grapesjs';
 import type { Editor, EditorConfig, ProjectData } from 'grapesjs';
-import { memo, useEffect, useMemo, useRef } from 'react';
+import { memo, useEffect, useMemo, useRef, useState } from 'react';
 import { useEditorInstance } from './context/EditorInstance';
 import { useEditorOptions } from './context/EditorOptions';
 import { cx, noop } from './utils';
 import { loadScript, loadStyle } from './utils/dom';
 import { GrapesPlugins, PluginToLoad, PluginTypeToLoad, initPlugins } from './utils/plugins';
 
-export interface EditorProps extends Omit<React.HTMLProps<HTMLDivElement>, 'onLoad'> {
+export interface EditorProps extends React.HTMLProps<HTMLDivElement> {
     grapesjs: string | typeof gjs,
     /**
      * GrapesJS options.
@@ -62,14 +62,15 @@ export interface EditorProps extends Omit<React.HTMLProps<HTMLDivElement>, 'onLo
     waitEditor?: boolean | React.ReactNode,
 
     /**
-     * Avoid rendering children of the editor until the editor is ready (mounted and loaded data from the Storage).
+     * Avoid showing children of the editor until the editor is ready (mounted and loaded data from the Storage).
      */
     waitReady?: boolean | React.ReactNode,
 }
 
-const EditorInstance = memo(function EditorInstance({
+const EditorInstance = memo(function({
   children,
   className,
+  style,
   options = {},
   plugins = [],
   grapesjs,
@@ -77,9 +78,12 @@ const EditorInstance = memo(function EditorInstance({
   onEditor = noop,
   onReady,
   onUpdate,
+  waitReady,
+  ...rest
 }: EditorProps) {
   const { setEditor } = useEditorInstance();
   const editorOptions = useEditorOptions();
+  const [isEditorReady, setEditorReady] = useState(false);
   const editorRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -145,9 +149,10 @@ const EditorInstance = memo(function EditorInstance({
         })
       }
 
-      if (onReady) {
-        editor.onReady(() => onReady(editor!));
-      }
+      editor.onReady(() => {
+        setEditorReady(true);
+        onReady?.(editor!);
+      });
     }
 
     const init = async () => {
@@ -172,16 +177,35 @@ const EditorInstance = memo(function EditorInstance({
 
   const height = options.height ?? '100%';
   const width = options.width ?? '100%';
+  const editorCls = cx('gjs-editor-wrapper', className);
+  const isWaitingReady = waitReady && !isEditorReady;
 
-  const style = useMemo(() => ({
+  const styleRes = useMemo(() => ({
+    ...style,
     height,
     width,
-  }), [height, width]);
+  }), [height, width, style]);
+
+  const styleEditorRes = useMemo(() => ({
+    ...styleRes,
+    ...(isWaitingReady ? {
+      opacity: 0,
+      width: 0,
+      height: 0,
+    } : {})
+  }), [styleRes, isWaitingReady]);
 
   return (
-    <div className={cx('gjs-editor-wrapper', className)} ref={editorRef} style={style}>
-      { children }
-    </div>
+    <>
+      {
+        waitReady && !isEditorReady ?
+          <div className={editorCls} style={styleRes} children={waitReady}/>
+        : null
+      }
+      <div {...rest} ref={editorRef} className={editorCls} style={styleEditorRes}>
+        { children }
+      </div>
+    </>
   );
 });
 

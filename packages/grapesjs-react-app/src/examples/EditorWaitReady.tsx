@@ -1,16 +1,17 @@
 import GrapesJsEditor, { EditorProps } from '@grapesjs/react';
 import { defaultEditorProps } from './common';
 import type { Plugin } from 'grapesjs';
+import CircularProgress from '@mui/material/CircularProgress';
 
 const slowStorage: Plugin = (editor) => {
   editor.Storage.add('slow', {
     async load() {
-      console.log('Waiting for slow Storage');
+      console.log('Waiting for the Storage');
       await new Promise(res => setTimeout(res, 3000));
       return {
         pages: [
           {
-            component: '<h1>Content from slow Storage</h1>',
+            component: '<h1>Content from the Storage</h1>',
           }
         ]
       };
@@ -24,7 +25,7 @@ const slowStorage: Plugin = (editor) => {
 export default function EditorWaitReady(props: Partial<EditorProps>) {
     return (
         <GrapesJsEditor
-          className="gjs-default-editor"
+          className="gjs-editor-wait-ready"
           {...defaultEditorProps}
           options={{
             ...defaultEditorProps.options,
@@ -37,6 +38,9 @@ export default function EditorWaitReady(props: Partial<EditorProps>) {
             ...defaultEditorProps.plugins!,
           ]}
           {...props}
+          waitReady={<div className="flex items-center h-full justify-center">
+            <CircularProgress/>
+          </div>}
         />
     )
 }
