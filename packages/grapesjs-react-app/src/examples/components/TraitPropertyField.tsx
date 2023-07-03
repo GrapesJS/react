@@ -1,3 +1,6 @@
+import { useEditor } from "@grapesjs/react";
+import Button from "@mui/material/Button";
+import Checkbox from "@mui/material/Checkbox";
 import FormControl from "@mui/material/FormControl";
 import InputAdornment from "@mui/material/InputAdornment";
 import MenuItem from "@mui/material/MenuItem";
@@ -11,6 +14,7 @@ interface StylePropertyFieldProps extends React.HTMLProps<HTMLDivElement> {
 }
 
 export default function TraitPropertyField({ trait, ...rest }: StylePropertyFieldProps) {
+    const editor = useEditor();
     const handleChange = (value: string) => {
         trait.setValue(value);
     };
@@ -19,12 +23,12 @@ export default function TraitPropertyField({ trait, ...rest }: StylePropertyFiel
         handleChange(ev.target.value);
     };
 
-    /**
-        case 'checkbox':
-            return <SwitchField {...getCheckboxProps(trait)}/>
-        case 'button':
-            return <Button {...getButtonProps(trait)}/>
-     */
+    const handleButtonClick = () => {
+        const command = trait.get('command');
+        if (command) {
+            typeof command === 'string' ? editor.runCommand(command) : command(editor, trait);
+        }
+    }
 
     const type = trait.getType();
     const defValue = trait.getDefault() || trait.attributes.placeholder;
@@ -61,6 +65,18 @@ export default function TraitPropertyField({ trait, ...rest }: StylePropertyFiel
                         </InputAdornment>,
                     }}
                 />
+            )
+        } break;
+        case 'checkbox': {
+            inputToRender = (
+                <Checkbox checked={value} onChange={onChange} size="small"/>
+            )
+        } break;
+        case 'button': {
+            inputToRender = (
+                <Button fullWidth onClick={handleButtonClick}>
+                    {trait.getLabel()}
+                </Button>
             )
         } break;
     }
