@@ -57,11 +57,6 @@ export interface EditorProps extends React.HTMLProps<HTMLDivElement> {
     onUpdate?: (projectData: ProjectData, editor: Editor) => void,
 
     /**
-     * Avoid rendering children of the editor until the editor instance is created.
-     */
-    waitEditor?: boolean | React.ReactNode,
-
-    /**
      * Avoid showing children of the editor until the editor is ready (mounted and loaded data from the Storage).
      */
     waitReady?: boolean | React.ReactNode,
