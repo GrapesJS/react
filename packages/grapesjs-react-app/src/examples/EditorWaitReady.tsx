@@ -9,16 +9,10 @@ const slowStorage: Plugin = (editor) => {
       console.log('Waiting for the Storage');
       await new Promise(res => setTimeout(res, 3000));
       return {
-        pages: [
-          {
-            component: '<h1>Content from the Storage</h1>',
-          }
-        ]
+        pages: [{ component: '<h1>Content from the Storage</h1>'}],
       };
     },
-    async store() {
-
-    },
+    async store() {},
   })
 }
 
@@ -38,9 +32,11 @@ export default function EditorWaitReady(props: Partial<EditorProps>) {
             ...defaultEditorProps.plugins!,
           ]}
           {...props}
-          waitReady={<div className="flex items-center h-full justify-center">
-            <CircularProgress/>
-          </div>}
+          waitReady={
+            <div className="flex items-center h-full justify-center">
+              <CircularProgress/>
+            </div>
+          }
         />
     )
 }
