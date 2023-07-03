@@ -21,7 +21,7 @@ function App() {
   const [ready, setReady] =  useState<Editor>();
   const [projectData, setProjectData] =  useState<ProjectData>();
   const [projectDataDate, setProjectDataDate] =  useState<Date>();
-  const [selectedExample, setSelectedExample] =  useState(Examples.DefaultCustom);
+  const [selectedExample, setSelectedExample] =  useState(Examples.Custom);
   const mountedIconCls = `inline-block ${editor ? 'text-green-400' : 'text-red-400'}`;
   const readyIconCls = `inline-block ${ready ? 'text-green-400' : 'text-red-400'}`;
 

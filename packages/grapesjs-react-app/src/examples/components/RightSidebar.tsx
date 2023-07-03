@@ -1,5 +1,5 @@
 import { BlocksProvider, LayersProvider, PagesProvider, SelectorsProvider, StylesProvider } from '@grapesjs/react';
-import { mdiBrush, mdiLayers, mdiViewGridPlus, mdiTextBoxMultiple } from '@mdi/js';
+import { mdiBrush, mdiLayers, mdiViewGridPlus, mdiTextBoxMultiple, mdiCog } from '@mdi/js';
 import Icon from '@mdi/react';
 import Tab from '@mui/material/Tab';
 import Tabs from '@mui/material/Tabs';
@@ -22,6 +22,7 @@ export default function RightSidebar({ className }: React.HTMLAttributes<HTMLDiv
       <div className={cx('gjs-right-sidebar flex flex-col', className)}>
         <Tabs value={selectedTab} onChange={(_, v) => setSelectedTab(v)} variant="fullWidth">
             <Tab {...defaultTabProps} label={<Icon size={1} path={mdiBrush}/>}/>
+            <Tab {...defaultTabProps} label={<Icon size={1} path={mdiCog}/>}/>
             <Tab {...defaultTabProps} label={<Icon size={1} path={mdiLayers}/>}/>
             <Tab {...defaultTabProps} label={<Icon size={1} path={mdiViewGridPlus}/>}/>
             <Tab {...defaultTabProps} label={<Icon size={1} path={mdiTextBoxMultiple}/>}/>
@@ -40,18 +41,24 @@ export default function RightSidebar({ className }: React.HTMLAttributes<HTMLDiv
             }
             {
                 selectedTab === 1 &&
+                <>
+                    Traits
+                </>
+            }
+            {
+                selectedTab === 2 &&
                 <LayersProvider>
                     {props => <CustomLayerManager {...props}/>}
                 </LayersProvider>
             }
             {
-                selectedTab === 2 &&
+                selectedTab === 3 &&
                 <BlocksProvider>
                     {props=> <CustomBlockManager {...props}/>}
                 </BlocksProvider>
             }
             {
-                selectedTab === 3 &&
+                selectedTab === 4 &&
                 <PagesProvider>
                     {props => <CustomPageManager {...props}/>}
                 </PagesProvider>

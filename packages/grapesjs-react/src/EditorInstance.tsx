@@ -130,6 +130,10 @@ const EditorInstance = memo(function({
           ...options.layerManager,
           custom: !!editorOptions.customLayers,
         },
+        traitManager: {
+          ...options.traitManager,
+          custom: !!editorOptions.customTraits,
+        },
         selectorManager: {
           ...options.selectorManager,
           custom: !!editorOptions.customSelectors,
