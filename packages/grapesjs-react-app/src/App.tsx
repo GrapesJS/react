@@ -7,10 +7,12 @@ import CustomEditor from './examples/CustomEditor';
 import DefaultEditor from './examples/DefaultEditor';
 import EditorWaitReady from './examples/EditorWaitReady';
 import { getDateString } from './examples/common';
+import DefaultCustomEditor from './examples/DefaultCustomEditor';
 
 enum Examples {
-  Default = 'Default Editor',
+  Default = 'Default UI Editor',
   Custom = 'Custom UI Editor',
+  DefaultCustom = 'Default & Custom UI Editor',
   WaitReady = 'Editor wait Ready',
 }
 
@@ -19,7 +21,7 @@ function App() {
   const [ready, setReady] =  useState<Editor>();
   const [projectData, setProjectData] =  useState<ProjectData>();
   const [projectDataDate, setProjectDataDate] =  useState<Date>();
-  const [selectedExample, setSelectedExample] =  useState(Examples.WaitReady);
+  const [selectedExample, setSelectedExample] =  useState(Examples.DefaultCustom);
   const mountedIconCls = `inline-block ${editor ? 'text-green-400' : 'text-red-400'}`;
   const readyIconCls = `inline-block ${ready ? 'text-green-400' : 'text-red-400'}`;
 
@@ -48,6 +50,9 @@ function App() {
   switch (selectedExample) {
     case Examples.Custom:
       EditorToRender = CustomEditor;
+      break;
+    case Examples.DefaultCustom:
+      EditorToRender = DefaultCustomEditor;
       break;
     case Examples.WaitReady:
       EditorToRender = EditorWaitReady;
