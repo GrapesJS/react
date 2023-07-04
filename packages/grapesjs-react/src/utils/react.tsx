@@ -28,8 +28,24 @@ export interface PortalContainerProps {
 
 export type PortalContainerResult = React.FC<PortalContainerProps>;
 
-export function portalContainer(el: HTMLElement): PortalContainerResult {
-    return function Container({ children }: PortalContainerProps) {
-        return el ? createPortal(children, el) : <></>;
+const elContainerMap = new WeakMap<HTMLElement, PortalContainerResult>();
+
+export function portalContainer(el?: HTMLElement): PortalContainerResult {
+    if (!el) {
+        return () => null;
+    }
+
+    const prevResult = elContainerMap.get(el);
+
+    if (prevResult) {
+        return prevResult;
+    }
+
+    const result = function Container({ children }: PortalContainerProps) {
+        return createPortal(children, el);
     };
+
+    elContainerMap.set(el, result);
+
+    return result;
 }
