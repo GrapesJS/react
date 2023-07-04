@@ -5,7 +5,7 @@ export type CustomBlockManagerProps = Pick<BlocksResultProps, 'mapCategoryBlocks
 
 export default function CustomBlockManager({ mapCategoryBlocks, dragStart, dragStop }: CustomBlockManagerProps) {
     return (
-      <div className="gjs-custom-block-manager">
+      <div className="gjs-custom-block-manager text-left">
         {Array.from(mapCategoryBlocks).map(([category, blocks]) => (
             <div key={category}>
                 <div className={cx('py-2 px-4 border-y', MAIN_BORDER_COLOR)}>
