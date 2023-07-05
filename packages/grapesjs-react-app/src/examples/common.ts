@@ -64,14 +64,9 @@ export const defaultOptions: EditorConfig = {
     selectorManager: {
         componentFirst: true,
     },
-    // components: `
-    //   <h1>Title</h1>
-    //   <p>Paragraph</p>
-    //   <img/>
-    // `,
     components: `
-        <div style="padding: 25px">Custom Layer Manager</div>
-        <div class="example example-a">Element A</div>
+        <div style="padding: 25px">Element A</div>
+        <div class="example example-a">Element B</div>
         <div style="padding: 20px">
             <div class="example-b1">Element B1</div>
             <div class="example-b2">Element B2</div>
