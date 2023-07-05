@@ -14,5 +14,6 @@ module.exports = {
     '@typescript-eslint/no-empty-function': 0,
     '@typescript-eslint/no-non-null-assertion': 0,
     'react-hooks/exhaustive-deps': 0,
+    '@typescript-eslint/ban-ts-comment': 0,
   },
 }
