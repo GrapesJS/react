@@ -1,6 +1,6 @@
 # GrapesJS React
 
-<img width="1075" src="https://github.com/GrapesJS/react/assets/11614725/48e11928-25c4-42d7-b245-bea50b43b6ec">
+<img width="1075" src="https://github.com/GrapesJS/react/assets/11614725/ca2cdbef-4ad2-4e5e-b0a1-c8218065efca">
 
 > Requires GrapesJS v0.21.3 or higher
 
