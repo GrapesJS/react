@@ -1,1 +1,1 @@
-# This app is used merely for the development purpose.
+# This app is used merely for development purpose.
