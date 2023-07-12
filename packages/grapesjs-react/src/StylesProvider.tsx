@@ -5,9 +5,6 @@ import { isFunction } from './utils';
 import { PortalContainerResult, portalContainer } from './utils/react';
 import { useEditorOptions } from './context/EditorOptions';
 
-// TODO
-// addSelector: (...args: Parameters<Editor['Selectors']['addSelected']>) => void,
-
 export type StylesState = {
     /**
      * Array of visible sectors.
