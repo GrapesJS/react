@@ -17,17 +17,17 @@ export type PagesState = {
     /**
      * Select page.
      */
-    select: (...args: Parameters<Editor['Pages']['select']>) => void,
+    select: Editor['Pages']['select'],
 
     /**
      * Add new page.
      */
-    add: (...args: Parameters<Editor['Pages']['add']>) => void,
+    add: Editor['Pages']['add'],
 
     /**
      * Remove page.
      */
-    remove: (...args: Parameters<Editor['Pages']['remove']>) => void,
+    remove: Editor['Pages']['remove'],
 };
 
 export type PagesResultProps = PagesState;
@@ -41,9 +41,9 @@ const PagesProvider = memo(function ({ children }: PagesProviderProps) {
     const [propState, setPropState] = useState<PagesState>(() => ({
         pages: [],
         selected: undefined,
-        select: noop,
-        add: noop,
-        remove: noop,
+        select: noop as any,
+        add: noop as any,
+        remove: noop as any,
     }));
 
     useEffect(() => {
