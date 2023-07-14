@@ -8,7 +8,7 @@ The official [GrapesJS](https://grapesjs.com) wrapper for React that allows you 
 
 The goal of this library is not to provide UI components but simple wrappers around the core GrapesJS modules and let you define your own UI components and access easily the GrapesJS API.
 
-> WARNING: This library is NOT intended to render your React components inside the GrapesJS canvas, here it's all about the custom UI around the canvas itself.
+> **Warning**: This library is NOT intended to render your React components inside the GrapesJS canvas, here it's all about the custom UI around the canvas itself.
 
 
 
@@ -94,7 +94,7 @@ export default function CustomEditor() {
 ```
 Here below you can find a good example (with the usage of all available providers) of how you would build a full custom editor around GrapesJS by using your own React components.
 
-> The app doesn't cover all the [GrapesJS API](https://grapesjs.com/docs/api/) but simply provides a good starting point to understand how to create your own custom editor.
+> **Info**: The app doesn't cover all the [GrapesJS API](https://grapesjs.com/docs/api/) but simply provides a good starting point to understand how to create your own custom editor.
 
 [Live Example](https://stackblitz.com/edit/grapesjs-react-custom-ui)
 
