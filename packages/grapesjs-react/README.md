@@ -94,7 +94,7 @@ export default function CustomEditor() {
 ```
 Here below you can find a good example (with the usage of all available providers) of how you would build a full custom editor around GrapesJS by using your own React components.
 
-> **Info**: The app doesn't cover all the [GrapesJS API](https://grapesjs.com/docs/api/) but simply provides a good starting point to understand how to create your own custom editor.
+> **Note**: The app doesn't cover all the [GrapesJS API](https://grapesjs.com/docs/api/) but simply provides a good starting point to understand how to create your own custom editor.
 
 [Live Example](https://stackblitz.com/edit/grapesjs-react-custom-ui)
 
