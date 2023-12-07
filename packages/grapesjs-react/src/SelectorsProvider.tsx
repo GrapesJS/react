@@ -86,6 +86,7 @@ const SelectorsProvider = memo(function ({ children }: SelectorsProviderProps) {
         }
 
         editor.on(event, up);
+        Selectors.__trgCustom();
 
         return () => {
             editor.off(event, up);
