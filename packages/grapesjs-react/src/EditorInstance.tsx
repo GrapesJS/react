@@ -8,61 +8,61 @@ import { loadScript, loadStyle } from './utils/dom';
 import { GrapesPlugins, PluginToLoad, PluginTypeToLoad, initPlugins } from './utils/plugins';
 
 export interface EditorProps extends React.HTMLProps<HTMLDivElement> {
-    grapesjs: string | typeof gjs,
-    /**
-     * GrapesJS options.
-     */
-    options?: EditorConfig,
+  grapesjs: string | typeof gjs,
+  /**
+   * GrapesJS options.
+   */
+  options?: EditorConfig,
 
-    /**
-     * Load GrapesJS CSS file asynchronously from URL.
-     * @example 'https://unpkg.com/grapesjs/dist/css/grapes.min.css'
-     */
-    grapesjsCss?: string,
+  /**
+   * Load GrapesJS CSS file asynchronously from URL.
+   * @example 'https://unpkg.com/grapesjs/dist/css/grapes.min.css'
+   */
+  grapesjsCss?: string,
 
-    /**
-     * Array of plugins.
-     * Differently from the GrapesJS `plugins` option, this one allows also you to load plugins
-     * asynchronously from a CDN URL.
-     * @example
-     * plugins: [
-     *  {
-     *    // The id should be name of the plugin that will be actually loaded
-     *    id: 'gjs-blocks-basic',
-     *    src: 'https://unpkg.com/grapesjs-blocks-basic',
-     *    options: {}
-     *  }
-     *  // plugin already loaded in the global scope (eg. loaded via CND in HTML)
-     *  'grapesjs-plugin-forms',
-     *  // plugin as a function
-     *  myPlugin,
-     * ]
-     */
-    plugins?: PluginTypeToLoad[],
+  /**
+   * Array of plugins.
+   * Differently from the GrapesJS `plugins` option, this one allows also you to load plugins
+   * asynchronously from a CDN URL.
+   * @example
+   * plugins: [
+   *  {
+   *    // The id should be name of the plugin that will be actually loaded
+   *    id: 'gjs-blocks-basic',
+   *    src: 'https://unpkg.com/grapesjs-blocks-basic',
+   *    options: {}
+   *  }
+   *  // plugin already loaded in the global scope (eg. loaded via CND in HTML)
+   *  'grapesjs-plugin-forms',
+   *  // plugin as a function
+   *  myPlugin,
+   * ]
+   */
+  plugins?: PluginTypeToLoad[],
 
-    /**
-     * Callback triggered once the editor instance is created.
-     */
-    onEditor?: (editor: Editor) => void,
+  /**
+   * Callback triggered once the editor instance is created.
+   */
+  onEditor?: (editor: Editor) => void,
 
-    /**
-     * Callback triggered once the editor is ready (mounted and loaded data from the Storage).
-     */
-    onReady?: (editor: Editor) => void,
+  /**
+   * Callback triggered once the editor is ready (mounted and loaded data from the Storage).
+   */
+  onReady?: (editor: Editor) => void,
 
-    /**
-     * Callback triggered on each update in the editor project.
-     * The updated ProjectData (JSON) is passed as a first argument.
-     */
-    onUpdate?: (projectData: ProjectData, editor: Editor) => void,
+  /**
+   * Callback triggered on each update in the editor project.
+   * The updated ProjectData (JSON) is passed as a first argument.
+   */
+  onUpdate?: (projectData: ProjectData, editor: Editor) => void,
 
-    /**
-     * Avoid showing children of the editor until the editor is ready (mounted and loaded data from the Storage).
-     */
-    waitReady?: boolean | React.ReactNode,
+  /**
+   * Avoid showing children of the editor until the editor is ready (mounted and loaded data from the Storage).
+   */
+  waitReady?: boolean | React.ReactNode,
 }
 
-const EditorInstance = memo(function({
+const EditorInstance = memo(function ({
   children,
   className,
   style,
@@ -111,8 +111,8 @@ const EditorInstance = memo(function({
           custom: !!editorOptions.customModal,
         },
         assetManager: {
-          ...options.assetManager,
           custom: !!editorOptions.customAssets,
+          ...options.assetManager,
         },
         styleManager: {
           ...options.styleManager,
@@ -206,11 +206,11 @@ const EditorInstance = memo(function({
     <>
       {
         waitReady && !isEditorReady ?
-          <div className={editorCls} style={styleRes} children={waitReady}/>
-        : null
+          <div className={editorCls} style={styleRes} children={waitReady} />
+          : null
       }
       <div {...rest} ref={editorRef} className={editorCls} style={styleEditorRes}>
-        { children }
+        {children}
       </div>
     </>
   );
