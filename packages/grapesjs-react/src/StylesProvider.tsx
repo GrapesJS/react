@@ -1,5 +1,5 @@
 import type { Sector } from 'grapesjs';
-import React, { memo, useEffect, useState } from 'react';
+import React, { FC, memo, useEffect, useState } from 'react';
 import { useEditorInstance } from './context/EditorInstance';
 import { isFunction } from './utils';
 import { PortalContainerResult, portalContainer } from './utils/react';
@@ -20,10 +20,10 @@ export type StylesState = {
 export type StylesResultProps = StylesState;
 
 export interface StylesProviderProps {
-    children: (props: StylesResultProps) => React.JSX.Element,
+    children: (props: StylesResultProps) => React.ReactElement
 }
 
-const StylesProvider = memo(function ({ children }: StylesProviderProps) {
+const StylesProvider: FC<StylesProviderProps> = memo(function ({ children }: StylesProviderProps) {
     const { editor } = useEditorInstance();
     const options = useEditorOptions();
     const [propState, setPropState] = useState<StylesState>(() => ({
@@ -55,6 +55,6 @@ const StylesProvider = memo(function ({ children }: StylesProviderProps) {
     return editor ?
         (isFunction(children) ? children(propState)  : null)
     : null;
-  });
+  })
 
   export default StylesProvider;

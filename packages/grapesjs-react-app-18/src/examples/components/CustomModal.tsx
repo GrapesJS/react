@@ -20,10 +20,11 @@ const style = {
     p: 2,
 };
 
-interface CustomModalProps extends Omit<ModalProps, 'title'> {
+interface CustomModalProps extends Omit<ModalProps, 'title' | 'children'> {
     title: React.ReactNode,
+    children: React.ReactNode,
     close: () => void,
-}
+  }
 
 export default function CustomModal({ children, title, close, ...props }: CustomModalProps) {
     return (

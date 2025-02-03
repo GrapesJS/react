@@ -1,5 +1,5 @@
 import type { Component } from 'grapesjs';
-import React, { memo, useEffect, useState } from 'react';
+import React, { FC, memo, useEffect, useState } from 'react';
 import { useEditorInstance } from './context/EditorInstance';
 import { useEditorOptions } from './context/EditorOptions';
 import { isFunction } from './utils';
@@ -20,10 +20,10 @@ export type LayersState = {
 export type LayersResultProps = LayersState;
 
 export interface LayersProviderProps {
-    children: (props: LayersResultProps) => React.JSX.Element,
+    children: (props: LayersResultProps) => React.ReactElement;
 }
 
-const LayersProvider = memo(function ({ children }: LayersProviderProps) {
+const LayersProvider: FC<LayersProviderProps> = memo(function ({ children }: LayersProviderProps) {
     const { editor } = useEditorInstance();
     const options = useEditorOptions();
     const [propState, setPropState] = useState<LayersState>(() => ({
