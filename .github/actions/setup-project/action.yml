@@ -1,0 +1,20 @@
+name: Setup Project
+description: Sets up the project by installing dependencies
+
+inputs:
+  node-version:
+    required: false
+    default: 22.4.1
+    description: "The version of Node.js to use."
+
+runs:
+  using: composite
+  steps:
+    - uses: actions/setup-node@v4
+      with:
+        node-version: ${{ inputs.node-version }}
+        registry-url: "https://registry.npmjs.org"
+        cache: "yarn"
+    - name: Install dependencies
+      run: yarn --frozen-lockfile
+      shell: bash
