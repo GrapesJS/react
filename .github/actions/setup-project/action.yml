@@ -18,3 +18,6 @@ runs:
     - name: Install dependencies
       run: yarn --frozen-lockfile
       shell: bash
+    - name: Build Core
+      run: yarn workspace @grapesjs/react run build
+      shell: bash
