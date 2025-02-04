@@ -11,17 +11,21 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@emotion/react": "^11.14.0",
-    "@emotion/styled": "^11.14.0",
-    "@grapesjs/react": "1.0.0",
-    "@mdi/js": "^7.4.47",
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
+    "@mdi/js": "^7.2.96",
     "@mdi/react": "^1.6.1",
-    "@mui/material": "^6.4.2",
+    "@mui/material": "^5.13.5",
+    "@grapesjs/react": "1.0.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },
   "devDependencies": {
     "@types/react": "^19.0.8",
     "@types/react-dom": "^19.0.3"
+  },
+  "resolutions": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
   }
 }

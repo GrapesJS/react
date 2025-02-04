@@ -12,15 +12,19 @@
   "dependencies": {
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
-    "@grapesjs/react": "1.0.0",
     "@mdi/js": "^7.2.96",
     "@mdi/react": "^1.6.1",
     "@mui/material": "^5.13.5",
+    "@grapesjs/react": "1.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
     "@types/react": "^18.2.0",
     "@types/react-dom": "^18.2.0"
+  },
+  "resolutions": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   }
 }
