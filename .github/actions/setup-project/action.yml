@@ -1,23 +1,43 @@
-name: Setup Project
-description: Sets up the project by installing dependencies
+name: PR Checks
 
-inputs:
-  node-version:
-    required: false
-    default: 22.4.1
-    description: "The version of Node.js to use."
+on:
+  pull_request:
+    branches:
+      - main
 
-runs:
-  using: composite
-  steps:
-    - uses: actions/setup-node@v4
-      with:
-        node-version: ${{ inputs.node-version }}
-        registry-url: "https://registry.npmjs.org"
-        cache: "yarn"
-    - name: Install dependencies
-      run: yarn
-      shell: bash
-    - name: Build Core
-      run: yarn workspace @grapesjs/react run build
-      shell: bash
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        react-version: [18, 19]
+        include:
+          - react-version: 18
+            app-name: react-app-18
+            react-dom-version: ^18.2.0
+            react-types-version: ^18.2.0
+          - react-version: 19
+            app-name: react-app-19
+            react-dom-version: ^19.0.0
+            react-types-version: ^19.0.0
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Project
+        uses: ./.github/actions/setup-project
+
+      - name: Install React Dependencies
+        run: |
+          cd packages/grapesjs-${{ matrix.app-name }}
+          yarn add react@${{ matrix.react-dom-version }} \
+                   react-dom@${{ matrix.react-dom-version }} \
+                   @types/react@${{ matrix.react-types-version }} \
+                   @types/react-dom@${{ matrix.react-types-version }}
+
+      - name: Build Core
+        run: yarn workspace @grapesjs/react run build
+
+      - name: Build Example App
+        run: yarn workspace @grapesjs/${{ matrix.app-name }} run build
