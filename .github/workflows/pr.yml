@@ -29,9 +29,9 @@ jobs:
       - name: Setup Project Base
         uses: ./.github/actions/setup-project
 
-      - name: Install React Dependencies for Example App
+      - name: Install React Dependencies in Root
         run: |
-          yarn workspace @grapesjs/${{ matrix.app-name }} add \
+          yarn add -W \
             react@${{ matrix.react-dom-version }} \
             react-dom@${{ matrix.react-dom-version }} \
             @types/react@${{ matrix.react-types-version }} \
