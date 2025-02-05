@@ -25,19 +25,6 @@ services:
       - ./packages/grapesjs-react-app-18:/app/packages/grapesjs-react-app-18
       - /app/packages/grapesjs-react-app-18/node_modules
 
-  test-react18:
-    build:
-      context: .
-      dockerfile: Dockerfile.playwright
-    environment:
-      - PLAYWRIGHT_BASE_URL=http://react18:5173
-    depends_on:
-      react18:
-        condition: service_healthy
-    volumes:
-      - ./tests/playwright-report:/app/tests/playwright-report
-      - ./tests/test-results:/app/tests/test-results
-
   react19:
     build:
       context: .
@@ -55,16 +42,3 @@ services:
     volumes:
       - ./packages/grapesjs-react-app-19:/app/packages/grapesjs-react-app-19
       - /app/packages/grapesjs-react-app-19/node_modules
-
-  test-react19:
-    build:
-      context: .
-      dockerfile: Dockerfile.playwright
-    environment:
-      - PLAYWRIGHT_BASE_URL=http://react19:5173
-    depends_on:
-      react18:
-        condition: service_healthy
-    volumes:
-      - ./tests/playwright-report:/app/tests/playwright-report
-      - ./tests/test-results:/app/tests/test-results

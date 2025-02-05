@@ -9,8 +9,7 @@
   },
   "workspaces": {
     "packages": [
-      "packages/*",
-      "tests"
+      "packages/*"
     ],
     "nohoist": [
       "**/react",
