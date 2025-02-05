@@ -1,4 +1,5 @@
 import { mdiClose } from '@mdi/js';
+import type { ReactNode } from 'react';
 import Icon from '@mdi/react';
 import Box from '@mui/material/Box';
 import Fade from '@mui/material/Fade';
@@ -21,8 +22,8 @@ const style = {
 };
 
 interface CustomModalProps extends Omit<ModalProps, 'title' | 'children'> {
-    title: React.ReactNode,
-    children: React.ReactNode,
+    title: ReactNode,
+    children: ReactNode,
     close: () => void,
   }
 

@@ -1,4 +1,4 @@
-import React, { createElement, FC, memo, useEffect, useState } from 'react';
+import  { createElement, memo, useEffect, useState, type ReactElement } from 'react';
 import { useEditorInstance } from './context/EditorInstance';
 import { useEditorOptions } from './context/EditorOptions';
 import { noop } from './utils';
@@ -8,12 +8,12 @@ export interface ModalState {
     /**
      * Modal title
      */
-    title: React.ReactElement<any>,
+    title: ReactElement<any>,
 
     /**
      * Modal content
      */
-    content: React.ReactElement<any>,
+    content: ReactElement<any>,
 
     /**
      * Modal attributes
@@ -34,7 +34,7 @@ export interface ModalResultProps extends ModalState {
 }
 
 export interface ModalProviderProps {
-    children: ((props: ModalResultProps) => React.ReactElement<any>),
+    children: ((props: ModalResultProps) => ReactElement<any>),
 }
 
 export interface ModalEventProps {
@@ -45,7 +45,7 @@ export interface ModalEventProps {
     close: () => void,
 }
 
-const ModalProvider: FC<ModalProviderProps> = memo(function ({ children }: ModalProviderProps) {
+const ModalProvider = memo(function ({ children }: ModalProviderProps) {
     const { editor } = useEditorInstance();
     const options = useEditorOptions();
     const [isOpen, setOpen] = useState(false);
@@ -84,4 +84,6 @@ const ModalProvider: FC<ModalProviderProps> = memo(function ({ children }: Modal
     : null;
   }) 
 
-  export default ModalProvider;
+  export default ModalProvider as unknown as (props: 
+    ModalProviderProps
+  ) => JSX.Element;

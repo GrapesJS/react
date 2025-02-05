@@ -1,5 +1,5 @@
 import type { Device } from 'grapesjs';
-import React, { FC, memo, useEffect, useState } from 'react';
+import  {  memo, useEffect, useState,type ReactElement } from 'react';
 import { useEditorInstance } from './context/EditorInstance';
 import { isFunction, noop } from './utils';
 
@@ -23,10 +23,10 @@ export type DevicesState = {
 export type DevicesResultProps = DevicesState;
 
 export interface DevicesProviderProps {
-    children: (props: DevicesResultProps) => React.ReactElement<any>;
+    children: (props: DevicesResultProps) => ReactElement<any>;
 }
 
-const DevicesProvider: FC<DevicesProviderProps> = memo(function ({ children }: DevicesProviderProps) {
+const DevicesProvider = memo(function ({ children }: DevicesProviderProps) {
     const { editor } = useEditorInstance();
     const [propState, setPropState] = useState<DevicesState>(() => ({
         devices: [],
@@ -60,4 +60,6 @@ const DevicesProvider: FC<DevicesProviderProps> = memo(function ({ children }: D
     : null;
   });
 
-  export default DevicesProvider;
+  export default DevicesProvider as unknown as (props: 
+DevicesProviderProps
+  ) => JSX.Element;

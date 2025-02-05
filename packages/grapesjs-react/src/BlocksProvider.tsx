@@ -1,5 +1,5 @@
 import type { Block } from 'grapesjs';
-import React, { FC, memo, useEffect, useState } from 'react';
+import  {  memo, useEffect, useState, type ReactElement } from 'react';
 import { useEditorInstance } from './context/EditorInstance';
 import { useEditorOptions } from './context/EditorOptions';
 import { isFunction, noop } from './utils';
@@ -35,7 +35,7 @@ export type BlocksState = {
 export type BlocksResultProps = BlocksState;
 
 export interface BlocksProviderProps {
-    children: (props: BlocksResultProps) => React.ReactElement<any>;
+    children: (props: BlocksResultProps) => ReactElement<any>;
 }
 
 export interface BlocksEventProps {
@@ -48,7 +48,7 @@ export interface BlocksEventProps {
 
 export type MapCategoryBlocks = Map<string, Block[]>;
 
-const BlocksProvider: FC<BlocksProviderProps>= memo(function ({ children }: BlocksProviderProps) {
+const BlocksProvider = memo(function ({ children }: BlocksProviderProps) {
     const { editor } = useEditorInstance();
     const options = useEditorOptions();
     const [propState, setPropState] = useState<BlocksState>(() => ({
@@ -56,7 +56,7 @@ const BlocksProvider: FC<BlocksProviderProps>= memo(function ({ children }: Bloc
         dragStart: noop,
         dragStop: noop,
         mapCategoryBlocks: new Map(),
-        Container: () => null,
+        Container: () => <></>,
     }));
 
     useEffect(() => {
@@ -100,4 +100,6 @@ const BlocksProvider: FC<BlocksProviderProps>= memo(function ({ children }: Bloc
     : null;
   })
 
-  export default BlocksProvider;
+  export default BlocksProvider as unknown as (props: 
+BlocksProviderProps
+  ) => JSX.Element;

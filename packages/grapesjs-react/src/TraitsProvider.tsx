@@ -1,5 +1,5 @@
 import type { Trait } from 'grapesjs';
-import React, { FC, memo, useEffect, useState } from 'react';
+import {  memo, useEffect, useState, type ReactElement } from 'react';
 import { useEditorInstance } from './context/EditorInstance';
 import { useEditorOptions } from './context/EditorOptions';
 import { isFunction } from './utils';
@@ -20,15 +20,15 @@ export type TraitsState = {
 export type TraitsResultProps = TraitsState;
 
 export interface TraitsProviderProps {
-    children: (props: TraitsResultProps) => React.ReactElement<any>;
+    children: (props: TraitsResultProps) => ReactElement<any>;
 }
 
-const TraitsProvider :FC<TraitsProviderProps>  = memo(function ({ children }: TraitsProviderProps) {
+const TraitsProvider  = memo(function ({ children }: TraitsProviderProps) {
     const { editor } = useEditorInstance();
     const options = useEditorOptions();
     const [propState, setPropState] = useState<TraitsState>(() => ({
         traits: [],
-        Container: () => null,
+        Container: () => <></>,
     }));
 
     useEffect(() => {
@@ -58,4 +58,4 @@ const TraitsProvider :FC<TraitsProviderProps>  = memo(function ({ children }: Tr
     : null;
   }) 
 
-  export default TraitsProvider;
+  export default TraitsProvider as unknown as (props: TraitsProviderProps) => JSX.Element;

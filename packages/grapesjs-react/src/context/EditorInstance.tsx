@@ -1,5 +1,5 @@
 import type { Editor } from 'grapesjs';
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useState, type ReactNode } from 'react';
 
 const EditorInstanceContext = createContext<EditorInstanceState | null>(null);
 
@@ -8,7 +8,7 @@ export interface EditorInstanceState {
     setEditor: (editor: Editor) => void,
 }
 export const EditorInstanceProvider = ({ children }: {
-    children?: React.ReactNode,
+    children?: ReactNode,
 }) => {
     const [state, setState] = useState<EditorInstanceState>({
         setEditor: editor => {

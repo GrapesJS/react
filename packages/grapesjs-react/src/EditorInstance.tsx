@@ -1,13 +1,13 @@
 import type gjs from 'grapesjs';
 import type { Editor, EditorConfig, ProjectData } from 'grapesjs';
-import { memo, useEffect, useMemo, useRef, useState } from 'react';
+import { memo, useEffect, useMemo, useRef, useState, type HTMLProps, type ReactNode } from 'react';
 import { useEditorInstance } from './context/EditorInstance';
 import { useEditorOptions } from './context/EditorOptions';
 import { cx, noop } from './utils';
 import { loadScript, loadStyle } from './utils/dom';
 import { GrapesPlugins, PluginToLoad, PluginTypeToLoad, initPlugins } from './utils/plugins';
 
-export interface EditorProps extends React.HTMLProps<HTMLDivElement> {
+export interface EditorProps extends HTMLProps<HTMLDivElement> {
     grapesjs: string | typeof gjs,
     /**
      * GrapesJS options.
@@ -59,7 +59,7 @@ export interface EditorProps extends React.HTMLProps<HTMLDivElement> {
     /**
      * Avoid showing children of the editor until the editor is ready (mounted and loaded data from the Storage).
      */
-    waitReady?: boolean | React.ReactNode,
+    waitReady?: boolean | ReactNode,
 }
 
 const EditorInstance = memo(function({
@@ -216,4 +216,6 @@ const EditorInstance = memo(function({
   );
 });
 
-export default EditorInstance;
+export default EditorInstance as unknown as (props: 
+  EditorProps
+) => JSX.Element;

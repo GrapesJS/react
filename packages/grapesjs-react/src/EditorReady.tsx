@@ -7,4 +7,4 @@ const EditorReady = memo(function () {
     return <></>;
 });
 
-export default EditorReady;
+export default EditorReady
