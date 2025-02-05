@@ -70,8 +70,8 @@ const PagesProvider = memo(function ({ children }: PagesProviderProps) {
     }, [editor]);
 
     return editor ?
-        (isFunction(children) ? children(propState)  : null)
-    : null;
+        (isFunction(children) ? children(propState)  : <></>)
+    : <></>;
   })
 
   export default PagesProvider as unknown as (props: PagesProviderProps) => JSX.Element;

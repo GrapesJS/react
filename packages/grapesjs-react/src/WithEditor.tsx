@@ -7,7 +7,7 @@ import { useEditorMaybe } from '.';
 const WithEditor = ({ children }: PropsWithChildren) => {
     const editor = useEditorMaybe();
 
-    return editor ? <>{ children }</> : null;
+    return editor ? <>{ children }</> : <></>;
 }
 
 export default WithEditor;

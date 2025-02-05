@@ -56,8 +56,8 @@ const DevicesProvider = memo(function ({ children }: DevicesProviderProps) {
     }, [editor]);
 
     return editor ?
-        (isFunction(children) ? children(propState)  : null)
-    : null;
+        (isFunction(children) ? children(propState)  : <></>)
+    : <></>;
   });
 
   export default DevicesProvider as unknown as (props: 

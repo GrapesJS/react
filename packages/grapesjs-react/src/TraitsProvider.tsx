@@ -54,8 +54,8 @@ const TraitsProvider  = memo(function ({ children }: TraitsProviderProps) {
     useEffect(() => options.setCustomTraits(true), []);
 
     return editor ?
-        (isFunction(children) ? children(propState)  : null)
-    : null;
+        (isFunction(children) ? children(propState)  : <></>)
+    : <></>;
   }) 
 
   export default TraitsProvider as unknown as (props: TraitsProviderProps) => JSX.Element;

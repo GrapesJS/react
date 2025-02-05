@@ -80,8 +80,8 @@ const ModalProvider = memo(function ({ children }: ModalProviderProps) {
     useEffect(() => options.setCustomModal(true), []);
 
     return editor ?
-        (typeof children === 'function' ? children({ open: isOpen, ...modalState })  : null)
-    : null;
+        (typeof children === 'function' ? children({ open: isOpen, ...modalState })  : <></>)
+    : <></>;
   }) 
 
   export default ModalProvider as unknown as (props: 

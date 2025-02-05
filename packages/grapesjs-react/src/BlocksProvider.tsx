@@ -96,8 +96,8 @@ const BlocksProvider = memo(function ({ children }: BlocksProviderProps) {
     useEffect(() => options.setCustomBlocks(true), []);
 
     return editor ?
-        (isFunction(children) ? children(propState)  : null)
-    : null;
+        (isFunction(children) ? children(propState)  : <></>)
+    : <></>;
   })
 
   export default BlocksProvider as unknown as (props: 

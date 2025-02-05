@@ -54,8 +54,8 @@ const LayersProvider = memo(function ({ children }: LayersProviderProps) {
     useEffect(() => options.setCustomLayers(true), []);
 
     return editor ?
-        (isFunction(children) ? children(propState)  : null)
-    : null;
+        (isFunction(children) ? children(propState)  : <></>)
+    : <></>;
   });
 
   export default LayersProvider as unknown as (props: 

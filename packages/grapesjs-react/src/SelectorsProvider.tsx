@@ -95,8 +95,8 @@ const SelectorsProvider = memo(function ({ children }: SelectorsProviderProps) {
     useEffect(() => options.setCustomSelectors(true), []);
 
     return editor ?
-        (isFunction(children) ? children(propState)  : null)
-    : null;
+        (isFunction(children) ? children(propState)  : <></>)
+    : <></>;
   });
 
   export default SelectorsProvider as unknown as (props: SelectorsProviderProps) => JSX.Element;
