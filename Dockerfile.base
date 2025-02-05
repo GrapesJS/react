@@ -8,7 +8,6 @@ COPY package.json yarn.lock ./
 COPY packages/grapesjs-react/package.json ./packages/grapesjs-react/package.json
 COPY packages/grapesjs-react-app-18/package.json ./packages/grapesjs-react-app-18/package.json
 COPY packages/grapesjs-react-app-19/package.json ./packages/grapesjs-react-app-19/package.json
-COPY tests/package.json ./tests/package.json
 
 RUN yarn install
 

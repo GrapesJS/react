@@ -13,7 +13,7 @@ WORKDIR /app/packages/grapesjs-react-app-18
 RUN yarn link @grapesjs/react
 
 WORKDIR /app
-RUN yarn install --force
+RUN yarn install
 
 WORKDIR /app/packages/grapesjs-react-app-18
 
