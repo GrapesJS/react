@@ -35,7 +35,7 @@ export type BlocksState = {
 export type BlocksResultProps = BlocksState;
 
 export interface BlocksProviderProps {
-    children: (props: BlocksResultProps) => React.ReactElement;
+    children: (props: BlocksResultProps) => React.ReactElement<any>;
 }
 
 export interface BlocksEventProps {

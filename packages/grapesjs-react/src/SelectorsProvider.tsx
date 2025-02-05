@@ -50,7 +50,7 @@ export type SelectorsState = {
 export type SelectorsResultProps = SelectorsState;
 
 export interface SelectorsProviderProps {
-    children: (props: SelectorsResultProps) => React.ReactElement;
+    children: (props: SelectorsResultProps) => React.ReactElement<any>;
 }
 
 const SelectorsProvider: FC<SelectorsProviderProps> = memo(function ({ children }: SelectorsProviderProps) {

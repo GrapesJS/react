@@ -40,7 +40,7 @@ export type AssetsResultProps = AssetsState & {
 };
 
 export interface AssetsProviderProps {
-    children: (props: AssetsResultProps) => React.ReactElement;
+    children: (props: AssetsResultProps) => React.ReactElement<any>;
 }
 
 export interface AssetsEventProps {

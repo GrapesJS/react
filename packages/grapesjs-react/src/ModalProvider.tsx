@@ -8,12 +8,12 @@ export interface ModalState {
     /**
      * Modal title
      */
-    title: React.ReactElement,
+    title: React.ReactElement<any>,
 
     /**
      * Modal content
      */
-    content: React.ReactElement,
+    content: React.ReactElement<any>,
 
     /**
      * Modal attributes
@@ -34,7 +34,7 @@ export interface ModalResultProps extends ModalState {
 }
 
 export interface ModalProviderProps {
-    children: ((props: ModalResultProps) => React.ReactElement),
+    children: ((props: ModalResultProps) => React.ReactElement<any>),
 }
 
 export interface ModalEventProps {

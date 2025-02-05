@@ -20,7 +20,7 @@ export type LayersState = {
 export type LayersResultProps = LayersState;
 
 export interface LayersProviderProps {
-    children: (props: LayersResultProps) => React.ReactElement;
+    children: (props: LayersResultProps) => React.ReactElement<any>;
 }
 
 const LayersProvider: FC<LayersProviderProps> = memo(function ({ children }: LayersProviderProps) {

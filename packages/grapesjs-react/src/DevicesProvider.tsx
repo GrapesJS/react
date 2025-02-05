@@ -23,7 +23,7 @@ export type DevicesState = {
 export type DevicesResultProps = DevicesState;
 
 export interface DevicesProviderProps {
-    children: (props: DevicesResultProps) => React.ReactElement;
+    children: (props: DevicesResultProps) => React.ReactElement<any>;
 }
 
 const DevicesProvider: FC<DevicesProviderProps> = memo(function ({ children }: DevicesProviderProps) {

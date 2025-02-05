@@ -20,7 +20,7 @@ export type StylesState = {
 export type StylesResultProps = StylesState;
 
 export interface StylesProviderProps {
-    children: (props: StylesResultProps) => React.ReactElement
+    children: (props: StylesResultProps) => React.ReactElement<any>
 }
 
 const StylesProvider: FC<StylesProviderProps> = memo(function ({ children }: StylesProviderProps) {

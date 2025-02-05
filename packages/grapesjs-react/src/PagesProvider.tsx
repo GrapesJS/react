@@ -33,7 +33,7 @@ export type PagesState = {
 export type PagesResultProps = PagesState;
 
 export interface PagesProviderProps {
-    children: (props: PagesResultProps) => React.ReactElement;
+    children: (props: PagesResultProps) => React.ReactElement<any>;
 }
 
 const PagesProvider: FC<PagesProviderProps> = memo(function ({ children }: PagesProviderProps) {

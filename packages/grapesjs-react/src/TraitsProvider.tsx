@@ -20,7 +20,7 @@ export type TraitsState = {
 export type TraitsResultProps = TraitsState;
 
 export interface TraitsProviderProps {
-    children: (props: TraitsResultProps) => React.ReactElement;
+    children: (props: TraitsResultProps) => React.ReactElement<any>;
 }
 
 const TraitsProvider :FC<TraitsProviderProps>  = memo(function ({ children }: TraitsProviderProps) {
