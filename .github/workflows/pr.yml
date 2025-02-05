@@ -10,16 +10,16 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        react-version: [18, 19]
+        react-version: [19, 18]
         include:
-          - react-version: 18
-            app-name: react-app-18
-            react-dom-version: ^18.2.0
-            react-types-version: ^18.2.0
           - react-version: 19
             app-name: react-app-19
             react-dom-version: ^19.0.0
             react-types-version: ^19.0.0
+          - react-version: 18
+            app-name: react-app-18
+            react-dom-version: ^18.2.0
+            react-types-version: ^18.2.0
 
     name: Build with React ${{ matrix.react-version }}
     steps:
