@@ -62,7 +62,7 @@ export default function DefaultCustomEditor(props: Partial<EditorProps>) {
                 </AssetsProvider>
                 <ModalProvider>
                     {({ open, title, content, close }) => (
-                        <CustomModal open={open} title={title} children={<>{content}</>} close={close}/>
+                        <CustomModal open={open} title={<>{title}</>} children={<>{content}</>} close={close}/>
                     )}
                 </ModalProvider>
             </GrapesJsEditor>
