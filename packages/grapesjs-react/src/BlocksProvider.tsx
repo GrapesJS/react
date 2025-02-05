@@ -1,5 +1,5 @@
 import type { Block } from 'grapesjs';
-import  {  memo, useEffect, useState, type ReactElement } from 'react';
+import  {  memo, useEffect, useState, type ReactElement, type JSX } from 'react';
 import { useEditorInstance } from './context/EditorInstance';
 import { useEditorOptions } from './context/EditorOptions';
 import { isFunction, noop } from './utils';

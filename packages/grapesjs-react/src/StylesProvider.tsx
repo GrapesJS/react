@@ -1,5 +1,5 @@
 import type { Sector } from 'grapesjs';
-import  {  memo, useEffect, useState ,type  ReactElement} from 'react';
+import  {  memo, useEffect, useState ,type  ReactElement, type JSX} from 'react';
 import { useEditorInstance } from './context/EditorInstance';
 import { isFunction } from './utils';
 import { PortalContainerResult, portalContainer } from './utils/react';

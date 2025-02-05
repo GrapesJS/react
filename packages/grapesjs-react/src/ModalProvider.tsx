@@ -1,4 +1,4 @@
-import  { createElement, memo, useEffect, useState, type ReactElement } from 'react';
+import  { createElement, memo, useEffect, useState, type ReactElement, type JSX } from 'react';
 import { useEditorInstance } from './context/EditorInstance';
 import { useEditorOptions } from './context/EditorOptions';
 import { noop } from './utils';
