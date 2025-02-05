@@ -21,9 +21,8 @@ const style = {
     p: 2,
 };
 
-interface CustomModalProps extends Omit<ModalProps, 'title' | 'children'> {
+interface CustomModalProps extends Omit<ModalProps, 'title'> {
     title: ReactNode,
-    children: ReactNode,
     close: () => void,
   }
 
