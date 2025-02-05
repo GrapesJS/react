@@ -1,0 +1,28 @@
+# Use Node.js LTS as base
+FROM node:20-alpine
+
+WORKDIR /app
+
+RUN apk add --no-cache python3 make g++ wget
+
+COPY package.json yarn.lock ./
+COPY packages/grapesjs-react/package.json ./packages/grapesjs-react/package.json
+COPY packages/grapesjs-react-app-18/package.json ./packages/grapesjs-react-app-18/package.json
+COPY packages/grapesjs-react-app-19/package.json ./packages/grapesjs-react-app-19/package.json
+COPY tests/package.json ./tests/package.json
+
+RUN yarn install
+
+WORKDIR /app/packages/grapesjs-react
+
+RUN yarn add \
+    react@^19.0.0 \
+    react-dom@^19.0.0 \
+    @types/react@^19.0.0 \
+    @types/react-dom@^19.0.0
+
+WORKDIR /app
+
+COPY . .
+
+RUN yarn workspace @grapesjs/react run build

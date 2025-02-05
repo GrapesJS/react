@@ -1,0 +1,70 @@
+version: "3.8"
+
+services:
+  base:
+    build:
+      context: .
+      dockerfile: Dockerfile.base
+    image: grapesjs-base:latest
+
+  react18:
+    build:
+      context: .
+      dockerfile: Dockerfile.react18
+    ports:
+      - "5173:5173"
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "http://localhost:5173"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    environment:
+      - VITE_DEV_SERVER_HOST=0.0.0.0
+      - VITE_DEV_SERVER_PORT=5173
+    volumes:
+      - ./packages/grapesjs-react-app-18:/app/packages/grapesjs-react-app-18
+      - /app/packages/grapesjs-react-app-18/node_modules
+
+  test-react18:
+    build:
+      context: .
+      dockerfile: Dockerfile.playwright
+    environment:
+      - PLAYWRIGHT_BASE_URL=http://react18:5173
+    depends_on:
+      react18:
+        condition: service_healthy
+    volumes:
+      - ./tests/playwright-report:/app/tests/playwright-report
+      - ./tests/test-results:/app/tests/test-results
+
+  react19:
+    build:
+      context: .
+      dockerfile: Dockerfile.react19
+    ports:
+      - "5173:5173"
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "http://localhost:5173"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    environment:
+      - VITE_DEV_SERVER_HOST=0.0.0.0
+      - VITE_DEV_SERVER_PORT=5173
+    volumes:
+      - ./packages/grapesjs-react-app-19:/app/packages/grapesjs-react-app-19
+      - /app/packages/grapesjs-react-app-19/node_modules
+
+  test-react19:
+    build:
+      context: .
+      dockerfile: Dockerfile.playwright
+    environment:
+      - PLAYWRIGHT_BASE_URL=http://react19:5173
+    depends_on:
+      react18:
+        condition: service_healthy
+    volumes:
+      - ./tests/playwright-report:/app/tests/playwright-report
+      - ./tests/test-results:/app/tests/test-results
