@@ -1,5 +1,6 @@
 import type { Asset } from 'grapesjs';
-import {  memo, useEffect, useState, type ReactElement , type JSX} from 'react';
+import {  memo, useEffect, useState } from 'react';
+import type { ReactElement, JSX } from 'react';
 import { useEditorInstance } from './context/EditorInstance';
 import { useEditorOptions } from './context/EditorOptions';
 import { isFunction } from './utils';

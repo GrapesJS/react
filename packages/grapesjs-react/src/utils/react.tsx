@@ -1,4 +1,6 @@
-import { useEffect, useRef, type ReactNode, createElement } from "react";
+import { useEffect, useRef, createElement } from "react";
+import type { ReactNode } from "react";
+
 import { createPortal } from "react-dom";
 import { isString } from "./dom";
 

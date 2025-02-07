@@ -1,4 +1,5 @@
-import { memo, type JSX } from 'react';
+import { memo } from 'react';
+import type { JSX } from 'react';
 import EditorInstance, { EditorProps } from './EditorInstance';
 import EditorReady from './EditorReady';
 import { EditorInstanceProvider, EditorOptionsProvider } from './context';

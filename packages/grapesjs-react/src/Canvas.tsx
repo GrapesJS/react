@@ -1,4 +1,5 @@
-import { useRef, useEffect, type HTMLProps } from 'react';
+import { useRef, useEffect } from 'react';
+import type { HTMLProps } from 'react';
 import { useEditorOptions } from './context/EditorOptions';
 
 export default function Canvas({ children, ...rest }:  HTMLProps<HTMLDivElement>) {

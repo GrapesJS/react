@@ -1,6 +1,7 @@
 import type gjs from 'grapesjs';
 import type { Editor, EditorConfig, ProjectData, } from 'grapesjs';
-import { memo, useEffect, useMemo, useRef, useState, type HTMLProps, type ReactNode, type JSX } from 'react';
+import { memo, useEffect, useMemo, useRef, useState } from 'react';
+import type { HTMLProps, ReactNode, JSX } from 'react';
 import { useEditorInstance } from './context/EditorInstance';
 import { useEditorOptions } from './context/EditorOptions';
 import { cx, noop } from './utils';

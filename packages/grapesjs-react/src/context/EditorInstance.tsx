@@ -1,5 +1,6 @@
 import type { Editor } from 'grapesjs';
-import { createContext, useContext, useState, type ReactNode } from 'react';
+import { createContext, useContext, useState } from 'react';
+import type { ReactNode } from 'react';
 
 const EditorInstanceContext = createContext<EditorInstanceState | null>(null);
 
