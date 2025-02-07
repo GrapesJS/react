@@ -42,8 +42,5 @@ jobs:
       - name: Build Core
         run: yarn workspace @grapesjs/react run build
 
-      - name: Build Simple Example App
-        run: yarn workspace @grapesjs/${{ matrix.app-name }}-simple run build
-
       - name: Build Full Example App
         run: yarn workspace @grapesjs/${{ matrix.app-name }} run build
