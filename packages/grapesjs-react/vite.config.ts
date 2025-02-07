@@ -14,16 +14,17 @@ export default defineConfig({
     lib: {
       entry: path.resolve(__dirname, "src/index.ts"),
       name: "MyLib",
-      formats: ["es", "umd"],
+      formats: ["es", "cjs"],
       fileName: (format) => `index${format === "es" ? "" : `.${format}`}.js`,
     },
     rollupOptions: {
-      external: ["react", "react-dom"],
+      external: ["react", "react-dom", "react/jsx-runtime"],
       output: {
         exports: "named",
         globals: {
           react: "React",
           "react-dom": "ReactDOM",
+          "react/jsx-runtime": "react/jsx-runtime",
         },
       },
     },
