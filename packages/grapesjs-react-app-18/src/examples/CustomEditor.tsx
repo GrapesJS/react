@@ -23,7 +23,9 @@ export default function CustomEditor(props: Partial<EditorProps>) {
                 </div>
                 <ModalProvider>
                     {({ open, title, content, close }) => (
-                        <CustomModal open={open} title={title} children={content} close={close}/>
+                        <CustomModal open={open} title={<>{title}</>} close={close}>
+                           <>{content}</>
+                        </CustomModal>
                     )}
                 </ModalProvider>
                 <AssetsProvider>

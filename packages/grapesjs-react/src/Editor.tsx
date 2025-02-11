@@ -1,9 +1,10 @@
 import { memo } from 'react';
+import type { JSX } from 'react';
 import EditorInstance, { EditorProps } from './EditorInstance';
 import EditorReady from './EditorReady';
 import { EditorInstanceProvider, EditorOptionsProvider } from './context';
 
-const Editor = memo(function Editor({ children, ...rest }: EditorProps) {
+export default memo(function Editor({ children, ...rest }: EditorProps) {
     return (
         <EditorInstanceProvider>
             <EditorOptionsProvider>
@@ -14,6 +15,4 @@ const Editor = memo(function Editor({ children, ...rest }: EditorProps) {
             </EditorOptionsProvider>
         </EditorInstanceProvider>
     );
-});
-
-export default Editor;
+}) as unknown as (props: EditorProps) => JSX.Element;

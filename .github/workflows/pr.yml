@@ -1,0 +1,46 @@
+name: PR Checks
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        react-version: [19, 18]
+        include:
+          - react-version: 19
+            app-name: react-app-19
+            react-dom-version: ^19.0.0
+            react-types-version: ^19.0.0
+          - react-version: 18
+            app-name: react-app-18
+            react-dom-version: ^18.2.0
+            react-types-version: ^18.2.0
+
+    name: Build with React ${{ matrix.react-version }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Project Base
+        uses: ./.github/actions/setup-project
+
+      ## We specify the version of react and react-dom we want to run vite build with
+      - name: Install React Dependencies in Root
+        run: |
+          cd ./packages/grapesjs-react && yarn add \
+          react@^19.0.0 \
+          react-dom@^19.0.0 \
+          @types/react@^19.0.0 \
+          @types/react-dom@^19.0.0
+
+      - name: Build Core
+        run: yarn workspace @grapesjs/react run build
+
+      - name: Build Full Example App
+        run: yarn workspace @grapesjs/${{ matrix.app-name }} run build

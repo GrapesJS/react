@@ -1,5 +1,6 @@
 import type { Editor, Page } from 'grapesjs';
-import React, { memo, useEffect, useState } from 'react';
+import  { memo, useEffect, useState } from 'react';
+import type { ReactElement, JSX } from 'react';
 import { useEditorInstance } from './context/EditorInstance';
 import { isFunction, noop } from './utils';
 
@@ -33,7 +34,7 @@ export type PagesState = {
 export type PagesResultProps = PagesState;
 
 export interface PagesProviderProps {
-    children: (props: PagesResultProps) => React.JSX.Element,
+    children: (props: PagesResultProps) => ReactElement<any>;
 }
 
 const PagesProvider = memo(function ({ children }: PagesProviderProps) {
@@ -70,8 +71,8 @@ const PagesProvider = memo(function ({ children }: PagesProviderProps) {
     }, [editor]);
 
     return editor ?
-        (isFunction(children) ? children(propState)  : null)
-    : null;
-  });
+        (isFunction(children) ? children(propState)  : <></>)
+    : <></>;
+  })
 
-  export default PagesProvider;
+  export default PagesProvider as unknown as (props: PagesProviderProps) => JSX.Element;

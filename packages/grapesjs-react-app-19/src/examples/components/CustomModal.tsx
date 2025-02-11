@@ -4,6 +4,7 @@ import Box from '@mui/material/Box';
 import Fade from '@mui/material/Fade';
 import Modal, { ModalProps } from '@mui/material/Modal';
 import { MAIN_BG_COLOR, MAIN_TXT_COLOR, cx } from '../common';
+import type { ReactNode } from 'react';
 
 const style = {
     position: 'absolute',
@@ -20,10 +21,11 @@ const style = {
     p: 2,
 };
 
-interface CustomModalProps extends Omit<ModalProps, 'title'> {
-    title: React.ReactNode,
+interface CustomModalProps extends Omit<ModalProps, 'title' | 'children'> {
+    title: ReactNode,
+    children: ReactNode,
     close: () => void,
-}
+  }
 
 export default function CustomModal({ children, title, close, ...props }: CustomModalProps) {
     return (

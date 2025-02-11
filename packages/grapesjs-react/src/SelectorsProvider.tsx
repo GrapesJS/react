@@ -1,5 +1,6 @@
 import type { Selector, State, Editor } from 'grapesjs';
-import React, { memo, useEffect, useState } from 'react';
+import  { memo, useEffect, useState } from 'react';
+import type { ReactElement, JSX } from 'react';
 import { useEditorInstance } from './context/EditorInstance';
 import { isFunction, noop } from './utils';
 import { PortalContainerResult, portalContainer } from './utils/react';
@@ -50,7 +51,7 @@ export type SelectorsState = {
 export type SelectorsResultProps = SelectorsState;
 
 export interface SelectorsProviderProps {
-    children: (props: SelectorsResultProps) => React.JSX.Element,
+    children: (props: SelectorsResultProps) => ReactElement<any>;
 }
 
 const SelectorsProvider = memo(function ({ children }: SelectorsProviderProps) {
@@ -64,7 +65,7 @@ const SelectorsProvider = memo(function ({ children }: SelectorsProviderProps) {
         addSelector: noop,
         removeSelector: noop,
         setState: noop,
-        Container: () => null,
+        Container: () => <></>,
     }));
 
     useEffect(() => {
@@ -95,8 +96,8 @@ const SelectorsProvider = memo(function ({ children }: SelectorsProviderProps) {
     useEffect(() => options.setCustomSelectors(true), []);
 
     return editor ?
-        (isFunction(children) ? children(propState)  : null)
-    : null;
+        (isFunction(children) ? children(propState)  : <></>)
+    : <></>;
   });
 
-  export default SelectorsProvider;
+  export default SelectorsProvider as unknown as (props: SelectorsProviderProps) => JSX.Element;

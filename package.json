@@ -3,11 +3,40 @@
   "private": true,
   "packageManager": "yarn@1.22.19",
   "scripts": {
-    "start": "yarn workspace @grapesjs/react run dev & yarn workspace @grapesjs/react-app run dev"
+    "build": "yarn build:core && yarn build:app-18 && yarn build:app-19",
+    "start": "yarn workspace @grapesjs/react run dev & yarn workspace @grapesjs/react-app run dev",
+    "clean": "find . -type d \\( -name \"node_modules\" -o -name \"build\" -o -name \"dist\" \\) -exec rm -rf {} + && rm ./yarn.lock",
+    "build:core": "yarn workspace @grapesjs/react run build",
+    "build:app-18": "yarn workspace @grapesjs/react-app-18 run build",
+    "build:app-19": "yarn workspace @grapesjs/react-app-19 run build"
   },
   "workspaces": {
     "packages": [
       "packages/*"
+    ],
+    "nohoist": [
+      "**/react",
+      "**/react-dom",
+      "**/react/**",
+      "**/react-dom/**",
+      "**/@types/react",
+      "**/@types/react-dom"
     ]
+  },
+  "dependencies": {
+    "@types/node": "^20.3.3",
+    "grapesjs": "^0.22.5",
+    "vite-plugin-dts": "^4.5.0",
+    "@typescript-eslint/eslint-plugin": "^5.59.0",
+    "@typescript-eslint/parser": "^5.59.0",
+    "@vitejs/plugin-react": "^4.0.0",
+    "autoprefixer": "^10.4.14",
+    "eslint": "^8.38.0",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-react-refresh": "^0.3.4",
+    "postcss": "^8.4.24",
+    "tailwindcss": "^3.3.2",
+    "typescript": "^5.0.2",
+    "vite": "^4.3.9"
   }
 }

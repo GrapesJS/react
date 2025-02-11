@@ -1,4 +1,5 @@
 import { createContext, useContext, useState } from 'react';
+import type { ReactNode } from 'react';
 
 const EditorOptionsContext = createContext<EditorOptionsState | null>(null);
 
@@ -27,7 +28,7 @@ export interface EditorOptionsState {
 
 
 export const EditorOptionsProvider = ({ children }: {
-    children?: React.ReactNode,
+    children?: ReactNode,
 }) => {
     const [state, setState] = useState<EditorOptionsState>(() => ({
         setRefCanvas(refCanvas) {

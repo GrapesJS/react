@@ -1,4 +1,6 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, createElement } from "react";
+import type { ReactNode } from "react";
+
 import { createPortal } from "react-dom";
 import { isString } from "./dom";
 
@@ -23,16 +25,16 @@ export const WrapDom = (el: HTMLElement | string) => {
 }
 
 export interface PortalContainerProps {
-    children: React.ReactNode
+    children: ReactNode
 }
 
-export type PortalContainerResult = React.FC<PortalContainerProps>;
+export type PortalContainerResult = (props: PortalContainerProps) => ReactNode | any;
 
 const elContainerMap = new WeakMap<HTMLElement, PortalContainerResult>();
 
 export function portalContainer(el?: HTMLElement): PortalContainerResult {
     if (!el) {
-        return () => null;
+        return () => <></>;
     }
 
     const prevResult = elContainerMap.get(el);
@@ -42,7 +44,7 @@ export function portalContainer(el?: HTMLElement): PortalContainerResult {
     }
 
     const result = function Container({ children }: PortalContainerProps) {
-        return createPortal(children, el);
+        return createPortal(createElement('div', null, children), el);
     };
 
     elContainerMap.set(el, result);

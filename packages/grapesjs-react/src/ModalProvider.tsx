@@ -1,4 +1,5 @@
-import React, { createElement, memo, useEffect, useState } from 'react';
+import  { createElement, memo, useEffect, useState } from 'react';
+import type { ReactElement, JSX } from 'react';
 import { useEditorInstance } from './context/EditorInstance';
 import { useEditorOptions } from './context/EditorOptions';
 import { noop } from './utils';
@@ -8,12 +9,12 @@ export interface ModalState {
     /**
      * Modal title
      */
-    title: React.ReactElement,
+    title: ReactElement<any>,
 
     /**
      * Modal content
      */
-    content: React.ReactElement,
+    content: ReactElement<any>,
 
     /**
      * Modal attributes
@@ -34,7 +35,7 @@ export interface ModalResultProps extends ModalState {
 }
 
 export interface ModalProviderProps {
-    children: ((props: ModalResultProps) => React.JSX.Element),
+    children: ((props: ModalResultProps) => ReactElement<any>),
 }
 
 export interface ModalEventProps {
@@ -80,8 +81,10 @@ const ModalProvider = memo(function ({ children }: ModalProviderProps) {
     useEffect(() => options.setCustomModal(true), []);
 
     return editor ?
-        (typeof children === 'function' ? children({ open: isOpen, ...modalState })  : null)
-    : null;
-  });
+        (typeof children === 'function' ? children({ open: isOpen, ...modalState })  : <></>)
+    : <></>;
+  }) 
 
-  export default ModalProvider;
+  export default ModalProvider as unknown as (props: 
+    ModalProviderProps
+  ) => JSX.Element;

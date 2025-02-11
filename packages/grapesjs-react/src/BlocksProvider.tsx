@@ -1,5 +1,6 @@
 import type { Block } from 'grapesjs';
-import React, { memo, useEffect, useState } from 'react';
+import  {  memo, useEffect, useState } from 'react';
+import type { ReactElement, JSX } from 'react';
 import { useEditorInstance } from './context/EditorInstance';
 import { useEditorOptions } from './context/EditorOptions';
 import { isFunction, noop } from './utils';
@@ -35,7 +36,7 @@ export type BlocksState = {
 export type BlocksResultProps = BlocksState;
 
 export interface BlocksProviderProps {
-    children: (props: BlocksResultProps) => React.JSX.Element,
+    children: (props: BlocksResultProps) => ReactElement<any>;
 }
 
 export interface BlocksEventProps {
@@ -56,7 +57,7 @@ const BlocksProvider = memo(function ({ children }: BlocksProviderProps) {
         dragStart: noop,
         dragStop: noop,
         mapCategoryBlocks: new Map(),
-        Container: () => null,
+        Container: () => <></>,
     }));
 
     useEffect(() => {
@@ -96,8 +97,10 @@ const BlocksProvider = memo(function ({ children }: BlocksProviderProps) {
     useEffect(() => options.setCustomBlocks(true), []);
 
     return editor ?
-        (isFunction(children) ? children(propState)  : null)
-    : null;
-  });
+        (isFunction(children) ? children(propState)  : <></>)
+    : <></>;
+  })
 
-  export default BlocksProvider;
+  export default BlocksProvider as unknown as (props: 
+BlocksProviderProps
+  ) => JSX.Element;

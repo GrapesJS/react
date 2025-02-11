@@ -1,5 +1,6 @@
 import type { Component } from 'grapesjs';
-import React, { memo, useEffect, useState } from 'react';
+import  {  memo, useEffect, useState } from 'react';
+import type { ReactElement, JSX } from 'react';
 import { useEditorInstance } from './context/EditorInstance';
 import { useEditorOptions } from './context/EditorOptions';
 import { isFunction } from './utils';
@@ -20,7 +21,7 @@ export type LayersState = {
 export type LayersResultProps = LayersState;
 
 export interface LayersProviderProps {
-    children: (props: LayersResultProps) => React.JSX.Element,
+    children: (props: LayersResultProps) => ReactElement<any>;
 }
 
 const LayersProvider = memo(function ({ children }: LayersProviderProps) {
@@ -28,7 +29,7 @@ const LayersProvider = memo(function ({ children }: LayersProviderProps) {
     const options = useEditorOptions();
     const [propState, setPropState] = useState<LayersState>(() => ({
         root: undefined,
-        Container: () => null,
+        Container: () => <></>,
     }));
 
     useEffect(() => {
@@ -54,8 +55,10 @@ const LayersProvider = memo(function ({ children }: LayersProviderProps) {
     useEffect(() => options.setCustomLayers(true), []);
 
     return editor ?
-        (isFunction(children) ? children(propState)  : null)
-    : null;
+        (isFunction(children) ? children(propState)  : <></>)
+    : <></>;
   });
 
-  export default LayersProvider;
+  export default LayersProvider as unknown as (props: 
+LayersProviderProps
+  ) => JSX.Element;

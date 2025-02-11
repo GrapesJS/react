@@ -1,5 +1,6 @@
 import type { Sector } from 'grapesjs';
-import React, { memo, useEffect, useState } from 'react';
+import  { memo, useEffect, useState } from 'react';
+import type { ReactElement, JSX } from 'react';
 import { useEditorInstance } from './context/EditorInstance';
 import { isFunction } from './utils';
 import { PortalContainerResult, portalContainer } from './utils/react';
@@ -20,7 +21,7 @@ export type StylesState = {
 export type StylesResultProps = StylesState;
 
 export interface StylesProviderProps {
-    children: (props: StylesResultProps) => React.JSX.Element,
+    children: (props: StylesResultProps) => ReactElement<any>
 }
 
 const StylesProvider = memo(function ({ children }: StylesProviderProps) {
@@ -28,7 +29,7 @@ const StylesProvider = memo(function ({ children }: StylesProviderProps) {
     const options = useEditorOptions();
     const [propState, setPropState] = useState<StylesState>(() => ({
         sectors: [],
-        Container: () => null,
+        Container: () => <></>,
     }));
 
     useEffect(() => {
@@ -53,8 +54,8 @@ const StylesProvider = memo(function ({ children }: StylesProviderProps) {
     useEffect(() => options.setCustomStyles(true), []);
 
     return editor ?
-        (isFunction(children) ? children(propState)  : null)
-    : null;
-  });
+        (isFunction(children) ? children(propState)  : <></>)
+    : <></>;
+  })
 
-  export default StylesProvider;
+  export default StylesProvider as unknown as (props: StylesProviderProps) => JSX.Element;
