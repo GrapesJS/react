@@ -34,7 +34,7 @@ async function prepareReleaseGrapesJSReact() {
     );
 
     console.log(
-      `Release prepared! Push the current "${newBranch}" branch and open a new PR targeting 'dev'`
+      `Release prepared! Push the current "${newBranch}" branch and open a new PR targeting 'main'`
     );
   } catch (error) {
     console.error(error);
