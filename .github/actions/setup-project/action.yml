@@ -18,12 +18,3 @@ runs:
     - name: Install dependencies
       run: yarn
       shell: bash
-
-    - name: Install React Dependencies in Root
-      shell: bash
-      run: |
-        cd ./packages/grapesjs-react && yarn add \
-        react@^19.0.0 \
-        react-dom@^19.0.0 \
-        @types/react@^19.0.0 \
-        @types/react-dom@^19.0.0

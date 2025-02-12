@@ -30,6 +30,15 @@ jobs:
       - name: Setup Project Base
         uses: ./.github/actions/setup-project
 
+      ## We specify the version of react and react-dom we want to run vite build with
+      - name: Install React Dependencies in Root
+        run: |
+          cd ./packages/grapesjs-react && yarn add \
+          react@^19.0.0 \
+          react-dom@^19.0.0 \
+          @types/react@^19.0.0 \
+          @types/react-dom@^19.0.0
+
       - name: Build Core
         run: yarn workspace @grapesjs/react run build
 
