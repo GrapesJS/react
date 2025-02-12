@@ -45,6 +45,7 @@ const StylesProvider = memo(function ({ children }: StylesProviderProps) {
         }
 
         editor.on(event, up);
+        Styles.__trgCustom();
 
         return () => {
             editor.off(event, up);
