@@ -1,4 +1,4 @@
-name: React 18 & 19 Lint Checks
+name: Quailty Checks
 
 on:
   pull_request:
