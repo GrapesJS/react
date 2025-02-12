@@ -1,4 +1,4 @@
-name: React 18 19 Build Checks
+name: Build Checks
 
 on:
   pull_request:
@@ -25,7 +25,7 @@ jobs:
             react-dom-version: ^18.2.0
             react-types-version: ^18.2.0
 
-    name: Build with React ${{ matrix.react-version }}
+    name: React ${{ matrix.react-version }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
