@@ -8,9 +8,7 @@
     "clean": "find . -type d \\( -name \"node_modules\" -o -name \"build\" -o -name \"dist\" \\) -exec rm -rf {} + && rm ./yarn.lock",
     "build:core": "yarn workspace @grapesjs/react run build",
     "build:app-18": "yarn workspace @grapesjs/react-app-18 run build",
-    "build:app-19": "yarn workspace @grapesjs/react-app-19 run build",
-    "release:core:latest": "ts-node scripts/releaseCore latest",
-    "publish:core:latest": "cd packages/grapesjs-react && npm publish --access public"
+    "build:app-19": "yarn workspace @grapesjs/react-app-19 run build"
   },
   "workspaces": {
     "packages": [
