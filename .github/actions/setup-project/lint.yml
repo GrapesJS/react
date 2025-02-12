@@ -1,0 +1,12 @@
+name: Lint Checks
+description: Runs ESLint and Prettier checks on the project.
+
+runs:
+  using: composite
+  steps:
+    - name: Run Eslit
+      run: yarn lint
+      shell: bash
+    - name: Run Prettier Checks
+      run: yarn format:check
+      shell: bash

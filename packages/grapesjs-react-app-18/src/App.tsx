@@ -13,31 +13,33 @@ enum Examples {
   Default = 'Default UI Editor',
   Custom = 'Custom UI Editor',
   DefaultCustom = 'Default & Custom UI Editor',
-  WaitReady = 'Editor wait Ready',
+  WaitReady = 'Editor wait Ready'
 }
 
 function App() {
-  const [editor, setEditor] =  useState<Editor>();
-  const [ready, setReady] =  useState<Editor>();
-  const [projectData, setProjectData] =  useState<ProjectData>();
-  const [projectDataDate, setProjectDataDate] =  useState<Date>();
-  const [selectedExample, setSelectedExample] =  useState(Examples.Custom);
+  const [editor, setEditor] = useState<Editor>();
+  const [ready, setReady] = useState<Editor>();
+  const [projectData, setProjectData] = useState<ProjectData>();
+  const [projectDataDate, setProjectDataDate] = useState<Date>();
+  const [selectedExample, setSelectedExample] = useState(Examples.Custom);
   const mountedIconCls = `inline-block ${editor ? 'text-green-400' : 'text-red-400'}`;
   const readyIconCls = `inline-block ${ready ? 'text-green-400' : 'text-red-400'}`;
 
-  const onProjectUpdate = useCallback<Required<EditorProps>['onUpdate']>((pd) => {
+  const onProjectUpdate = useCallback<Required<EditorProps>['onUpdate']>(pd => {
     setProjectData(pd);
     setProjectDataDate(new Date());
     projectData;
   }, []);
 
-  const exampleOptions = useMemo(() => (
-    Object.entries(Examples).map(([key, value]) => (
-      <option key={key} value={value}>
-        {value}
-      </option>
-    ))
-  ), []);
+  const exampleOptions = useMemo(
+    () =>
+      Object.entries(Examples).map(([key, value]) => (
+        <option key={key} value={value}>
+          {value}
+        </option>
+      )),
+    []
+  );
 
   const onExampleChange = (ev: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedExample(ev.target.value as Examples);
@@ -59,50 +61,31 @@ function App() {
       break;
   }
 
-  (window as any).editor = editor
+  (window as any).editor = editor;
 
   return (
     <div className="flex flex-col h-screen text-sm text-white bg-slate-900">
       <div className="flex gap-3 p-3 items-center">
         <div>
-          <select
-            className="rounded-sm bg-slate-700 p-1"
-            value={selectedExample}
-            onChange={onExampleChange}
-          >
+          <select className="rounded-sm bg-slate-700 p-1" value={selectedExample} onChange={onExampleChange}>
             {exampleOptions}
           </select>
         </div>
         <div className="flex gap-2 items-center">
-            Mounted:
-            <Icon
-              size={0.7}
-              path={editor ? mdiCheckBold : mdiClose}
-              className={mountedIconCls}
-            />
+          Mounted:
+          <Icon size={0.7} path={editor ? mdiCheckBold : mdiClose} className={mountedIconCls} />
         </div>
         <div className="flex gap-2 items-center">
-            Ready:
-            <Icon
-              size={0.7}
-              path={ready ? mdiCheckBold : mdiClose}
-              className={readyIconCls}
-            />
+          Ready:
+          <Icon size={0.7} path={ready ? mdiCheckBold : mdiClose} className={readyIconCls} />
         </div>
-        {
-          !!projectDataDate &&
-          <div>Last update: {getDateString(projectDataDate)}</div>
-        }
+        {!!projectDataDate && <div>Last update: {getDateString(projectDataDate)}</div>}
       </div>
       <div className="flex-grow overflow-hidden">
-        <EditorToRender
-          onEditor={setEditor}
-          onReady={setReady}
-          onUpdate={onProjectUpdate}
-        />
+        <EditorToRender onEditor={setEditor} onReady={setReady} onUpdate={onProjectUpdate} />
       </div>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;

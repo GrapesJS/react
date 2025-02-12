@@ -5,7 +5,7 @@ inputs:
   node-version:
     required: false
     default: 22.4.1
-    description: "The version of Node.js to use."
+    description: 'The version of Node.js to use.'
 
 runs:
   using: composite
@@ -13,8 +13,8 @@ runs:
     - uses: actions/setup-node@v4
       with:
         node-version: ${{ inputs.node-version }}
-        registry-url: "https://registry.npmjs.org"
-        cache: "yarn"
+        registry-url: 'https://registry.npmjs.org'
+        cache: 'yarn'
     - name: Install dependencies
       run: yarn
       shell: bash

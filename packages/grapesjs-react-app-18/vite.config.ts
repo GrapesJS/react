@@ -14,6 +14,6 @@ if (fs.existsSync(`${dirCwd}/${indexDev}`)) {
 export default defineConfig({
   plugins: [react()],
   server: {
-    ...serverOpts,
-  },
-})
+    ...serverOpts
+  }
+});

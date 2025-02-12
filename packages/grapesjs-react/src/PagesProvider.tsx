@@ -1,78 +1,76 @@
 import type { Editor, Page } from 'grapesjs';
-import  { memo, useEffect, useState } from 'react';
+import { memo, useEffect, useState } from 'react';
 import type { ReactElement, JSX } from 'react';
 import { useEditorInstance } from './context/EditorInstance';
 import { isFunction, noop } from './utils';
 
 export type PagesState = {
-    /**
-     * Array of pages.
-     */
-    pages: Page[],
+  /**
+   * Array of pages.
+   */
+  pages: Page[];
 
-    /**
-     * Selected page.
-     */
-    selected?: Page,
+  /**
+   * Selected page.
+   */
+  selected?: Page;
 
-    /**
-     * Select page.
-     */
-    select: Editor['Pages']['select'],
+  /**
+   * Select page.
+   */
+  select: Editor['Pages']['select'];
 
-    /**
-     * Add new page.
-     */
-    add: Editor['Pages']['add'],
+  /**
+   * Add new page.
+   */
+  add: Editor['Pages']['add'];
 
-    /**
-     * Remove page.
-     */
-    remove: Editor['Pages']['remove'],
+  /**
+   * Remove page.
+   */
+  remove: Editor['Pages']['remove'];
 };
 
 export type PagesResultProps = PagesState;
 
 export interface PagesProviderProps {
-    children: (props: PagesResultProps) => ReactElement<any>;
+  children: (props: PagesResultProps) => ReactElement<any>;
 }
 
 const PagesProvider = memo(function ({ children }: PagesProviderProps) {
-    const { editor } = useEditorInstance();
-    const [propState, setPropState] = useState<PagesState>(() => ({
-        pages: [],
-        selected: undefined,
-        select: noop as any,
-        add: noop as any,
-        remove: noop as any,
-    }));
+  const { editor } = useEditorInstance();
+  const [propState, setPropState] = useState<PagesState>(() => ({
+    pages: [],
+    selected: undefined,
+    select: noop as any,
+    add: noop as any,
+    remove: noop as any
+  }));
 
-    useEffect(() => {
-        if (!editor) return;
-        const { Pages } = editor;
-        const event = Pages.events.all;
+  useEffect(() => {
+    if (!editor) return;
+    const { Pages } = editor;
+    const event = Pages.events.all;
 
-        const up = () => {
-            setPropState({
-                pages: Pages.getAll(),
-                selected: Pages.getSelected(),
-                select: (...args) => Pages.select(...args),
-                add: (...args) => Pages.add(...args),
-                remove: (...args) => Pages.remove(...args),
-            });
-        }
+    const up = () => {
+      setPropState({
+        pages: Pages.getAll(),
+        selected: Pages.getSelected(),
+        select: (...args) => Pages.select(...args),
+        add: (...args) => Pages.add(...args),
+        remove: (...args) => Pages.remove(...args)
+      });
+    };
 
-        editor.on(event, up);
-        up();
+    editor.on(event, up);
+    up();
 
-        return () => {
-            editor.off(event, up);
-        };
-    }, [editor]);
+    return () => {
+      editor.off(event, up);
+    };
+  }, [editor]);
 
-    return editor ?
-        (isFunction(children) ? children(propState)  : <></>)
-    : <></>;
-  })
+  return editor ? isFunction(children) ? children(propState) : <></> : <></>;
+});
 
-  export default PagesProvider as unknown as (props: PagesProviderProps) => JSX.Element;
+export default PagesProvider as unknown as (props: PagesProviderProps) => JSX.Element;

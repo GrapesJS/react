@@ -20,4 +20,3 @@ export { default as TraitsProvider } from './TraitsProvider';
 export type { TraitsResultProps } from './TraitsProvider';
 export { default as WithEditor } from './WithEditor';
 export { useEditor, useEditorMaybe } from './context/EditorInstance';
-

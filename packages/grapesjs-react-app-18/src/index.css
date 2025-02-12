@@ -3,5 +3,5 @@
 @tailwind utilities;
 
 select {
-    line-height: initial;
+  line-height: initial;
 }

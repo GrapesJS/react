@@ -1,4 +1,4 @@
-version: "3.8"
+version: '3.8'
 
 services:
   base:
@@ -12,9 +12,9 @@ services:
       context: .
       dockerfile: Dockerfile.react18
     ports:
-      - "5173:5173"
+      - '5173:5173'
     healthcheck:
-      test: ["CMD", "wget", "--spider", "http://localhost:5173"]
+      test: ['CMD', 'wget', '--spider', 'http://localhost:5173']
       interval: 5s
       timeout: 5s
       retries: 10
@@ -30,9 +30,9 @@ services:
       context: .
       dockerfile: Dockerfile.react19
     ports:
-      - "5173:5173"
+      - '5173:5173'
     healthcheck:
-      test: ["CMD", "wget", "--spider", "http://localhost:5173"]
+      test: ['CMD', 'wget', '--spider', 'http://localhost:5173']
       interval: 5s
       timeout: 5s
       retries: 10
