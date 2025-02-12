@@ -16,7 +16,7 @@ jobs:
         run: yarn build:core
       - name: Publish to npm
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.ORG_NPM_TOKEN }}
         run: |
           echo "//registry.npmjs.org/:_authToken=${NODE_AUTH_TOKEN}" >> ./packages/grapesjs-react/.npmrc
           yarn publish:core:latest
