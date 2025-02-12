@@ -13,7 +13,9 @@
     "build:app-18": "yarn workspace @grapesjs/react-app-18 run build",
     "build:app-19": "yarn workspace @grapesjs/react-app-19 run build",
     "release:core:latest": "ts-node scripts/releaseCore latest",
-    "publish:core:latest": "cd packages/grapesjs-react && npm publish --access public"
+    "release:core:rc": "ts-node scripts/releaseCore rc",
+    "publish:core:latest": "cd packages/grapesjs-react && npm publish --access public",
+    "publish:core:rc": "cd packages/grapesjs-react && npm publish --tag rc --access public"
   },
   "workspaces": {
     "packages": [
