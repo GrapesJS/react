@@ -1,11 +1,11 @@
 {
-    "ts-node": {
-        "compilerOptions": {
-            "esModuleInterop": true,
-            "module": "commonjs"
-        }
-    },
+  "ts-node": {
     "compilerOptions": {
-        "module": "esnext"
+      "esModuleInterop": true,
+      "module": "commonjs"
     }
+  },
+  "compilerOptions": {
+    "module": "esnext"
+  }
 }
