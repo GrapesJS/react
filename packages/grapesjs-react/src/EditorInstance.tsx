@@ -105,36 +105,36 @@ const EditorInstance = memo(function ({
           ...pluginOptions
         },
         modal: {
-          ...options.modal,
-          custom: !!editorOptions.customModal
+          custom: !!editorOptions.customModal,
+          ...options.modal
         },
         assetManager: {
-          ...options.assetManager,
-          custom: !!editorOptions.customAssets
+          custom: !!editorOptions.customAssets,
+          ...options.assetManager
         },
         styleManager: {
-          ...options.styleManager,
-          custom: !!editorOptions.customStyles
+          custom: !!editorOptions.customStyles,
+          ...options.styleManager
         },
         blockManager: {
-          ...options.blockManager,
-          custom: !!editorOptions.customBlocks
+          custom: !!editorOptions.customBlocks,
+          ...options.blockManager
         },
         richTextEditor: {
-          ...options.richTextEditor,
-          custom: !!editorOptions.customRte
+          custom: !!editorOptions.customRte,
+          ...options.richTextEditor
         },
         layerManager: {
-          ...options.layerManager,
-          custom: !!editorOptions.customLayers
+          custom: !!editorOptions.customLayers,
+          ...options.layerManager
         },
         traitManager: {
-          ...options.traitManager,
-          custom: !!editorOptions.customTraits
+          custom: !!editorOptions.customTraits,
+          ...options.traitManager
         },
         selectorManager: {
-          ...options.selectorManager,
-          custom: !!editorOptions.customSelectors
+          custom: !!editorOptions.customSelectors,
+          ...options.selectorManager
         },
         container: canvasContainer || defaultContainer,
         customUI: !!canvasContainer,
