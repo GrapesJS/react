@@ -8,7 +8,6 @@ import { cx, noop } from './utils';
 import { loadScript, loadStyle } from './utils/dom';
 import { GrapesPlugins, PluginToLoad, PluginTypeToLoad, initPlugins } from './utils/plugins';
 
-
 export interface EditorProps extends HTMLProps<HTMLDivElement> {
   grapesjs: string | typeof gjs;
   /**
