@@ -1,0 +1,22 @@
+FROM grapesjs-base:latest
+
+RUN yarn add -W \
+    react@^18.2.0 \
+    react-dom@^18.2.0 \
+    @types/react@^18.2.0 \
+    @types/react-dom@^18.2.0
+
+WORKDIR /app/packages/grapesjs-react
+RUN yarn link
+
+WORKDIR /app/packages/grapesjs-react-app-18
+RUN yarn link @grapesjs/react
+
+WORKDIR /app
+RUN yarn install
+
+WORKDIR /app/packages/grapesjs-react-app-18
+
+EXPOSE 5173
+
+CMD ["yarn", "dev", "--host", "0.0.0.0"]

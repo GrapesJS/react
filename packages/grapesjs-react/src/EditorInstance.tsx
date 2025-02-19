@@ -1,24 +1,26 @@
 import type gjs from 'grapesjs';
 import type { Editor, EditorConfig, ProjectData } from 'grapesjs';
 import { memo, useEffect, useMemo, useRef, useState } from 'react';
+import type { HTMLProps, ReactNode, JSX } from 'react';
 import { useEditorInstance } from './context/EditorInstance';
 import { useEditorOptions } from './context/EditorOptions';
 import { cx, noop } from './utils';
 import { loadScript, loadStyle } from './utils/dom';
 import { GrapesPlugins, PluginToLoad, PluginTypeToLoad, initPlugins } from './utils/plugins';
 
-export interface EditorProps extends React.HTMLProps<HTMLDivElement> {
-  grapesjs: string | typeof gjs,
+
+export interface EditorProps extends HTMLProps<HTMLDivElement> {
+  grapesjs: string | typeof gjs;
   /**
    * GrapesJS options.
    */
-  options?: EditorConfig,
+  options?: EditorConfig;
 
   /**
    * Load GrapesJS CSS file asynchronously from URL.
    * @example 'https://unpkg.com/grapesjs/dist/css/grapes.min.css'
    */
-  grapesjsCss?: string,
+  grapesjsCss?: string;
 
   /**
    * Array of plugins.
@@ -38,28 +40,28 @@ export interface EditorProps extends React.HTMLProps<HTMLDivElement> {
    *  myPlugin,
    * ]
    */
-  plugins?: PluginTypeToLoad[],
+  plugins?: PluginTypeToLoad[];
 
   /**
    * Callback triggered once the editor instance is created.
    */
-  onEditor?: (editor: Editor) => void,
+  onEditor?: (editor: Editor) => void;
 
   /**
    * Callback triggered once the editor is ready (mounted and loaded data from the Storage).
    */
-  onReady?: (editor: Editor) => void,
+  onReady?: (editor: Editor) => void;
 
   /**
    * Callback triggered on each update in the editor project.
    * The updated ProjectData (JSON) is passed as a first argument.
    */
-  onUpdate?: (projectData: ProjectData, editor: Editor) => void,
+  onUpdate?: (projectData: ProjectData, editor: Editor) => void;
 
   /**
    * Avoid showing children of the editor until the editor is ready (mounted and loaded data from the Storage).
    */
-  waitReady?: boolean | React.ReactNode,
+  waitReady?: boolean | ReactNode;
 }
 
 const EditorInstance = memo(function ({
@@ -98,53 +100,51 @@ const EditorInstance = memo(function ({
       const config: EditorConfig = {
         height: '100%',
         ...options,
-        plugins: [
-          ...loadedPlugins,
-          ...(options.plugins || []),
-        ],
+        plugins: [...loadedPlugins, ...(options.plugins || [])],
         pluginsOpts: {
           ...options.pluginsOpts,
-          ...pluginOptions,
+          ...pluginOptions
         },
         modal: {
-          ...options.modal,
           custom: !!editorOptions.customModal,
+          ...options.modal
         },
         assetManager: {
           custom: !!editorOptions.customAssets,
-          ...options.assetManager,
+          ...options.assetManager
         },
         styleManager: {
-          ...options.styleManager,
           custom: !!editorOptions.customStyles,
+          ...options.styleManager
         },
         blockManager: {
-          ...options.blockManager,
           custom: !!editorOptions.customBlocks,
+          ...options.blockManager
         },
         richTextEditor: {
-          ...options.richTextEditor,
           custom: !!editorOptions.customRte,
+          ...options.richTextEditor
         },
         layerManager: {
-          ...options.layerManager,
           custom: !!editorOptions.customLayers,
+          ...options.layerManager
         },
         traitManager: {
-          ...options.traitManager,
           custom: !!editorOptions.customTraits,
+          ...options.traitManager
         },
         selectorManager: {
-          ...options.selectorManager,
           custom: !!editorOptions.customSelectors,
+          ...options.selectorManager
         },
         container: canvasContainer || defaultContainer,
         customUI: !!canvasContainer,
         // Disables all default panels if Canvas is used
-        ...(canvasContainer ?
-          {
-            panels: { defaults: [] }
-          } : {})
+        ...(canvasContainer
+          ? {
+              panels: { defaults: [] }
+            }
+          : {})
       };
       editor = grapes.init(config);
       setEditor(editor);
@@ -153,17 +153,17 @@ const EditorInstance = memo(function ({
       if (onUpdate) {
         editor.on('update', () => {
           onUpdate(editor!.getProjectData(), editor!);
-        })
+        });
       }
 
       editor.onReady(() => {
         setEditorReady(true);
         onReady?.(editor!);
       });
-    }
+    };
 
     const init = async () => {
-      grapesjsCss && await loadStyle(grapesjsCss);
+      grapesjsCss && (await loadStyle(grapesjsCss));
       const pluginsRes = await initPlugins(plugins);
       loadedPlugins = pluginsRes.plugins;
       pluginOptions = pluginsRes.pluginOptions;
@@ -175,7 +175,7 @@ const EditorInstance = memo(function ({
       } else {
         loadEditor(grapesjs);
       }
-    }
+    };
 
     init();
 
@@ -187,28 +187,32 @@ const EditorInstance = memo(function ({
   const editorCls = cx('gjs-editor-wrapper', className);
   const isWaitingReady = waitReady && !isEditorReady;
 
-  const styleRes = useMemo(() => ({
-    ...style,
-    height,
-    width,
-  }), [height, width, style]);
+  const styleRes = useMemo(
+    () => ({
+      ...style,
+      height,
+      width
+    }),
+    [height, width, style]
+  );
 
-  const styleEditorRes = useMemo(() => ({
-    ...styleRes,
-    ...(isWaitingReady ? {
-      opacity: 0,
-      width: 0,
-      height: 0,
-    } : {})
-  }), [styleRes, isWaitingReady]);
+  const styleEditorRes = useMemo(
+    () => ({
+      ...styleRes,
+      ...(isWaitingReady
+        ? {
+            opacity: 0,
+            width: 0,
+            height: 0
+          }
+        : {})
+    }),
+    [styleRes, isWaitingReady]
+  );
 
   return (
     <>
-      {
-        waitReady && !isEditorReady ?
-          <div className={editorCls} style={styleRes} children={waitReady} />
-          : null
-      }
+      {waitReady && !isEditorReady ? <div className={editorCls} style={styleRes} children={waitReady} /> : null}
       <div {...rest} ref={editorRef} className={editorCls} style={styleEditorRes}>
         {children}
       </div>
@@ -216,4 +220,4 @@ const EditorInstance = memo(function ({
   );
 });
 
-export default EditorInstance;
+export default EditorInstance as unknown as (props: EditorProps) => JSX.Element;

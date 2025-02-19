@@ -1,0 +1,40 @@
+name: Build Checks
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        react-version: [19, 18]
+        include:
+          - react-version: 19
+            app-name: react-app-19
+            react-dom-version: ^19.0.0
+            react-types-version: ^19.0.0
+          - react-version: 18
+            app-name: react-app-18
+            react-dom-version: ^18.2.0
+            react-types-version: ^18.2.0
+
+    name: React ${{ matrix.react-version }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Project Base
+        uses: ./.github/actions/setup-project
+
+      - name: Build Core
+        run: yarn workspace @grapesjs/react run build
+
+      - name: Build Full Example App
+        run: yarn workspace @grapesjs/${{ matrix.app-name }} run build
