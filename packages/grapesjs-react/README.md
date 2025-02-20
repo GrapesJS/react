@@ -18,7 +18,19 @@ The core `grapesjs` library is not bundled with the wrapper itself so you have t
 npm i grapesjs @grapesjs/react
 ```
 
-## Usage
+## Compatibility
+
+#### @grapesjs/react@1.X
+
+- React v18.X
+- GrapesJS v0.21.3 or higher
+- NextJS v14.X
+
+#### @grapesjs/react@2.X
+
+- React v18.X or v19.X
+- GrapesJS v0.22.5 or higher
+- NextJS v15.X
 
 ### Default UI
 
