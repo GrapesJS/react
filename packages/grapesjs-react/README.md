@@ -20,13 +20,13 @@ npm i grapesjs @grapesjs/react
 
 ## Compatibility
 
-#### @grapesjs/react@1.X
+#### @grapesjs/react v1.X
 
 - React v18.X
 - GrapesJS v0.21.3 or higher
 - NextJS v14.X
 
-#### @grapesjs/react@2.X
+#### @grapesjs/react v2.X
 
 - React v18.X or v19.X
 - GrapesJS v0.22.5 or higher
