@@ -10,21 +10,13 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-
       - name: Setup project
         uses: ./.github/actions/setup-project
-
       - name: Build
         run: yarn build:core
-
-      - name: Setup NPM Auth
-        run: |
-          echo "//registry.yarnpkg.com/:_authToken=${NODE_AUTH_TOKEN}" >> ./packages/grapesjs-react/.npmrc
-          echo "//registry.npmjs.org/:_authToken=${NODE_AUTH_TOKEN}" >> ./packages/grapesjs-react/.npmrc
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.ORG_NPM_TOKEN }}
-
       - name: Publish to npm
-        run: yarn publish:core:latest
         env:
           NODE_AUTH_TOKEN: ${{ secrets.ORG_NPM_TOKEN }}
+        run: |
+          echo "//registry.npmjs.org/:_authToken=${NODE_AUTH_TOKEN}" >> ./packages/grapesjs-react/.npmrc
+          yarn publish:core:latest
